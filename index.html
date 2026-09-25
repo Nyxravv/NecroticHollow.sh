@@ -3266,5 +3266,27 @@ document.querySelectorAll('.yba-archive-person').forEach(btn => {
   }, {passive:true});
 });
 
+
+/* V19.5 — fresh global visitor counter.
+   This counts unique people who reach the portfolio, which is the closest reliable
+   measure of bio-link clicks available to a static GitHub Pages site. */
+(async()=>{
+  const countEl=document.getElementById('visitorCount');
+  const deviceEl=document.getElementById('visitorDevice');
+  if(!countEl)return;
+  const endpoint='https://counterapi.com/api/necrotichollow.sh/view/portfolio-v195?unique=true&startNumber=0&noFormatting=true';
+  try{
+    const res=await fetch(endpoint,{cache:'no-store'});
+    const data=await res.json();
+    if(typeof data.value==='number') countEl.textContent=`VISITOR COUNT: ${data.value}`;
+  }catch(e){
+    console.warn('V19.5 global visitor counter unavailable; keeping local fallback.',e);
+  }
+  const ua=navigator.userAgent||'';
+  const w=window.innerWidth;
+  const device=/iPad|Tablet/i.test(ua)||(w>=600&&w<=1100)?'TABLET':/Mobile|iPhone|iPod|Android/i.test(ua)||w<600?'MOBILE':'DESKTOP';
+  if(deviceEl) deviceEl.textContent=`DEVICE // ${device} NODE`;
+})();
+
 </script>
 </body></html>
