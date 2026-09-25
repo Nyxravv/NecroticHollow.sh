@@ -1646,7 +1646,7 @@ body{background:radial-gradient(circle at 76% 12%,rgba(110,34,255,.16),transpare
 <div class="identity-q"><span>WHAT IS THIS WEBSITE?</span><p>This is my portfolio, designed by me and made with the help / assistance of AI.</p></div>
 <div class="identity-q"><span>WHY DID I MAKE THIS?</span><p>Why not? 😜</p></div>
 <div class="identity-open">OPEN PROFILE <b>↗</b></div>
-</button><div aria-live="polite" class="visitor-node" id="visitorNode"><span class="visitor-led"></span><div><small>NETWORK / VISITOR NODE</small><strong id="visitorCount">VISITOR COUNT: 100</strong><em id="visitorDevice">DEVICE // DETECTING</em></div></div></div>
+</button><div aria-live="polite" class="visitor-node" id="visitorNode"><span class="visitor-led"></span><div><small>NETWORK / VISITOR NODE</small><strong id="visitorCount">VISITOR COUNT: 0</strong><em id="visitorDevice">DEVICE // DETECTING</em></div></div></div>
 
 <div class="noise"></div><div class="scanlines"></div>
 <div class="cyberhack" id="cyberhack"><div class="hack-core">SIGNAL LOST<br/><small>/// SYSTEM DESYNC ///</small></div></div>
@@ -3166,7 +3166,7 @@ function detectDevice(){
 }
 const hasVisited = localStorage.getItem('nh-v175-visitor') === '1';
 if(!hasVisited){ localStorage.setItem('nh-v175-visitor','1'); }
-const localVisitCount = Number(localStorage.getItem('nh-v175-local-visits')||'99') + (hasVisited ? 0 : 1);
+const localVisitCount = Number(localStorage.getItem('nh-v175-local-visits')||'0') + (hasVisited ? 0 : 1);
 localStorage.setItem('nh-v175-local-visits', String(localVisitCount));
 if(visitorCount) visitorCount.textContent = `VISITOR COUNT: ${localVisitCount}`;
 if(visitorDevice) visitorDevice.textContent = `DEVICE // ${detectDevice()} NODE`;
