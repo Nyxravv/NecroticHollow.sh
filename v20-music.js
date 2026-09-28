@@ -173,38 +173,36 @@
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
 
   function findVisitorCounterBox(){
-    const candidates=[...document.querySelectorAll('body *')].filter(el=>
-      el!==dock &&
-      !el.closest('#nhMusicDock') &&
-      (el.textContent||'').trim().replace(/\s+/g,' ').toLowerCase().includes('visitor count')
-    );
-    if(!candidates.length)return null;
-    const textNode=candidates.sort((a,b)=>a.textContent.length-b.textContent.length)[0];
-    return textNode.closest('[class*="counter" i],[id*="counter" i],[class*="visitor" i],[id*="visitor" i]')
-      || textNode.closest('section,article,aside,div')
-      || textNode;
-  }
+    const hits=[...document.querySelectorAll('body *')].filter(el=>{
+      if(el===dock||el.closest('#nhMusicDock'))return false;
+      const txt=(el.textContent||'').trim().replace(/\s+/g,' ').toLowerCase();
+      return txt.includes('visitor count');
+    });
+    if(!hits.length)return null;
 
-  function hardPlaceBelowCounter(){
-    if(placing)return;
-    const counter=findVisitorCounterBox();
-    if(!counter)return;
-    placing=true;
-
-    const rect=counter.getBoundingClientRect();
-    const scrollX=window.scrollX||window.pageXOffset;
-    const scrollY=window.scrollY||window.pageYOffset;
-    const width=Math.min(360,Math.max(250,window.innerWidth-28));
-    const left=Math.max(14,Math.min(scrollX+rect.left+(rect.width-width)/2,scrollX+window.innerWidth-width-14));
-    const top=scrollY+rect.bottom+14;
-
-    dock.classList.add('v20-fixed-placement');
-    dock.style.width=width+'px';
-    dock.style.left=left+'px';
-    dock.style.top=top+'px';
-    if(dock.parentNode!==document.body)document.body.appendChild(dock);
-
-    placing=false;
+    const seed=hits.sort((a,b)=>a.textContent.length-b.textContent.length)[0];
+    const candidates=[];
+    let el=seed;
+    for(let depth=0;el&&depth<10;depth++,el=el.parentElement){
+      if(el===document.body||el===document.documentElement)break;
+      const r=el.getBoundingClientRect();
+      const cs=getComputedStyle(el);
+      if(r.width<220||r.height<55)continue;
+      const area=r.width*r.height;
+      if(area>700000)continue;
+      const hasBorder=['borderTopWidth','borderRightWidth','borderBottomWidth','borderLeftWidth'].some(k=>parseFloat(cs[k])>0);
+      const rounded=parseFloat(cs.borderTopLeftRadius)>0||parseFloat(cs.borderTopRightRadius)>0||parseFloat(cs.borderBottomLeftRadius)>0||parseFloat(cs.borderBottomRightRadius)>0;
+      const visible=cs.display!=='none'&&cs.visibility!=='hidden'&&parseFloat(cs.opacity||'1')>0;
+      if(!visible)continue;
+      let score=area;
+      if(hasBorder)score+=1000000;
+      if(rounded)score+=250000;
+      if(r.width>280&&r.width<650)score+=100000;
+      candidates.push({el,r,score});
+    }
+    if(!candidates.length)return seed;
+    candidates.sort((a,b)=>b.score-a.score);
+    return candidates[0].el;
   }
 
   function pointerTilt(e){
