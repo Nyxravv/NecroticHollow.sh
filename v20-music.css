@@ -1,21 +1,300 @@
-/* V20.0 REMAKE — compact music player + cinematic playlist viewer */
-.nh-music-dock{width:min(430px,92vw);margin-top:18px;position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:11px 13px;border:1px solid rgba(255,23,63,.55);border-radius:14px;background:linear-gradient(120deg,rgba(255,23,63,.12),rgba(127,42,255,.10) 55%,rgba(7,7,12,.88)),rgba(8,7,11,.88);box-shadow:0 0 24px rgba(255,23,63,.11),inset 0 0 24px rgba(122,42,255,.05);backdrop-filter:blur(16px);overflow:visible;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease,filter .25s ease}
-.nh-music-dock:before{content:"";position:absolute;inset:0;border-radius:14px;background:linear-gradient(115deg,transparent 0 35%,rgba(255,255,255,.055) 49%,transparent 63%);transform:translateX(-120%);transition:transform .65s ease;pointer-events:none;overflow:hidden}
-.nh-music-dock:after{content:"";position:absolute;top:-5px;right:24px;width:92px;height:1px;background:linear-gradient(90deg,transparent,#ff3158,#a83dff);transform:skewX(-42deg);box-shadow:0 8px 0 rgba(168,61,255,.65),-34px 16px 0 rgba(255,49,88,.45);opacity:.8;pointer-events:none}
-.nh-music-dock:hover{transform:translateY(-4px) scale(1.012);border-color:#ff4164;box-shadow:0 0 38px rgba(255,23,63,.24),0 0 72px rgba(133,52,255,.18),inset 0 0 34px rgba(133,52,255,.10);filter:brightness(1.1)}
-.nh-music-dock:hover:before{transform:translateX(120%)}
-.nh-music-dock:hover:after{animation:nhAsymPulse .9s ease-in-out infinite alternate}
-.nh-music-dock.on{animation:nhMusicPulse 2.2s ease-in-out infinite}
-.nh-music-play{width:36px;height:36px;border-radius:10px;border:1px solid rgba(255,255,255,.24);background:linear-gradient(145deg,#ff2148,#8a35ff);color:#fff;display:grid;place-items:center;cursor:pointer;font:800 13px "JetBrains Mono";box-shadow:0 0 18px rgba(255,23,63,.24);transition:transform .16s ease,filter .16s ease,box-shadow .2s ease}
-.nh-music-play:hover{transform:translateY(-1px) scale(1.08);filter:brightness(1.2);box-shadow:0 0 26px rgba(255,45,97,.45),0 0 22px rgba(138,53,255,.25)}
-.nh-music-play:active{transform:scale(.94)}
-.nh-music-meta{min-width:0}.nh-music-kicker{color:#ff4966;font:600 7px "JetBrains Mono";letter-spacing:.18em;margin-bottom:3px}.nh-music-title{display:block;color:#fff;font:800 11px Inter;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:255px}.nh-music-status{display:block;color:#777;font:8px "JetBrains Mono";margin-top:3px;letter-spacing:.08em}.nh-music-tools{display:flex;align-items:center;gap:8px}
-.nh-music-volume{appearance:none;width:92px;height:4px;border-radius:99px;background:#24202a;cursor:pointer;accent-color:#ff2b56}.nh-music-volume::-webkit-slider-thumb{appearance:none;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 9px #ff2b56;border:1px solid #ff2b56}.nh-music-volume::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 9px #ff2b56;border:1px solid #ff2b56}
-.nh-music-list{border:1px solid rgba(168,61,255,.5);border-radius:10px;background:rgba(9,7,13,.86);color:#fff;padding:8px 9px;cursor:pointer;font:600 8px "JetBrains Mono";letter-spacing:.08em;transition:.18s}.nh-music-list:hover{border-color:#ff4966;box-shadow:0 0 22px rgba(168,61,255,.32),0 0 12px rgba(255,49,88,.18);transform:translateY(-2px) scale(1.03)}
-.nh-next-track{position:absolute;left:12px;right:12px;top:calc(100% + 7px);z-index:12;display:grid;grid-template-columns:auto 1fr;column-gap:9px;row-gap:2px;padding:8px 10px;border:1px solid rgba(168,61,255,.55);border-left:3px solid #ff3158;border-radius:9px;background:linear-gradient(100deg,rgba(255,23,63,.13),rgba(122,45,255,.16) 60%,rgba(7,7,12,.96));box-shadow:0 0 20px rgba(133,52,255,.18),0 0 16px rgba(255,23,63,.10);backdrop-filter:blur(14px);opacity:0;transform:translateY(-5px);pointer-events:none;transition:opacity .2s ease,transform .2s ease}
-.nh-music-dock:hover .nh-next-track,.nh-music-dock:focus-within .nh-next-track{opacity:1;transform:none}.nh-next-kicker{grid-column:1/-1;color:#ff4966;font:600 6px "JetBrains Mono";letter-spacing:.16em}.nh-next-track strong{color:#fff;font:800 9px Inter;font-style:italic}.nh-next-track small{color:#9b91a5;font:7px "JetBrains Mono";align-self:center}
-.nh-music-file{position:absolute;inset:auto auto -9999px -9999px;width:1px;height:1px;opacity:0;pointer-events:none}.nh-music-modal{position:fixed;inset:0;z-index:110;display:grid;place-items:center;padding:24px;background:rgba(30,10,44,.62);backdrop-filter:blur(18px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s ease,visibility .28s ease}.nh-music-modal.open{opacity:1;visibility:visible;pointer-events:auto}
-.nh-music-panel{width:min(620px,94vw);max-height:min(760px,82vh);display:grid;grid-template-rows:auto 1fr auto;border:1px solid rgba(255,23,63,.72);border-radius:18px;overflow:hidden;background:radial-gradient(circle at 82% 4%,rgba(184,55,255,.12),transparent 36%),linear-gradient(150deg,rgba(20,9,28,.98),rgba(6,6,11,.98));box-shadow:0 0 70px rgba(132,45,255,.26),0 0 40px rgba(255,23,63,.16),inset 0 0 35px rgba(132,45,255,.06);transform:translateY(14px) scale(.98);transition:transform .35s cubic-bezier(.2,.8,.2,1)}.nh-music-modal.open .nh-music-panel{transform:none}.nh-music-head{position:relative;padding:19px 72px 15px 20px;border-bottom:1px solid rgba(255,255,255,.09)}.nh-music-head:after{content:"";position:absolute;left:20px;right:20px;bottom:0;height:1px;background:linear-gradient(90deg,#ff2148,#a83dff,transparent)}.nh-music-label{color:#ff4966;font:600 8px "JetBrains Mono";letter-spacing:.18em}.nh-music-head h2{margin:8px 0 0;font:800 italic 29px/1 Inter;color:#fff;letter-spacing:-.04em}.nh-music-head p{margin:7px 0 0;color:#7e7584;font:8px/1.5 "JetBrains Mono";letter-spacing:.08em}.nh-music-close{position:absolute;top:14px;right:14px;width:46px;height:46px;border-radius:13px;border:1px solid #ff3158;background:linear-gradient(145deg,rgba(255,23,63,.22),rgba(122,45,255,.12));color:#fff;font:800 22px Inter;cursor:pointer;display:grid;place-items:center;box-shadow:0 0 20px rgba(255,23,63,.15);transition:.2s}.nh-music-close:hover{transform:scale(1.05);filter:brightness(1.16);box-shadow:0 0 28px rgba(255,23,63,.27),0 0 18px rgba(133,52,255,.18)}.nh-music-listbox{overflow:auto;padding:14px 16px 16px}.nh-track{display:grid;grid-template-columns:34px 1fr auto;gap:11px;align-items:center;width:100%;padding:11px 11px;margin:0 0 8px;text-align:left;color:#f5f2f8;border:1px solid rgba(255,255,255,.07);border-radius:11px;background:rgba(255,255,255,.018);cursor:pointer;transition:transform .17s ease,border-color .2s,background .2s,box-shadow .2s,filter .2s}.nh-track:last-child{margin-bottom:0}.nh-track:hover{transform:translateX(4px);border-color:rgba(168,61,255,.65);background:linear-gradient(90deg,rgba(255,23,63,.08),rgba(133,52,255,.08));box-shadow:0 0 24px rgba(133,52,255,.10);filter:brightness(1.08)}.nh-track.active{border-color:#ff3158;background:linear-gradient(90deg,rgba(255,23,63,.12),rgba(126,45,255,.12));box-shadow:inset 0 0 24px rgba(255,23,63,.05),0 0 22px rgba(255,23,63,.08)}.nh-track-num{color:#ff4966;font:600 8px "JetBrains Mono"}.nh-track-name{font:800 11px Inter;font-style:italic;line-height:1.2}.nh-track-source{color:#777;font:7px "JetBrains Mono";letter-spacing:.08em;margin-top:3px}.nh-track-dot{width:8px;height:8px;border-radius:50%;background:#555;box-shadow:none;transition:.2s}.nh-track.active .nh-track-dot{background:#ff3158;box-shadow:0 0 12px #ff3158}.nh-music-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 16px;border-top:1px solid rgba(255,255,255,.08);color:#6f6774;font:7px "JetBrains Mono";letter-spacing:.12em}.nh-music-bottom strong{color:#b7aebe}
-@keyframes nhMusicPulse{0%,100%{box-shadow:0 0 24px rgba(255,23,63,.14),0 0 34px rgba(133,52,255,.08),inset 0 0 22px rgba(133,52,255,.05)}50%{box-shadow:0 0 42px rgba(255,23,63,.25),0 0 70px rgba(133,52,255,.17),inset 0 0 34px rgba(133,52,255,.10)}}
-@keyframes nhAsymPulse{from{opacity:.45;filter:brightness(.9)}to{opacity:1;filter:brightness(1.7)}}
-@media(max-width:700px){.nh-music-dock{grid-template-columns:auto 1fr;gap:10px}.nh-music-tools{grid-column:1 / -1;justify-content:space-between;padding-top:2px}.nh-music-title{max-width:68vw}.nh-music-volume{flex:1;max-width:none}.nh-music-panel{width:96vw;max-height:86vh}.nh-music-head h2{font-size:24px}.nh-next-track{left:8px;right:8px}}
+/* V20.2 — clean compact player / high-response hover system */
+.nh-music-stack{
+  width:100%;
+  margin:10px 0 0;
+  position:relative;
+  display:block;
+  flex:0 0 100%;
+  grid-column:1/-1;
+  clear:both;
+  z-index:8;
+}
+.nh-music-dock{
+  --rx:0deg;
+  --ry:0deg;
+  width:min(360px,94vw);
+  margin:0 auto;
+  position:relative;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  gap:9px;
+  align-items:center;
+  padding:9px 10px;
+  border:1px solid rgba(222,148,255,.48);
+  border-radius:11px;
+  background:
+    linear-gradient(125deg,rgba(255,91,157,.10),rgba(137,74,255,.12) 52%,rgba(8,7,12,.95)),
+    rgba(8,7,12,.92);
+  box-shadow:
+    0 0 16px rgba(174,66,255,.12),
+    0 0 28px rgba(255,77,140,.06),
+    inset 0 0 20px rgba(149,76,255,.05);
+  backdrop-filter:blur(16px);
+  overflow:visible;
+  transform:perspective(700px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition:transform .22s ease,filter .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+.nh-music-dock::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:11px;
+  background:
+    linear-gradient(105deg,transparent 12%,rgba(255,183,226,.72) 28%,transparent 39%),
+    linear-gradient(290deg,transparent 58%,rgba(176,124,255,.72) 69%,transparent 79%);
+  background-size:240% 100%,220% 100%;
+  background-position:-110% 0,140% 0;
+  opacity:.35;
+  pointer-events:none;
+  transition:opacity .2s ease,background-position .8s ease;
+}
+.nh-music-dock::after{
+  content:"";
+  position:absolute;
+  top:-5px;
+  right:8px;
+  width:88px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#ff78b4,#b773ff);
+  transform:skewX(-38deg);
+  box-shadow:
+    -22px 7px 0 rgba(179,115,255,.55),
+    -50px 15px 0 rgba(255,120,180,.36),
+    -3px 22px 0 rgba(179,115,255,.22);
+  opacity:.72;
+  pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease,filter .2s ease;
+}
+.nh-music-dock:hover,
+.nh-music-dock:focus-within{
+  border-color:rgba(255,166,220,.92);
+  filter:brightness(1.08);
+  box-shadow:
+    0 0 24px rgba(195,92,255,.24),
+    0 0 46px rgba(255,88,153,.15),
+    0 0 74px rgba(120,80,255,.08),
+    inset 0 0 28px rgba(191,90,255,.10);
+}
+.nh-music-dock:hover::before,
+.nh-music-dock:focus-within::before{
+  opacity:.95;
+  background-position:110% 0,-140% 0;
+}
+.nh-music-dock:hover::after,
+.nh-music-dock:focus-within::after{
+  opacity:1;
+  transform:skewX(-38deg) translateX(-6px) scaleX(1.08);
+  filter:drop-shadow(0 0 5px rgba(255,120,190,.75));
+}
+.nh-music-dock.on{
+  animation:nhMusicGlow 2.8s ease-in-out infinite;
+}
+.nh-music-play{
+  width:33px;
+  height:33px;
+  border-radius:9px;
+  border:1px solid rgba(255,203,236,.38);
+  background:linear-gradient(145deg,#ff5b9d,#9b5cff);
+  color:#fff;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  font:800 12px "JetBrains Mono";
+  box-shadow:0 0 14px rgba(255,91,157,.22);
+  transition:transform .16s ease,filter .16s ease,box-shadow .2s ease;
+}
+.nh-music-play:hover{
+  transform:translateY(-1px) scale(1.1) rotate(-2deg);
+  filter:brightness(1.18);
+  box-shadow:0 0 18px rgba(255,102,170,.5),0 0 28px rgba(155,92,255,.28);
+}
+.nh-music-play:active{transform:scale(.91) rotate(2deg)}
+.nh-music-meta{min-width:0}
+.nh-music-kicker{
+  display:block;
+  margin-bottom:2px;
+  font:700 6px "JetBrains Mono";
+  letter-spacing:.15em;
+  background:linear-gradient(90deg,#b982ff,#ffabd5,#c774ff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.nh-music-title{
+  display:block;
+  max-width:215px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font:800 italic 10px Inter;
+  background:linear-gradient(90deg,#c49cff,#ffb7dc,#b679ff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  transition:letter-spacing .2s ease,filter .2s ease;
+}
+.nh-music-dock:hover .nh-music-title{
+  letter-spacing:.025em;
+  filter:drop-shadow(0 0 5px rgba(199,141,255,.45));
+}
+.nh-music-status{
+  display:block;
+  margin-top:2px;
+  color:#897e93;
+  font:6.5px "JetBrains Mono";
+  letter-spacing:.075em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.nh-music-tools{display:flex;align-items:center;gap:6px}
+.nh-music-volume{
+  appearance:none;
+  width:72px;
+  height:3px;
+  border-radius:99px;
+  background:#251d30;
+  cursor:pointer;
+  accent-color:#d48cff;
+  transition:box-shadow .2s ease,transform .2s ease;
+}
+.nh-music-volume:hover{transform:scaleY(1.7);box-shadow:0 0 10px rgba(205,139,255,.45)}
+.nh-music-volume::-webkit-slider-thumb{
+  appearance:none;
+  width:9px;height:9px;border-radius:50%;
+  background:linear-gradient(145deg,#fff,#f2b4ff);
+  border:1px solid #d184ff;
+  box-shadow:0 0 7px rgba(214,132,255,.72);
+}
+.nh-music-volume::-moz-range-thumb{
+  width:9px;height:9px;border-radius:50%;
+  background:linear-gradient(145deg,#fff,#f2b4ff);
+  border:1px solid #d184ff;
+  box-shadow:0 0 7px rgba(214,132,255,.72);
+}
+.nh-music-list{
+  border:1px solid rgba(188,119,255,.46);
+  border-radius:8px;
+  background:rgba(13,8,19,.82);
+  padding:6px 7px;
+  cursor:pointer;
+  font:700 6.5px "JetBrains Mono";
+  letter-spacing:.08em;
+  background-image:linear-gradient(90deg,#c18cff,#ffb4d9,#b873ff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  transition:transform .16s ease,border-color .16s ease,box-shadow .2s ease,filter .2s ease;
+}
+.nh-music-list:hover{
+  transform:translateY(-2px) scale(1.04);
+  border-color:rgba(255,169,223,.9);
+  box-shadow:0 0 14px rgba(189,115,255,.35),inset 0 0 12px rgba(255,101,162,.06);
+  filter:brightness(1.18);
+}
+.nh-next-track{
+  position:absolute;
+  left:10px;
+  right:10px;
+  top:calc(100% + 6px);
+  z-index:12;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  column-gap:8px;
+  row-gap:1px;
+  padding:7px 8px;
+  border:1px solid rgba(190,122,255,.42);
+  border-left:2px solid #ff78b4;
+  border-radius:8px;
+  background:linear-gradient(105deg,rgba(255,90,154,.11),rgba(152,90,255,.13),rgba(7,6,11,.97));
+  box-shadow:0 0 17px rgba(172,96,255,.18),0 0 12px rgba(255,91,157,.08);
+  backdrop-filter:blur(13px);
+  opacity:0;
+  transform:translateY(-5px) scale(.98);
+  pointer-events:none;
+  transition:opacity .18s ease,transform .18s ease,filter .18s ease;
+}
+.nh-music-dock:hover .nh-next-track,
+.nh-music-dock:focus-within .nh-next-track{
+  opacity:1;
+  transform:none;
+  filter:brightness(1.06);
+}
+.nh-next-track::after{
+  content:"";
+  position:absolute;
+  left:7px;
+  right:22%;
+  bottom:3px;
+  height:1px;
+  background:linear-gradient(90deg,#ff78b4,#a878ff,transparent);
+  transform:skewX(-28deg);
+  opacity:.6;
+}
+.nh-next-kicker{
+  grid-column:1/-1;
+  font:700 5.5px "JetBrains Mono";
+  letter-spacing:.15em;
+  background:linear-gradient(90deg,#b982ff,#ffabd5);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.nh-next-track strong{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font:800 8.5px Inter;
+  font-style:italic;
+  background:linear-gradient(90deg,#c69fff,#ffb7dd);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.nh-next-track small{
+  align-self:center;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#8d8298;
+  font:6px "JetBrains Mono";
+}
+.nh-music-file{position:absolute;inset:auto auto -9999px -9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+.nh-music-modal{position:fixed;inset:0;z-index:110;display:grid;place-items:center;padding:24px;background:rgba(30,10,44,.62);backdrop-filter:blur(18px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s ease,visibility .28s ease}
+.nh-music-modal.open{opacity:1;visibility:visible;pointer-events:auto}
+.nh-music-panel{width:min(620px,94vw);max-height:min(760px,82vh);display:grid;grid-template-rows:auto 1fr auto;border:1px solid rgba(255,23,63,.72);border-radius:18px;overflow:hidden;background:radial-gradient(circle at 82% 4%,rgba(184,55,255,.12),transparent 36%),linear-gradient(150deg,rgba(20,9,28,.98),rgba(6,6,11,.98));box-shadow:0 0 70px rgba(132,45,255,.26),0 0 40px rgba(255,23,63,.16),inset 0 0 35px rgba(132,45,255,.06);transform:translateY(14px) scale(.98);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.nh-music-modal.open .nh-music-panel{transform:none}
+.nh-music-head{position:relative;padding:19px 72px 15px 20px;border-bottom:1px solid rgba(255,255,255,.09)}
+.nh-music-head:after{content:"";position:absolute;left:20px;right:20px;bottom:0;height:1px;background:linear-gradient(90deg,#ff78b4,#a878ff,transparent)}
+.nh-music-label,.nh-music-head p,.nh-music-bottom{color:#847789;font-family:"JetBrains Mono"}
+.nh-music-label{font:700 8px "JetBrains Mono";letter-spacing:.18em;background:linear-gradient(90deg,#b982ff,#ffabd5);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nh-music-head h2{margin:8px 0 0;font:800 italic 29px/1 Inter;color:#fff;letter-spacing:-.04em}
+.nh-music-head p{margin:7px 0 0;font:8px/1.5 "JetBrains Mono";letter-spacing:.08em}
+.nh-music-close{position:absolute;top:14px;right:14px;width:46px;height:46px;border-radius:13px;border:1px solid #ff78b4;background:linear-gradient(145deg,rgba(255,91,157,.18),rgba(122,45,255,.12));color:#fff;font:800 22px Inter;cursor:pointer;display:grid;place-items:center;box-shadow:0 0 18px rgba(255,91,157,.12);transition:.2s}
+.nh-music-close:hover{transform:scale(1.05) rotate(2deg);filter:brightness(1.15);box-shadow:0 0 26px rgba(255,91,157,.26),0 0 18px rgba(133,52,255,.18)}
+.nh-music-listbox{overflow:auto;padding:14px 16px 16px}
+.nh-track{display:grid;grid-template-columns:34px 1fr auto;gap:11px;align-items:center;width:100%;padding:11px;margin:0 0 8px;text-align:left;color:#f5f2f8;border:1px solid rgba(255,255,255,.07);border-radius:11px;background:rgba(255,255,255,.018);cursor:pointer;transition:transform .17s ease,border-color .2s,background .2s,box-shadow .2s,filter .2s}
+.nh-track:hover{transform:translateX(4px);border-color:rgba(199,126,255,.68);background:linear-gradient(90deg,rgba(255,91,157,.07),rgba(133,52,255,.09));box-shadow:0 0 22px rgba(133,52,255,.12);filter:brightness(1.08)}
+.nh-track.active{border-color:#ff78b4;background:linear-gradient(90deg,rgba(255,91,157,.11),rgba(126,45,255,.12));box-shadow:inset 0 0 22px rgba(255,91,157,.05),0 0 20px rgba(255,91,157,.08)}
+.nh-track-num{font:600 8px "JetBrains Mono";background:linear-gradient(90deg,#b982ff,#ffabd5);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nh-track-name{font:800 11px Inter;font-style:italic;line-height:1.2;background:linear-gradient(90deg,#c49cff,#ffb7dc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nh-track-source{color:#777;font:7px "JetBrains Mono";letter-spacing:.08em;margin-top:3px}
+.nh-track-dot{width:8px;height:8px;border-radius:50%;background:#3d3446;transition:.2s}
+.nh-track:hover .nh-track-dot{background:#bb7cff;box-shadow:0 0 10px #bb7cff;transform:scale(1.2)}
+.nh-track.active .nh-track-dot{background:#ff78b4;box-shadow:0 0 12px #ff78b4}
+.nh-music-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 16px;border-top:1px solid rgba(255,255,255,.08);font:7px "JetBrains Mono";letter-spacing:.12em}
+.nh-music-bottom strong{background:linear-gradient(90deg,#c49cff,#ffb7dc);-webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes nhMusicGlow{
+  0%,100%{box-shadow:0 0 16px rgba(174,66,255,.12),0 0 28px rgba(255,77,140,.06),inset 0 0 18px rgba(149,76,255,.04)}
+  50%{box-shadow:0 0 25px rgba(190,93,255,.22),0 0 48px rgba(255,88,153,.12),inset 0 0 24px rgba(191,90,255,.08)}
+}
+@media(max-width:700px){
+  .nh-music-dock{grid-template-columns:auto 1fr;gap:8px;width:min(340px,94vw)}
+  .nh-music-tools{grid-column:1/-1;justify-content:space-between;padding-top:1px}
+  .nh-music-title{max-width:62vw}
+  .nh-music-volume{flex:1;max-width:none}
+  .nh-music-panel{width:96vw;max-height:86vh}
+  .nh-music-head h2{font-size:24px}
+  .nh-next-track{left:7px;right:7px}
+}
