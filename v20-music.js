@@ -1,4 +1,4 @@
-/* V20.3 — music player hard placement + reactive VFX */
+/* V20.4 — music player hard placement + reactive VFX */
 (() => {
   const playlist = [
     {title:"Party Addict", artist:"kets4eki, Nosgov, kojo", file:"assets/music/party_addict_nosgov_kojo_KLICKAUD.mp3"},
@@ -31,7 +31,7 @@
   const DEFAULT_VOLUME=0.10;
   let index=0,userPaused=false,unlocked=false,placing=false;
 
-  const label=t=>t.artist?t.title+' — '+t.artist:t.title;
+  const label=t=>t.artist?t.title+' — '+t.artist;
   const nextTrack=()=>playlist[Math.min(index+1,playlist.length-1)];
 
   function setVolume(v){
@@ -77,7 +77,8 @@
       el.setAttribute('aria-hidden','true');
       dock.appendChild(el);
     }
-    const n=nextTrack(), atEnd=index===playlist.length-1;
+    const atEnd=index===playlist.length-1;
+    const n=nextTrack();
     el.innerHTML='<span class="nh-next-kicker">'+(atEnd?'QUEUE // COMPLETE':'NEXT // QUEUED')+
       '</span><strong>'+n.title+'</strong><small>'+(n.artist||'PIANO / INSTRUMENTAL')+'</small>';
   }
@@ -162,11 +163,13 @@
     document.body.style.overflow='hidden';
     if(typeof triggerTimeErase==='function')triggerTimeErase();
   }
+
   function closeModal(){
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden','true');
     document.body.style.overflow='';
   }
+
   openBtn.addEventListener('click',openModal);
   closeBtn.addEventListener('click',closeModal);
   modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
@@ -183,26 +186,54 @@
     const seed=hits.sort((a,b)=>a.textContent.length-b.textContent.length)[0];
     const candidates=[];
     let el=seed;
+
     for(let depth=0;el&&depth<10;depth++,el=el.parentElement){
       if(el===document.body||el===document.documentElement)break;
       const r=el.getBoundingClientRect();
       const cs=getComputedStyle(el);
-      if(r.width<220||r.height<55)continue;
-      const area=r.width*r.height;
-      if(area>700000)continue;
-      const hasBorder=['borderTopWidth','borderRightWidth','borderBottomWidth','borderLeftWidth'].some(k=>parseFloat(cs[k])>0);
-      const rounded=parseFloat(cs.borderTopLeftRadius)>0||parseFloat(cs.borderTopRightRadius)>0||parseFloat(cs.borderBottomLeftRadius)>0||parseFloat(cs.borderBottomRightRadius)>0;
-      const visible=cs.display!=='none'&&cs.visibility!=='hidden'&&parseFloat(cs.opacity||'1')>0;
-      if(!visible)continue;
-      let score=area;
-      if(hasBorder)score+=1000000;
+      if(r.width<240||r.width>700||r.height<70||r.height>240)continue;
+      if(cs.display==='none'||cs.visibility==='hidden'||Number(cs.opacity||1)===0)continue;
+
+      const hasBorder=['borderTopWidth','borderRightWidth','borderBottomWidth','borderLeftWidth']
+        .some(k=>parseFloat(cs[k])>0);
+      const rounded=['borderTopLeftRadius','borderTopRightRadius','borderBottomLeftRadius','borderBottomRightRadius']
+        .some(k=>parseFloat(cs[k])>0);
+
+      let score=r.width*r.height;
+      if(hasBorder)score+=900000;
       if(rounded)score+=250000;
-      if(r.width>280&&r.width<650)score+=100000;
-      candidates.push({el,r,score});
+      candidates.push({el,score});
     }
+
     if(!candidates.length)return seed;
     candidates.sort((a,b)=>b.score-a.score);
     return candidates[0].el;
+  }
+
+  function hardPlaceBelowCounter(){
+    if(placing)return;
+    const counter=findVisitorCounterBox();
+    if(!counter)return;
+    placing=true;
+
+    const rect=counter.getBoundingClientRect();
+    const scrollX=window.scrollX||window.pageXOffset;
+    const scrollY=window.scrollY||window.pageYOffset;
+
+    const width=Math.min(360,Math.max(250,Math.min(rect.width-8,window.innerWidth-28)));
+    const left=Math.max(14,Math.min(
+      scrollX+rect.left+(rect.width-width)/2,
+      scrollX+window.innerWidth-width-14
+    ));
+    const top=scrollY+rect.bottom+16;
+
+    dock.classList.add('v20-fixed-placement');
+    dock.style.width=width+'px';
+    dock.style.left=left+'px';
+    dock.style.top=top+'px';
+
+    if(dock.parentNode!==document.body)document.body.appendChild(dock);
+    placing=false;
   }
 
   function pointerTilt(e){
@@ -212,6 +243,7 @@
     dock.style.setProperty('--rx',((0.5-y)*5).toFixed(2)+'deg');
     dock.style.setProperty('--ry',((x-0.5)*7).toFixed(2)+'deg');
   }
+
   dock.addEventListener('pointermove',pointerTilt);
   dock.addEventListener('pointerleave',()=>{
     dock.style.setProperty('--rx','0deg');
@@ -222,8 +254,8 @@
   setVolume(DEFAULT_VOLUME);
   updateNextAttachment();
   addSparkles();
-  hardPlaceBelowCounter();
 
+  hardPlaceBelowCounter();
   requestAnimationFrame(hardPlaceBelowCounter);
   setTimeout(hardPlaceBelowCounter,350);
   setTimeout(hardPlaceBelowCounter,900);
@@ -231,6 +263,7 @@
   window.addEventListener('scroll',hardPlaceBelowCounter,{passive:true});
 
   setTimeout(tryAutoplay,120);
+
   ['pointerdown','keydown','touchstart','wheel'].forEach(evt=>{
     document.addEventListener(evt,()=>{if(!unlocked)start();},{once:true,passive:true});
   });
