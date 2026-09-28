@@ -21,8 +21,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Inject V20 interaction layer
-        run: python3 build-v20.py
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
