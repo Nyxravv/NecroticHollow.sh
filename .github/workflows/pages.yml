@@ -23,6 +23,8 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Remove unwanted spark particles
         run: python3 remove-v19-spark-effects.py
+      - name: Inject V20 music player
+        run: python3 build-v20-music.py
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
