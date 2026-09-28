@@ -1,17 +1,17 @@
 /* V20.0 REMAKE — compact music player */
 (() => {
   const playlist = [
-    {title:"Party Addict", artist:"kets4eki, Nosgov, kojo", file:"assets/music/party-addict.mp3"},
-    {title:"Bop", artist:"DaBaby", file:"assets/music/bop.mp3"},
-    {title:"Freaked Out", artist:"Fat Papi", file:"assets/music/freaked-out.mp3"},
-    {title:"Monster", artist:"Skillet", file:"assets/music/monster.mp3"},
-    {title:"Drowning Love — Piano Version", artist:"", file:"assets/music/drowning-love-piano-version.mp3"},
-    {title:"Love Potions", artist:"BJ Lips, Princess Paparazzi", file:"assets/music/love-potions.mp3"},
-    {title:"My Jealousy", artist:"vivi baby & ovg!", file:"assets/music/my-jealousy.mp3"},
-    {title:"On My Mind", artist:"Fat Papi", file:"assets/music/on-my-mind.mp3"},
-    {title:"Murder On My Mind", artist:"YNW Melly", file:"assets/music/murder-on-my-mind.mp3"},
-    {title:"Havana — HEAVELY VERSION", artist:"", file:"assets/music/havana-heavely-version.mp3"},
-    {title:"Jalebi Baby", artist:"Tesher & Jason Derulo", file:"assets/music/jalebi-baby.mp3"}
+    {title:"Party Addict", artist:"kets4eki, Nosgov, kojo", file:"assets/music/party_addict_nosgov_kojo_KLICKAUD.mp3"},
+    {title:"Bop", artist:"DaBaby", file:"assets/music/BOP_KLICKAUD.mp3"},
+    {title:"Freaked Out", artist:"Fat Papi", file:"assets/music/best_part_freaked_out_fat_papi_KLICKAUD.mp3"},
+    {title:"Monster", artist:"Skillet", file:"assets/music/Monster_KLICKAUD.mp3"},
+    {title:"Drowning Love — Piano Version", artist:"", file:"assets/music/Drowning_Love_Piano_KLICKAUD.mp3"},
+    {title:"Love Potions", artist:"BJ Lips, Princess Paparazzi", file:"assets/music/Love_Potions_feat_Princess_Paparazzi_KLICKAUD.mp3"},
+    {title:"My Jealousy", artist:"vivi baby & ovg!", file:"assets/music/MY_JEALOUSY_vivi_baby_ovg_KLICKAUD.mp3"},
+    {title:"On My Mind", artist:"Fat Papi", file:"assets/music/ON_MY_MIND_KLICKAUD.mp3"},
+    {title:"Murder On My Mind", artist:"YNW Melly", file:"assets/music/YNW_Melly_Murder_on_my_mind_bass_boosted_KLICKAUD.mp3"},
+    {title:"Havana — HEAVELY VERSION", artist:"Camila Cabello ft. Young Thug", file:"assets/music/Camilla_Cabello_Ft_Young_Thug_Havana_Cuban_Version_KLICKAUD.mp3"},
+    {title:"Jalebi Baby", artist:"Tesher & Jason Derulo", file:"assets/music/Jalebi_Baby_KLICKAUD.mp3"}
   ];
 
   const dock = document.getElementById('nhMusicDock');
