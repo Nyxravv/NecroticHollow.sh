@@ -7,6 +7,125 @@ html = index.read_text(encoding="utf-8")
 CSS = '<link rel="stylesheet" href="v21-gaming.css">'
 JS = '<script src="v21-gaming.js"></script>'
 
+REPAIR_CSS = r'''
+/* V22 flagship repair styling */
+.nh-v22-layout{display:grid;grid-template-columns:250px minmax(0,1fr) 270px;gap:12px;align-items:start;margin-top:10px}
+.nh-v22-rail{position:relative;padding:13px;border:1px solid rgba(193,116,255,.44);border-radius:14px;background:linear-gradient(145deg,rgba(17,7,25,.965),rgba(7,5,12,.985));overflow:hidden}
+.nh-v22-rail::before{content:"";position:absolute;inset:0;pointer-events:none;border:1px solid rgba(255,75,142,.20);border-radius:14px}
+.nh-v22-rail-head{position:relative;z-index:2}
+.nh-v22-rail-head small{display:block;color:#ff71aa;font:700 5.5px "JetBrains Mono";letter-spacing:.13em}
+.nh-v22-rail-head strong{display:block;margin:4px 0 6px;font:900 italic 24px/1 Inter;background:linear-gradient(90deg,#d39cff,#ffb6da,#aa78ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nh-v22-rail-head p{margin:0 0 10px;color:#8d8194;font:6px/1.5 "JetBrains Mono"}
+.nh-v22-note,.nh-v22-disc{position:relative;margin-top:7px;border:1px solid rgba(179,105,255,.30);border-radius:10px;background:linear-gradient(145deg,rgba(25,10,36,.82),rgba(8,5,13,.92));color:#fff;overflow:hidden;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .18s}
+.nh-v22-note{animation:nhV22RailPulse 3.4s ease-in-out infinite}.nh-v22-disc{animation:nhV22RailPulse 3.1s ease-in-out infinite}
+.nh-v22-note:hover,.nh-v22-disc:hover{transform:translateY(-2px);border-color:rgba(255,92,151,.94);box-shadow:0 0 0 1px rgba(255,64,134,.5),0 0 18px rgba(255,56,128,.17),0 0 28px rgba(158,75,255,.13)}
+.nh-v22-note button,.nh-v22-disc button{width:100%;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;padding:10px 11px;font:inherit}
+.nh-v22-note-title,.nh-v22-disc-title{display:flex;align-items:center;justify-content:space-between;gap:8px;font:900 italic 9px Inter;color:#f1cce6}
+.nh-v22-note-title span:first-child,.nh-v22-disc-title span:first-child{color:#ff85bc}
+.nh-v22-note-sub,.nh-v22-disc-sub{margin-top:3px;color:#786d82;font:5px "JetBrains Mono";letter-spacing:.05em}
+.nh-v22-note-detail,.nh-v22-disc-detail{display:none;padding:0 11px 10px;color:#aa9ead;font:6px/1.6 "JetBrains Mono"}
+.nh-v22-note.open .nh-v22-note-detail,.nh-v22-disc.open .nh-v22-disc-detail{display:block}
+.nh-v22-center{min-width:0}.nh-v22-center .nh-game-grid{width:100%}
+.nh-v22-gacha-bottom{position:relative;margin-top:12px;padding:14px;border:1px solid rgba(194,116,255,.42);border-radius:15px;background:linear-gradient(145deg,rgba(17,7,25,.96),rgba(7,5,12,.985));overflow:hidden}
+.nh-v22-gacha-bottom::before{content:"";position:absolute;inset:-1px;border:1px solid transparent;border-radius:15px;pointer-events:none;background:linear-gradient(135deg,#ff5d9f,transparent 28%,#9f6aff 72%,#ff72ad) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.62}
+.nh-v22-gacha-title{position:relative;z-index:2}.nh-v22-gacha-title small{display:block;color:#ff71aa;font:700 5.5px "JetBrains Mono";letter-spacing:.13em}
+.nh-v22-gacha-title strong{display:block;margin:4px 0;font:900 italic 27px Inter;background:linear-gradient(90deg,#d39cff,#ffb6da,#aa78ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nh-v22-gacha-title p{margin:0;color:#8d8194;font:6px/1.5 "JetBrains Mono"}
+.nh-v22-gacha-bottom .nh-gacha-panel{border:0;box-shadow:none;background:transparent;padding:0}
+.nh-v22-gacha-bottom .nh-gacha-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:10px}
+.nh-game-card,.nh-gacha-card{animation:nhV22CardPulse 2.7s ease-in-out infinite}
+.nh-game-card:hover,.nh-game-card:focus-visible,.nh-gacha-card:hover,.nh-gacha-card:focus-visible{animation:nhV22CardHoverPulse .9s ease-in-out infinite!important}
+.nh-game-card:focus-visible,.nh-gacha-card:focus-visible{outline:1px solid rgba(255,107,166,.95);outline-offset:3px}
+@keyframes nhV22CardPulse{0%,100%{box-shadow:0 0 0 1px rgba(174,82,255,.20),0 0 12px rgba(157,67,255,.06)}50%{box-shadow:0 0 0 1px rgba(255,67,135,.78),0 0 22px rgba(255,54,130,.16),0 0 30px rgba(154,69,255,.10)}}
+@keyframes nhV22CardHoverPulse{0%,100%{box-shadow:0 0 0 1px rgba(255,56,126,.75),0 0 20px rgba(255,45,114,.12),0 0 32px rgba(159,70,255,.09)}50%{box-shadow:0 0 0 2px rgba(255,111,165,.96),0 0 32px rgba(255,49,119,.26),0 0 48px rgba(145,63,255,.16)}}
+@keyframes nhV22RailPulse{0%,100%{box-shadow:0 0 0 1px rgba(148,70,226,.14),0 0 10px rgba(144,69,234,.04)}50%{box-shadow:0 0 0 1px rgba(255,65,132,.46),0 0 17px rgba(255,52,128,.10)}}
+#blenderProjectGrid .blender-project-card{position:relative;display:block;width:100%;min-height:300px;padding:0;overflow:hidden;border:1px solid rgba(185,108,255,.46);border-radius:11px;background:linear-gradient(145deg,#15101b,#08060c);cursor:pointer;text-align:left;box-shadow:0 0 18px rgba(115,55,190,.08);transition:border-color .18s,box-shadow .18s,transform .18s}
+#blenderProjectGrid .blender-project-card:hover{transform:translateY(-3px);border-color:rgba(255,92,158,.92);box-shadow:0 0 0 1px rgba(255,80,142,.78),0 0 24px rgba(255,50,127,.16),0 0 34px rgba(145,68,255,.14)}
+#blenderProjectGrid .blender-project-image{width:100%;height:100%;min-height:300px;object-fit:cover;display:block;opacity:.78}
+#blenderProjectGrid .blender-project-meta{position:absolute;left:0;right:0;bottom:0;padding:15px 14px 13px;background:linear-gradient(180deg,transparent,rgba(6,3,10,.96) 38%)}
+#blenderProjectGrid .blender-project-copy b{display:block;color:#f0d5eb;font:900 italic 14px Inter}
+#blenderProjectGrid .blender-project-copy small{display:block;margin-top:4px;color:#ff79b1;font:6px "JetBrains Mono"}
+#blenderProjectGrid .blender-project-open{position:absolute;right:12px;bottom:13px;color:#d396ff;font:700 6px "JetBrains Mono"}
+.blender-image-fallback{background:radial-gradient(circle at 30% 25%,rgba(255,68,141,.18),transparent 30%),radial-gradient(circle at 80% 70%,rgba(129,69,255,.18),transparent 34%),linear-gradient(145deg,#190a27,#09050e)!important}
+@media(max-width:1180px){.nh-v22-layout{grid-template-columns:210px minmax(0,1fr) 230px}.nh-v22-gacha-bottom .nh-gacha-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:920px){.nh-v22-layout{grid-template-columns:1fr}.nh-v22-gacha-bottom .nh-gacha-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.nh-v22-gacha-bottom .nh-gacha-list{grid-template-columns:1fr}}
+'''
+REPAIR_SCRIPT = r'''<script>
+(()=> {
+  const root=document.getElementById('nhGamingHistory'); if(!root)return;
+  const matrix=root.querySelector('.nh-gaming-matrix'),gameGrid=root.querySelector('.nh-game-grid'),gacha=root.querySelector('.nh-gacha-panel');
+  if(matrix&&gameGrid&&!root.querySelector('.nh-v22-layout')){
+    const layout=document.createElement('div');layout.className='nh-v22-layout';
+    const left=document.createElement('aside');left.className='nh-v22-rail nh-v22-left';
+    left.innerHTML='<div class="nh-v22-rail-head"><small>SIDE ARCHIVE // 08-A</small><strong>PLAYER NOTES</strong><p>Personal notes on the games that keep pulling me back.</p></div>';
+    const notes=[
+      ['01','WHY OPEN WORLDS?','Exploration // atmosphere','Open worlds work for me when the environment itself feels worth studying. Wandering should feel like part of the reward.'],
+      ['02','COMBAT FEEL','Timing // impact // mastery','I tend to remember combat systems with a distinct rhythm. Precision, animation timing, sound design and readable enemy patterns matter.'],
+      ['03','WORLDS I REMEMBER','Art direction // mood','Strong art direction is a major reason a game stays in my head. NieR:Automata, Wukong and Wuchang all make their environments feel part of the identity.'],
+      ['04','REPLAY VALUE','Systems // discovery','Replayability is less about repeating the same mission and more about finding another layer: builds, routes, encounters, secrets, challenge or simply a different way to play.']
+    ];
+    notes.forEach(([n,t,s,d])=>{const box=document.createElement('div');box.className='nh-v22-note';box.innerHTML='<button type="button"><div class="nh-v22-note-title"><span>'+n+'</span><span>+</span></div><div class="nh-v22-note-sub">'+t+' // '+s+'</div></button><div class="nh-v22-note-detail">'+d+'</div>';box.querySelector('button').addEventListener('click',()=>{box.classList.toggle('open');box.querySelector('.nh-v22-note-title span:last-child').textContent=box.classList.contains('open')?'×':'+'});left.appendChild(box)});
+    const center=document.createElement('div');center.className='nh-v22-center';center.appendChild(gameGrid);
+    const right=document.createElement('aside');right.className='nh-v22-rail nh-v22-right';
+    right.innerHTML='<div class="nh-v22-rail-head"><small>SIDE ARCHIVE // 08-B</small><strong>GAME DISCUSSIONS</strong><p>Short archive entries on style, competition and the games that stayed with me.</p></div>';
+    const discussions=[
+      ['A','// THE SAMURAI LINE','Ghost / Onimusha','The samurai-focused games stand out for atmosphere, swordplay and a strong sense of place.'],
+      ['B','// SOULS-LIKE DNA','Elden / Wuchang','Exploration, risk and learning enemy patterns create the kind of combat loop I keep returning to.'],
+      ['C','// STYLE OVER SCALE','NieR // Hitman','Distinct art direction and strong visual identity can make a smaller moment more memorable than sheer scope.'],
+      ['D','// COMPETITIVE MODE','Valorant // Mastery','I placed top 28 in tournaments. Competitive games become interesting when mechanical improvement is measurable.']
+    ];
+    discussions.forEach(([n,t,s,d])=>{const box=document.createElement('div');box.className='nh-v22-disc';box.innerHTML='<button type="button"><div class="nh-v22-disc-title"><span>'+n+'</span><span>+</span></div><div class="nh-v22-disc-sub">'+t.replace('// ','')+' // '+s+'</div></button><div class="nh-v22-disc-detail">'+d+'</div>';box.querySelector('button').addEventListener('click',()=>{box.classList.toggle('open');box.querySelector('.nh-v22-disc-title span:last-child').textContent=box.classList.contains('open')?'×':'+'});right.appendChild(box)});
+    layout.append(left,center,right);matrix.replaceWith(layout);
+    if(gacha){
+      const shell=root.querySelector('.nh-gaming-shell'),list=gacha.querySelector('.nh-gacha-list'),bottom=document.createElement('div');bottom.className='nh-v22-gacha-bottom';
+      const title=document.createElement('div');title.className='nh-v22-gacha-title';title.innerHTML='<small>08-C // COMPLETION ARCHIVE</small><strong>GACHA // COMPLETION</strong><p>Five additional titles tracked as completed archive entries. Select one to inspect its detail layer.</p>';
+      if(list)bottom.append(title,list);else bottom.append(title,gacha);shell?.appendChild(bottom);
+    }
+  }
+  const route=e=>{
+    if(e.button!==0)return;if(root.querySelector('.nh-game-viewer.open'))return;
+    const target=e.target instanceof Element?e.target:null;
+    if(target?.closest('.nh-gaming-filter,.nh-gaming-action,.nh-v22-note,.nh-v22-disc,.nh-game-card,.nh-gacha-card'))return;
+    const x=e.clientX,y=e.clientY;
+    for(const card of root.querySelectorAll('.nh-game-card,.nh-gacha-card')){
+      if(card.hidden)continue;const r=card.getBoundingClientRect();
+      if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom){e.preventDefault();e.stopPropagation();card.click();return}
+    }
+  };
+  document.addEventListener('pointerup',route,true);document.addEventListener('mousedown',route,true);
+
+  const grid=document.getElementById('blenderProjectGrid');
+  if(grid){
+    const fallback=[
+      {title:'PROJECT GOLD // CORAL & ENVIRONMENT',tag:'BLENDER STUDIO / ENVIRONMENT',image:'https://image.thum.io/get/width/1400/crop/900/https://studio.blender.org/projects/gold/',source:'https://studio.blender.org/projects/gold/'},
+      {title:'PANTHERA SPELAEA // BLENDER 5.2',tag:'BLENDER 5.2 / RELEASE ARTWORK',image:'https://image.thum.io/get/width/1400/crop/900/https://www.blender.org/releases/5-2/',source:'https://www.blender.org/releases/5-2/'},
+      {title:'MIKASSA // CHARACTER PIPELINE',tag:'BLENDER STUDIO / CHARACTER',image:'https://image.thum.io/get/width/1400/crop/900/https://studio.blender.org/characters/mikassa/v1/',source:'https://studio.blender.org/characters/mikassa/v1/'},
+      {title:'BLENDER STUDIO // FILMS',tag:'BLENDER STUDIO / CINEMATIC PIPELINE',image:'https://image.thum.io/get/width/1400/crop/900/https://studio.blender.org/films/',source:'https://studio.blender.org/films/'}
+    ];
+    const projects=(Array.isArray(window.NH_BLENDER_PROJECTS)&&window.NH_BLENDER_PROJECTS.length?window.NH_BLENDER_PROJECTS:fallback).slice(0,4);
+    grid.replaceChildren();
+    projects.forEach((p,i)=>{
+      const base=fallback[i]||fallback[0],src=p.image||base.image,card=document.createElement('button');
+      card.type='button';card.className='blender-project-card';card.style.backgroundImage="linear-gradient(145deg,rgba(26,9,37,.42),rgba(7,5,12,.92)),url('"+src+"')";
+      card.innerHTML='<img class="blender-project-image" alt="" loading="eager"><div class="blender-project-meta"><div class="blender-project-copy"><b></b><small></small></div><span class="blender-project-open">INSPECT ↗</span></div>';
+      const img=card.querySelector('img');img.src=src;img.alt=p.title||base.title;img.addEventListener('error',()=>{img.style.display='none';card.classList.add('blender-image-fallback')},{once:true});
+      card.querySelector('b').textContent=p.title||base.title;card.querySelector('small').textContent=p.tag||base.tag;
+      card.addEventListener('click',()=>{
+        const modal=document.getElementById('blenderModal');
+        if(!modal)return;
+        const mi=modal.querySelector('#blenderModalImage'),mt=modal.querySelector('#blenderModalTitle'),mc=modal.querySelector('#blenderModalCopy'),ms=modal.querySelector('#blenderModalSource');
+        if(mi)mi.src=src;if(mt)mt.textContent=p.title||base.title;if(mc)mc.textContent='Blender project reference from the public Blender Studio archive.';if(ms){ms.href=p.source||base.source;ms.target='_blank';ms.rel='noopener noreferrer'}
+        modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+      });
+      grid.appendChild(card);
+    });
+    const modal=document.getElementById('blenderModal'),close=modal?.querySelector('#blenderModalClose');
+    close?.addEventListener('click',()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.style.overflow=''});
+  }
+})();
+</script>'''
+
 # Strip any older generated gaming block before inserting the current version.
 def remove_block(source, element_id):
     marker=f'id="{element_id}"'
@@ -32,6 +151,8 @@ def remove_block(source, element_id):
     return source[:start]+source[end:]
 
 html=remove_block(html,"gaming-history")
+html=remove_block(html,"nhGamingHistory")
+html=remove_block(html,"nhGamingHistoryLocal")
 html=re.sub(r'<link\\b[^>]*href=["\\\']v21-gaming\\.css["\\\'][^>]*>\\s*','',html,flags=re.I)
 html=re.sub(r'<script\\b[^>]*src=["\\\']v21-gaming\\.js["\\\'][^>]*>\\s*</script>\\s*','',html,flags=re.I)
 
@@ -39,6 +160,7 @@ section="\n<section class=\"section nh-gaming-section\" id=\"gaming-history\">\n
 marker='<section class="section links v150-links" id="links">'
 if marker not in html:
     raise RuntimeError("Section 09/network marker not found.")
+section=section.replace('id="gaming-history"','id="nhGamingHistory"')
 html=html.replace(marker,section+"\\n"+marker,1)
 
 # Renumber the original network section to 09, leaving the gaming archive as 08.
@@ -53,7 +175,9 @@ if head<0: raise RuntimeError("Missing </head>.")
 html=html[:head]+CSS+"\\n"+html[head:]
 body=html.lower().rfind('</body>')
 if body<0: raise RuntimeError("Missing </body>.")
-html=html[:body]+JS+"\\n"+html[body:]
+Path("v21-gaming.css").write_text(dec(C)+REPAIR_CSS,encoding="utf-8")
+Path("v21-gaming.js").write_text(dec(J),encoding="utf-8")
+html=html[:body]+JS+"\\n"+REPAIR_SCRIPT+"\\n"+html[body:]
 
 index.write_text(html,encoding="utf-8")
-print("V21.5 gaming archive generated.")
+print("V22 repaired gaming archive; Section 02 populated; music and CounterAPI untouched.")
