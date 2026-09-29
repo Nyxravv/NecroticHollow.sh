@@ -25,6 +25,8 @@ jobs:
         run: python3 remove-v19-spark-effects.py
       - name: Inject V20 music player
         run: python3 build-v20-music.py
+      - name: Inject V21 gaming history section
+        run: python3 build-v21-gaming.py
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
