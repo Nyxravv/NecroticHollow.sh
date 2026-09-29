@@ -27,6 +27,7 @@
 
   const DEFAULT_VOLUME=0.08;
   const MAX_OUTPUT_VOLUME=0.165;
+  const MAX_CEILING=0.1155;
   let index=0;
   let userPaused=false;
   let started=false;
@@ -35,7 +36,7 @@
 
   function setVolume(v){
     const n=Math.max(0,Math.min(1,Number(v)));
-    const output=n*MAX_OUTPUT_VOLUME;
+    const output=Math.min(n*MAX_OUTPUT_VOLUME,MAX_CEILING);
     audio.volume=output;
     volume.value=String(n);
   }
@@ -112,7 +113,7 @@
     }
   });
 
-  volume.addEventListener('input',()=>audio.volume=Number(volume.value)*MAX_OUTPUT_VOLUME);
+  volume.addEventListener('input',()=>audio.volume=Math.min(Number(volume.value)*MAX_OUTPUT_VOLUME,MAX_CEILING));
 
   audio.addEventListener('ended',()=>{
     if(index<playlist.length-1){
