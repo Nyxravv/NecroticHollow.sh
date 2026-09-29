@@ -178,8 +178,7 @@
   function findVisitorCounterBox(){
     const hits=[...document.querySelectorAll('body *')].filter(el=>{
       if(el===dock||el.closest('#nhMusicDock'))return false;
-      const txt=(el.textContent||'').trim().replace(/\s+/g,' ').toLowerCase();
-      return txt.includes('visitor count');
+      return (el.textContent||'').trim().replace(/\s+/g,' ').toLowerCase().includes('visitor count');
     });
     if(!hits.length)return null;
 
@@ -187,53 +186,44 @@
     const candidates=[];
     let el=seed;
 
-    for(let depth=0;el&&depth<10;depth++,el=el.parentElement){
+    for(let depth=0;el&&depth<12;depth++,el=el.parentElement){
       if(el===document.body||el===document.documentElement)break;
       const r=el.getBoundingClientRect();
       const cs=getComputedStyle(el);
-      if(r.width<240||r.width>700||r.height<70||r.height>240)continue;
       if(cs.display==='none'||cs.visibility==='hidden'||Number(cs.opacity||1)===0)continue;
+      if(r.width<240||r.width>620||r.height<70||r.height>220)continue;
 
-      const hasBorder=['borderTopWidth','borderRightWidth','borderBottomWidth','borderLeftWidth']
+      const border=['borderTopWidth','borderRightWidth','borderBottomWidth','borderLeftWidth']
         .some(k=>parseFloat(cs[k])>0);
-      const rounded=['borderTopLeftRadius','borderTopRightRadius','borderBottomLeftRadius','borderBottomRightRadius']
+      const radius=['borderTopLeftRadius','borderTopRightRadius','borderBottomLeftRadius','borderBottomRightRadius']
         .some(k=>parseFloat(cs[k])>0);
 
-      let score=r.width*r.height;
-      if(hasBorder)score+=900000;
-      if(rounded)score+=250000;
-      candidates.push({el,score});
+      if(border){
+        candidates.push({el,area:r.width*r.height,radius});
+      }
     }
 
     if(!candidates.length)return seed;
-    candidates.sort((a,b)=>b.score-a.score);
+    candidates.sort((a,b)=>a.area-b.area);
     return candidates[0].el;
   }
 
   function hardPlaceBelowCounter(){
-    if(placing)return;
     const counter=findVisitorCounterBox();
     if(!counter)return;
-    placing=true;
 
     const rect=counter.getBoundingClientRect();
-    const scrollX=window.scrollX||window.pageXOffset;
-    const scrollY=window.scrollY||window.pageYOffset;
-
     const width=Math.min(360,Math.max(250,Math.min(rect.width-8,window.innerWidth-28)));
     const left=Math.max(14,Math.min(
-      scrollX+rect.left+(rect.width-width)/2,
-      scrollX+window.innerWidth-width-14
+      rect.left+(rect.width-width)/2,
+      window.innerWidth-width-14
     ));
-    const top=scrollY+rect.bottom+16;
+    const top=Math.max(10,rect.bottom+14);
 
     dock.classList.add('v20-fixed-placement');
     dock.style.width=width+'px';
     dock.style.left=left+'px';
     dock.style.top=top+'px';
-
-    if(dock.parentNode!==document.body)document.body.appendChild(dock);
-    placing=false;
   }
 
   function pointerTilt(e){
