@@ -38,7 +38,7 @@
           </div>
         </div>
       </div>`;
-    root.appendChild(viewer);
+    document.body.appendChild(viewer);
     bindViewerControls();
     return viewer;
   }
@@ -134,6 +134,33 @@
 
   root.querySelectorAll('.nh-game-card,.nh-gacha-card').forEach(bindCard);
 
+  // Window-level fallback: the portfolio has full-page visual layers that can
+  // become the actual hit-test target. We route pointer input by coordinates.
+  function cardAtPoint(clientX, clientY) {
+    for (const card of root.querySelectorAll('.nh-game-card,.nh-gacha-card')) {
+      if (card.hidden) continue;
+      const r = card.getBoundingClientRect();
+      if (clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom) return card;
+    }
+    return null;
+  }
+
+  const routeGamePointer = (event) => {
+    if (event.button !== undefined && event.button !== 0) return;
+    if (viewer?.classList.contains('open')) return;
+    const card = cardAtPoint(event.clientX, event.clientY);
+    if (!card) return;
+    const target = event.target instanceof Element ? event.target : null;
+    if (target?.closest('#nhGamingHistory .nh-gaming-filter,#nhGamingHistory .nh-gaming-action')) return;
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation?.();
+    openViewer(card);
+  };
+
+  window.addEventListener('pointerdown', routeGamePointer, {capture:true, passive:false});
+  window.addEventListener('mousedown', routeGamePointer, {capture:true, passive:false});
+
   // Normal click path.
   root.addEventListener('click', e => {
     const target = e.target instanceof Element ? e.target : null;
@@ -208,7 +235,10 @@
     });
   }
 
-  if (viewer) bindViewerControls();
+  if (viewer) {
+    if (viewer.parentNode !== document.body) document.body.appendChild(viewer);
+    bindViewerControls();
+  }
 
   root.querySelectorAll('.nh-gaming-filter').forEach(btn => {
     btn.addEventListener('click', e => {
