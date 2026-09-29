@@ -1,58 +1,88 @@
 from pathlib import Path
+import re
 
 index = Path("index.html")
-text = index.read_text(encoding="utf-8")
+html = index.read_text(encoding="utf-8")
 
-css_link = '<link rel="stylesheet" href="v20-music.css">'
-js_script = '<script src="v20-music.js"></script>'
+CSS_LINK = '<link rel="stylesheet" href="v20-music.css">'
+JS_SCRIPT = '<script src="v20-music.js"></script>'
+
+# Remove any previous V20 music markup by its unique root IDs.
+def remove_div_by_id(source, element_id):
+    marker = f'id="{element_id}"'
+    pos = source.find(marker)
+    if pos < 0:
+        return source
+
+    start = source.rfind("<div", 0, pos)
+    if start < 0:
+        return source
+
+    token_re = re.compile(r"</?div\b[^>]*>", re.I)
+    depth = 0
+    end = None
+
+    for m in token_re.finditer(source, start):
+        token = m.group(0)
+        if token.lower().startswith("</div"):
+            depth -= 1
+            if depth == 0:
+                end = m.end()
+                break
+        else:
+            depth += 1
+
+    if end is None:
+        raise RuntimeError(f"Could not safely remove #{element_id}")
+
+    return source[:start] + source[end:]
+
+html = remove_div_by_id(html, "nhMusicDock")
+html = remove_div_by_id(html, "nhMusicModal")
+
+# Remove any stale direct asset references so each deployment has exactly one.
+html = re.sub(r'<link\b[^>]*href=["\']v20-music\.css["\'][^>]*>\s*', '', html, flags=re.I)
+html = re.sub(r'<script\b[^>]*src=["\']v20-music\.js["\'][^>]*>\s*</script>\s*', '', html, flags=re.I)
 
 music_html = r'''
-<!-- V20.0 REMAKE — front-page compact music player -->
-<div class="nh-music-dock tilt" id="nhMusicDock">
+<div class="nh-music-dock" id="nhMusicDock">
+  <div class="nh-music-spark-field" aria-hidden="true">
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+  </div>
   <button aria-label="Play or pause music" class="nh-music-play" id="nhMusicPlay" type="button">▶</button>
   <div class="nh-music-meta">
     <span class="nh-music-kicker">MUSIC // ACTIVE QUEUE</span>
     <strong class="nh-music-title" id="nhMusicTitle">Party Addict — kets4eki, Nosgov, kojo</strong>
-    <span class="nh-music-status" id="nhMusicStatus">SOURCE REQUIRED // ADD AUDIO FILE</span>
+    <span class="nh-music-status" id="nhMusicStatus">READY // 08% START VOLUME</span>
   </div>
   <div class="nh-music-tools">
-    <input aria-label="Music volume" class="nh-music-volume" id="nhMusicVolume" max="1" min="0" step="0.01" type="range" value=".65"/>
-    <button class="nh-music-list" id="nhMusicOpen" type="button">PLAYLIST ↗</button>
+    <input aria-label="Music volume" class="nh-music-volume" id="nhMusicVolume" max="1" min="0" step="0.01" type="range" value="0.08">
+    <button class="nh-music-list" id="nhMusicOpen" type="button">QUEUE ↗</button>
   </div>
-  <audio class="nh-music-file" id="nhMusicAudio" preload="none"></audio>
-</div>
-
-<!-- V20.0 REMAKE — cinematic music viewer -->
-<div aria-hidden="true" class="nh-music-modal" id="nhMusicModal">
-  <div aria-labelledby="nhMusicModalTitle" aria-modal="true" class="nh-music-panel" role="dialog">
-    <div class="nh-music-head">
-      <div class="nh-music-label">MUSIC // PERSONAL QUEUE</div>
-      <h2 id="nhMusicModalTitle">NECROTIC<span style="color:#ff3158">HOLLOW</span> // PLAYLIST</h2>
-      <p>CLICK A TRACK TO LOAD IT · VOLUME CONTROL REMAINS ACTIVE BELOW · TIME // ERASE VISUAL ONLINE</p>
-      <button aria-label="Close music playlist" class="nh-music-close" id="nhMusicClose" type="button">×</button>
-    </div>
-    <div class="nh-music-listbox" id="nhMusicListBox"></div>
-    <div class="nh-music-bottom">
-      <span>V20.0 REMAKE // AUDIO PLAYER</span>
-      <span><strong id="nhMusicBottomState">READY</strong> · ESC // CLOSE</span>
-    </div>
-  </div>
+  <div class="nh-next-track" id="nhMusicNext" aria-hidden="true"></div>
+  <audio class="nh-music-file" id="nhMusicAudio" preload="metadata"></audio>
 </div>
 '''
 
-if 'id="nhMusicDock"' not in text:
-    anchor = '<div class="hero-corner">'
-    if anchor not in text:
-        raise SystemExit("Hero anchor not found.")
-    text = text.replace(anchor, music_html + '\n' + anchor, 1)
+# Put the player directly after the existing visitor-node inside top-right-stack.
+needle = '</div>\n\n<div class="noise"></div>'
+if music_html not in html:
+    pattern = re.compile(r'(<div class="top-right-stack">.*?)(</div>\s*<div class="noise"></div>)', re.S)
+    match = pattern.search(html)
+    if not match:
+        raise RuntimeError("Could not locate top-right-stack / visitor counter area.")
+    html = html[:match.start(2)] + music_html + '\n' + html[match.start(2):]
 
-if css_link not in text:
-    head = text.lower().rfind("</head>")
-    text = text[:head] + "\n" + css_link + "\n" + text[head:]
+# Add the asset references at the end of the document.
+head_end = html.lower().rfind('</head>')
+if head_end < 0:
+    raise RuntimeError("Missing </head>")
+html = html[:head_end] + CSS_LINK + '\n' + html[head_end:]
 
-if js_script not in text:
-    body = text.lower().rfind("</body>")
-    text = text[:body] + "\n" + js_script + "\n" + text[body:]
+body_end = html.lower().rfind('</body>')
+if body_end < 0:
+    raise RuntimeError("Missing </body>")
+html = html[:body_end] + JS_SCRIPT + '\n' + html[body_end:]
 
-index.write_text(text, encoding="utf-8")
-print("V20 music layer injected.")
+index.write_text(html, encoding="utf-8")
+print("V20.5 clean music player injected directly under visitor counter.")
