@@ -1,4 +1,4 @@
-/* V21.0 — interactive gaming history archive */
+/* V21.1 — tighter cards, reliable expand controls, stronger mouse VFX */
 (() => {
   const root = document.getElementById('nhGamingHistory');
   if (!root) return;
@@ -12,6 +12,20 @@
   const closeBtn = root.querySelector('.nh-game-link-close');
   let selectedUrl = '';
 
+  const setExpanded = (card, open) => {
+    const details = card.querySelector('.nh-game-details');
+    const button = card.querySelector('.nh-game-expand');
+    card.classList.toggle('expanded', open);
+    card.setAttribute('aria-expanded', String(open));
+    if (details) {
+      details.style.maxHeight = open ? details.scrollHeight + 'px' : '0px';
+      details.style.opacity = open ? '1' : '0';
+      details.style.paddingTop = open ? '12px' : '0';
+      details.style.paddingBottom = open ? '14px' : '0';
+    }
+    if (button) button.innerHTML = open ? 'COLLAPSE DETAIL' : 'EXPAND DETAIL';
+  };
+
   function closePopover() {
     popover.classList.remove('open');
     popover.setAttribute('aria-hidden', 'true');
@@ -23,8 +37,6 @@
     popoverUrl.textContent = selectedUrl.replace(/^https?:\/\//,'');
     popover.classList.add('open');
     popover.setAttribute('aria-hidden', 'false');
-    root.style.setProperty('--popover-x', '50%');
-    root.style.setProperty('--popover-y', '50%');
   }
 
   cards.forEach(card => {
@@ -32,19 +44,21 @@
     const icon = card.querySelector('.nh-game-icon');
     const expand = card.querySelector('.nh-game-expand');
 
+    setExpanded(card, false);
+
     body?.addEventListener('click', (e) => {
-      if (e.target.closest('.nh-game-icon')) return;
-      const open = card.classList.toggle('expanded');
-      card.setAttribute('aria-expanded', String(open));
+      if (e.target.closest('button')) return;
+      setExpanded(card, !card.classList.contains('expanded'));
     });
 
     expand?.addEventListener('click', (e) => {
+      e.preventDefault();
       e.stopPropagation();
-      const open = card.classList.toggle('expanded');
-      card.setAttribute('aria-expanded', String(open));
+      setExpanded(card, !card.classList.contains('expanded'));
     });
 
     icon?.addEventListener('click', (e) => {
+      e.preventDefault();
       e.stopPropagation();
       openPopover(card);
     });
@@ -55,8 +69,9 @@
       const y = ((e.clientY - r.top) / Math.max(1, r.height)) * 100;
       card.style.setProperty('--mx', x.toFixed(1) + '%');
       card.style.setProperty('--my', y.toFixed(1) + '%');
-      card.style.setProperty('--rx', ((50 - y) / 30).toFixed(2) + 'deg');
-      card.style.setProperty('--ry', ((x - 50) / 36).toFixed(2) + 'deg');
+      card.style.setProperty('--rx', ((50 - y) / 24).toFixed(2) + 'deg');
+      card.style.setProperty('--ry', ((x - 50) / 30).toFixed(2) + 'deg');
+      card.style.setProperty('--glow', '1');
     });
 
     card.addEventListener('pointerleave', () => {
@@ -64,28 +79,22 @@
       card.style.setProperty('--my', '50%');
       card.style.setProperty('--rx', '0deg');
       card.style.setProperty('--ry', '0deg');
+      card.style.setProperty('--glow', '0');
     });
   });
 
   root.querySelector('.nh-gaming-expand-all')?.addEventListener('click', () => {
-    cards.forEach(card => {
-      card.classList.add('expanded');
-      card.setAttribute('aria-expanded', 'true');
-    });
+    cards.forEach(card => setExpanded(card, true));
   });
 
   root.querySelector('.nh-gaming-collapse-all')?.addEventListener('click', () => {
-    cards.forEach(card => {
-      card.classList.remove('expanded');
-      card.setAttribute('aria-expanded', 'false');
-    });
+    cards.forEach(card => setExpanded(card, false));
   });
 
   root.querySelectorAll('.nh-gaming-filter').forEach(button => {
     button.addEventListener('click', () => {
       root.querySelectorAll('.nh-gaming-filter').forEach(b => b.classList.remove('active'));
       button.classList.add('active');
-
       const filter = button.dataset.filter;
       cards.forEach(card => {
         const tags = (card.dataset.tags || '').split(/\s+/);
@@ -126,6 +135,7 @@
     const y = ((e.clientY - r.top) / Math.max(1, r.height)) * 100;
     root.style.setProperty('--gx', x.toFixed(1) + '%');
     root.style.setProperty('--gy', y.toFixed(1) + '%');
+    root.style.setProperty('--gangle', ((x + y) * 0.9).toFixed(1) + 'deg');
   });
 
   const pulse = root.querySelector('.nh-gaming-pulse');
@@ -133,4 +143,11 @@
     pulse.addEventListener('pointerenter', () => root.classList.add('pulse-active'));
     pulse.addEventListener('pointerleave', () => root.classList.remove('pulse-active'));
   }
+
+  window.addEventListener('resize', () => {
+    cards.filter(c => c.classList.contains('expanded')).forEach(c => {
+      const details = c.querySelector('.nh-game-details');
+      if (details) details.style.maxHeight = details.scrollHeight + 'px';
+    });
+  }, {passive:true});
 })();
