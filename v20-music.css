@@ -86,3 +86,16 @@
   .nh-music-panel{width:96vw;max-height:86vh}.nh-music-head h2{font-size:24px}
   .nh-next-track{left:6px;right:6px}
 }
+
+/* V20.5 placement override */
+.nh-music-dock.v20-fixed-placement{
+  position:fixed !important;
+  margin:0 !important;
+  z-index:9999 !important;
+}
+.nh-music-modal{
+  z-index:12000 !important;
+}
+.nh-music-panel{
+  position:relative !important;
+}
