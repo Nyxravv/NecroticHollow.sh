@@ -1,364 +1,358 @@
-/* V21.3 — compact neon gaming archive / reactive VFX */
+/* V21.5 — flagship gaming archive */
 .nh-gaming-section{
   --gx:50%;--gy:50%;
-  width:min(100%,1180px);
-  margin:clamp(34px,5vw,66px) auto 0;
-  padding:0 0 clamp(34px,4vw,56px);
+  width:min(100%,1280px);
+  margin:clamp(40px,5.5vw,78px) auto 0;
+  padding:0 0 clamp(46px,5vw,70px);
   position:relative;
   isolation:isolate;
 }
 .nh-gaming-section::before{
   content:"";
   position:absolute;
-  inset:-18px -20px 4%;
-  z-index:-3;
+  inset:-22px -28px 3%;
+  z-index:-4;
   background:
-    radial-gradient(circle at 12% 25%,rgba(255,36,102,.16),transparent 27%),
-    radial-gradient(circle at 82% 70%,rgba(137,54,255,.19),transparent 30%),
-    radial-gradient(circle at var(--gx) var(--gy),rgba(251,127,206,.10),transparent 18%);
-  filter:blur(26px);
+    radial-gradient(circle at 10% 25%,rgba(255,40,104,.18),transparent 28%),
+    radial-gradient(circle at 87% 55%,rgba(143,61,255,.22),transparent 31%),
+    radial-gradient(circle at var(--gx) var(--gy),rgba(255,123,199,.12),transparent 20%);
+  filter:blur(28px);
 }
 .nh-gaming-shell{
   position:relative;
-  box-sizing:border-box;
   width:100%;
-  padding:15px;
-  border:1px solid rgba(198,111,255,.54);
-  border-radius:17px;
+  box-sizing:border-box;
+  padding:21px;
   overflow:hidden;
+  border:1px solid rgba(208,121,255,.68);
+  border-radius:20px;
   background:
-    radial-gradient(circle at var(--gx) var(--gy),rgba(183,83,255,.08),transparent 23%),
-    linear-gradient(145deg,rgba(14,6,23,.97),rgba(7,5,12,.97) 55%,rgba(20,5,17,.97));
+    radial-gradient(circle at var(--gx) var(--gy),rgba(181,80,255,.085),transparent 21%),
+    linear-gradient(145deg,rgba(14,6,23,.975),rgba(7,5,12,.985) 56%,rgba(22,5,17,.97));
   box-shadow:
-    0 0 36px rgba(143,55,255,.15),
-    0 0 64px rgba(255,43,116,.07),
-    inset 0 0 44px rgba(137,62,255,.05);
-  transition:box-shadow .25s ease,border-color .25s ease;
+    0 0 34px rgba(138,52,255,.18),
+    0 0 90px rgba(255,42,118,.08),
+    inset 0 0 62px rgba(139,60,255,.07);
 }
 .nh-gaming-shell:hover{
-  border-color:rgba(243,166,255,.74);
+  border-color:rgba(248,165,255,.84);
   box-shadow:
-    0 0 44px rgba(154,69,255,.22),
-    0 0 82px rgba(255,51,126,.10),
-    inset 0 0 54px rgba(145,65,255,.08);
+    0 0 48px rgba(153,66,255,.23),
+    0 0 105px rgba(255,49,126,.11),
+    inset 0 0 72px rgba(145,64,255,.09);
 }
 .nh-gaming-shell::before{
   content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
+  position:absolute;inset:0;pointer-events:none;
   background:
-    linear-gradient(115deg,transparent 0 19%,rgba(255,146,208,.20) 19.2%,transparent 19.7%),
-    linear-gradient(290deg,transparent 0 72%,rgba(166,120,255,.22) 72.2%,transparent 72.7%),
-    linear-gradient(90deg,transparent 0 8%,rgba(255,255,255,.028) 8.1%,transparent 8.3%);
-  opacity:.75;
+    radial-gradient(circle at var(--gx) var(--gy),rgba(255,154,215,.10),transparent 17%),
+    linear-gradient(111deg,transparent 0 16%,rgba(255,135,198,.21) 16.2%,transparent 16.7%),
+    linear-gradient(298deg,transparent 0 73%,rgba(172,122,255,.25) 73.2%,transparent 73.7%),
+    repeating-linear-gradient(90deg,transparent 0 54px,rgba(205,143,255,.018) 55px,transparent 56px);
 }
 .nh-gaming-shell::after{
-  content:"";
-  position:absolute;
-  inset:-1px;
-  pointer-events:none;
+  content:"";position:absolute;inset:-1px;pointer-events:none;border-radius:20px;
   border:1px solid transparent;
-  border-radius:17px;
-  background:conic-gradient(from 120deg,transparent,#ff4e8f,#aa66ff,transparent 24%,#7d62ff,transparent 52%,#ff68a8,transparent 78%) border-box;
-  -webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-  mask-composite:exclude;
-  opacity:.38;
-  animation:nhGameBorderSpin 8s linear infinite;
-}
-.nh-gaming-particles{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
-}
-.nh-gaming-particles i{
-  position:absolute;
-  width:2px;height:2px;border-radius:50%;
-  left:calc((var(--i) * 17 + 7) % 97 * 1%);
-  top:calc((var(--i) * 31 + 11) % 93 * 1%);
-  background:#fff;
-  opacity:.0;
-  box-shadow:0 0 6px #e9a1ff,0 0 13px rgba(255,102,177,.75);
-  animation:nhGameSpark 2.8s ease-in-out infinite;
-  animation-delay:calc(var(--i) * -0.17s);
-}
-.nh-gaming-topline,.nh-gaming-heading,.nh-gaming-controls,.nh-gaming-matrix,.nh-gaming-footer{position:relative;z-index:2}
-.nh-gaming-topline{
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:2px 3px 10px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  color:#817589;font:6px "JetBrains Mono";letter-spacing:.14em;
-}
-.nh-gaming-topline strong{
-  background:linear-gradient(90deg,#ba8bff,#ff9dce,#a66eff);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.nh-gaming-topline b{
-  color:#ff78ad;font:700 6px "JetBrains Mono";letter-spacing:.1em;
-}
-.nh-gaming-heading{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 290px;
-  gap:18px;
-  align-items:end;
-  padding:17px 3px 12px;
-}
-.nh-gaming-kicker{
-  color:#ff659f;font:700 6.5px "JetBrains Mono";letter-spacing:.16em;
-}
-.nh-gaming-heading h2{
-  margin:5px 0 7px;
-  font:900 italic clamp(36px,5.4vw,66px)/.86 Inter;
-  letter-spacing:-.055em;
-  color:#fff;
-  text-shadow:0 0 24px rgba(255,119,190,.12);
-}
-.nh-gaming-heading h2 em{
-  background:linear-gradient(95deg,#ff3567,#ff7eac,#c86cff,#8f6cff);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.nh-gaming-heading p{
-  max-width:690px;margin:0;color:#9c90a4;
-  font:7.4px/1.65 "JetBrains Mono";
-}
-.nh-gaming-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.nh-gaming-stats span{
-  display:block;padding:9px 7px;border:1px solid rgba(182,111,255,.25);border-radius:9px;
-  background:linear-gradient(145deg,rgba(255,72,139,.05),rgba(134,70,255,.08));
-  transition:.18s;
-}
-.nh-gaming-stats span:hover{
-  transform:translateY(-2px) scale(1.02);
-  border-color:rgba(255,178,225,.8);
-  box-shadow:0 0 17px rgba(166,78,255,.2);
-}
-.nh-gaming-stats small{display:block;color:#756982;font:5px "JetBrains Mono";letter-spacing:.1em}
-.nh-gaming-stats b{display:block;margin-top:3px;color:#efe6f3;font:800 13px Inter;font-style:italic}
-.nh-gaming-stats em{display:block;margin-top:2px;color:#8d8196;font:4.5px "JetBrains Mono";font-style:normal}
-.nh-gaming-controls{
-  display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;
-  padding:7px 2px 10px;
-}
-.nh-gaming-filter-row,.nh-gaming-action-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.nh-gaming-filter,.nh-gaming-action{
-  position:relative;padding:5px 7px;border:1px solid rgba(182,111,255,.28);border-radius:7px;
-  background:rgba(10,6,15,.74);color:#97879f;cursor:pointer;
-  font:700 5px "JetBrains Mono";letter-spacing:.08em;
-  transition:.16s ease;overflow:hidden;
-}
-.nh-gaming-filter::before,.nh-gaming-action::before{
-  content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent,rgba(255,194,225,.22),transparent);
-  transform:translateX(-130%);transition:transform .5s ease;
-}
-.nh-gaming-filter:hover,.nh-gaming-filter.active,.nh-gaming-action:hover{
-  color:#fff;border-color:rgba(255,169,222,.85);
-  box-shadow:0 0 15px rgba(169,77,255,.18),0 0 9px rgba(255,80,145,.07);
-  transform:translateY(-1px);
-}
-.nh-gaming-filter:hover::before,.nh-gaming-filter.active::before,.nh-gaming-action:hover::before{transform:translateX(130%)}
-.nh-gaming-action{border-radius:6px;color:#b6a5bd}
-.nh-gaming-matrix{display:grid;grid-template-columns:minmax(0,1fr) 305px;gap:10px;align-items:start}
-.nh-game-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
-.nh-game-card{
-  --mx:50%;--my:50%;--rx:0deg;--ry:0deg;
-  position:relative;min-width:0;border:1px solid rgba(181,104,255,.25);border-radius:10px;
-  background:
-    radial-gradient(circle at var(--mx) var(--my),rgba(255,135,198,.13),transparent 29%),
-    linear-gradient(145deg,rgba(19,9,28,.94),rgba(7,6,12,.985) 62%,rgba(27,7,18,.94));
-  box-shadow:0 0 13px rgba(142,68,255,.06),inset 0 0 18px rgba(158,77,255,.03);
-  transform:perspective(760px) rotateX(var(--rx)) rotateY(var(--ry));
-  transition:transform .14s ease,border-color .18s,box-shadow .2s,filter .18s;
-  overflow:hidden;
-}
-.nh-game-card::before{
-  content:"";position:absolute;inset:-1px;border-radius:10px;pointer-events:none;
-  border:1px solid transparent;
-  background:conic-gradient(from 90deg,transparent,#ff4b87,#9e68ff,transparent 34%,#7c69ff,transparent 65%,#ff5d9e,transparent) border-box;
+  background:conic-gradient(from 120deg,transparent,#ff4e8f,#a768ff,transparent 23%,#735dff,transparent 55%,#ff76ad,transparent 80%) border-box;
   -webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;mask-composite:exclude;
-  opacity:.32;animation:nhGameBorderSpin 5.5s linear infinite;
+  opacity:.52;animation:nhGameBorderSpin 7s linear infinite;
+}
+.nh-gaming-particles{position:absolute;inset:0;pointer-events:none;z-index:1}
+.nh-gaming-particles i{
+  position:absolute;width:2px;height:2px;border-radius:50%;
+  left:calc((var(--i)*23 + 7)%97 * 1%);
+  top:calc((var(--i)*37 + 11)%93 * 1%);
+  background:#fff;opacity:0;
+  box-shadow:0 0 7px #e49bff,0 0 15px rgba(255,100,178,.8);
+  animation:nhGameSpark 2.55s ease-in-out infinite;
+  animation-delay:calc(var(--i)*-.13s);
+}
+.nh-gaming-cursor-core{
+  position:absolute;left:var(--gx);top:var(--gy);width:210px;height:210px;
+  transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(circle,rgba(224,142,255,.10),rgba(255,73,153,.035) 32%,transparent 69%);
+  filter:blur(10px);mix-blend-mode:screen;transition:left .08s ease,top .08s ease;
+}
+.nh-gaming-topline,.nh-gaming-heading,.nh-gaming-controls,.nh-gaming-matrix,.nh-gaming-footer{position:relative;z-index:3}
+.nh-gaming-topline{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  padding:0 3px 12px;border-bottom:1px solid rgba(255,255,255,.09);
+  color:#8b7b94;font:7px "JetBrains Mono";letter-spacing:.14em;
+}
+.nh-gaming-topline strong{
+  background:linear-gradient(90deg,#c293ff,#ff9fd0,#ad76ff);
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.nh-gaming-topline b{color:#ff75ae;font:700 6.5px "JetBrains Mono";letter-spacing:.1em}
+.nh-gaming-heading{
+  display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:25px;align-items:end;
+  padding:22px 3px 15px;
+}
+.nh-gaming-kicker{color:#ff679e;font:700 7px "JetBrains Mono";letter-spacing:.17em}
+.nh-gaming-heading h2{
+  margin:6px 0 9px;
+  font:900 italic clamp(44px,6.4vw,82px)/.84 Inter;
+  letter-spacing:-.06em;color:#fff;
+  text-shadow:0 0 26px rgba(255,110,184,.15)
+}
+.nh-gaming-heading h2 em{
+  background:linear-gradient(96deg,#ff315f,#ff7cab,#cc6cff,#906dff);
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.nh-gaming-heading p{max-width:760px;margin:0;color:#a69aaE;font:8px/1.65 "JetBrains Mono"}
+.nh-gaming-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.nh-gaming-stats span{
+  padding:10px 8px;border:1px solid rgba(190,116,255,.28);border-radius:10px;
+  background:linear-gradient(145deg,rgba(255,68,140,.045),rgba(135,72,255,.08));
+  transition:.18s
+}
+.nh-gaming-stats span:hover{
+  transform:translateY(-3px) scale(1.02);
+  border-color:rgba(255,181,225,.86);
+  box-shadow:0 0 20px rgba(171,78,255,.23)
+}
+.nh-gaming-stats small{display:block;color:#76697e;font:5px "JetBrains Mono";letter-spacing:.1em}
+.nh-gaming-stats b{display:block;margin-top:3px;color:#f3e8f5;font:800 15px Inter;font-style:italic}
+.nh-gaming-stats em{display:block;margin-top:2px;color:#8e8096;font:4.5px "JetBrains Mono";font-style:normal}
+.nh-gaming-controls{
+  display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap;
+  padding:8px 2px 12px
+}
+.nh-gaming-filter-row{display:flex;gap:6px;flex-wrap:wrap}
+.nh-gaming-filter,.nh-gaming-action{
+  position:relative;overflow:hidden;padding:6px 8px;border:1px solid rgba(182,111,255,.30);border-radius:8px;
+  background:rgba(10,6,15,.76);color:#a190a9;cursor:pointer;
+  font:700 5.5px "JetBrains Mono";letter-spacing:.08em;transition:.17s
+}
+.nh-gaming-filter::after,.nh-gaming-action::after{
+  content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent,rgba(255,200,228,.25),transparent);
+  transform:translateX(-140%);transition:transform .55s ease
+}
+.nh-gaming-filter:hover,.nh-gaming-filter.active,.nh-gaming-action:hover{
+  color:#fff;border-color:rgba(255,177,226,.94);
+  box-shadow:0 0 18px rgba(174,81,255,.22),0 0 10px rgba(255,87,150,.08);
+  transform:translateY(-2px)
+}
+.nh-gaming-filter:hover::after,.nh-gaming-filter.active::after,.nh-gaming-action:hover::after{transform:translateX(140%)}
+.nh-gaming-matrix{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:11px;align-items:start}
+.nh-game-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.nh-game-card{
+  --mx:50%;--my:50%;--rx:0deg;--ry:0deg;
+  position:relative;min-width:0;min-height:125px;
+  display:grid;grid-template-columns:78px minmax(0,1fr) 18px;align-items:center;gap:10px;
+  padding:10px;border:1px solid rgba(181,108,255,.30);border-radius:12px;
+  background:
+    radial-gradient(circle at var(--mx) var(--my),rgba(255,143,201,.16),transparent 30%),
+    linear-gradient(145deg,rgba(18,9,27,.95),rgba(7,5,12,.985) 65%,rgba(25,6,17,.94));
+  color:#fff;cursor:pointer;text-align:left;
+  transform:perspective(820px) rotateX(var(--rx)) rotateY(var(--ry));
+  box-shadow:0 0 16px rgba(143,68,255,.07),inset 0 0 22px rgba(157,77,255,.03);
+  transition:transform .12s ease,box-shadow .20s,border-color .18s,filter .18s
+}
+.nh-game-card::before{
+  content:"";position:absolute;inset:-1px;border-radius:12px;pointer-events:none;
+  border:1px solid transparent;
+  background:conic-gradient(from 50deg,transparent,#ff4b87,#aa67ff,transparent 27%,#7765ff,transparent 58%,#ff68aa,transparent 83%) border-box;
+  -webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:.34;animation:nhGameBorderSpin 5.5s linear infinite
 }
 .nh-game-card::after{
   content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(115deg,transparent 0 33%,rgba(255,255,255,.08) 46%,transparent 61%);
-  background-size:220% 100%;background-position:-120% 0;opacity:.0;transition:opacity .2s,background-position .65s ease;
+  background:linear-gradient(113deg,transparent 0 34%,rgba(255,255,255,.10) 47%,transparent 59%);
+  background-size:230% 100%;background-position:-130% 0;opacity:0;transition:.5s
 }
 .nh-game-card:hover{
-  border-color:rgba(255,180,226,.87);
-  box-shadow:0 0 22px rgba(174,82,255,.25),0 0 34px rgba(255,58,132,.10),inset 0 0 22px rgba(161,76,255,.07);
-  filter:brightness(1.06);
+  border-color:rgba(255,191,228,.96);
+  box-shadow:0 0 26px rgba(174,82,255,.28),0 0 46px rgba(255,61,133,.13),inset 0 0 27px rgba(160,75,255,.08);
+  filter:brightness(1.07)
 }
-.nh-game-card:hover::after{opacity:1;background-position:120% 0}
-.nh-game-card.is-open{
-  border-color:rgba(255,148,207,.78);
-  box-shadow:0 0 20px rgba(180,78,255,.2),0 0 36px rgba(255,57,131,.09),inset 0 0 25px rgba(160,77,255,.08);
+.nh-game-card:hover::after{opacity:1;background-position:130% 0}
+.nh-game-card-art{
+  position:relative;width:78px;height:78px;padding:2px;border:1px solid rgba(255,193,227,.50);
+  border-radius:10px;background:#0b0710;box-shadow:0 0 18px rgba(166,80,255,.16);overflow:hidden;
+  transition:.16s
 }
-.nh-game-summary{
-  position:relative;display:grid;grid-template-columns:60px minmax(0,1fr) 16px;gap:8px;align-items:center;
-  min-height:112px;padding:9px;cursor:pointer;list-style:none;outline:none;
+.nh-game-card-art::after{
+  content:"OPEN";position:absolute;right:4px;bottom:4px;padding:3px 4px;border-radius:5px;
+  background:rgba(7,4,11,.82);color:#fff;font:700 5px "JetBrains Mono";opacity:0;transform:translateY(5px);transition:.16s
 }
-.nh-game-summary::-webkit-details-marker{display:none}
-.nh-game-icon{
-  position:relative;z-index:5;width:60px;height:60px;padding:2px;
-  border:1px solid rgba(255,185,225,.40);border-radius:9px;background:rgba(8,5,13,.85);
-  cursor:pointer;overflow:hidden;box-shadow:0 0 15px rgba(162,81,255,.16);
-  transition:.17s;
+.nh-game-card:hover .nh-game-card-art{transform:scale(1.055) rotate(-1.2deg);box-shadow:0 0 24px rgba(193,88,255,.36),0 0 15px rgba(255,92,160,.16)}
+.nh-game-card:hover .nh-game-card-art::after{opacity:1;transform:none}
+.nh-game-card-art img{display:block;width:100%;height:100%;object-fit:cover;border-radius:8px}
+.nh-game-card-copy{min-width:0;display:block}
+.nh-game-index{display:block;color:#ff72a7;font:700 5px "JetBrains Mono";letter-spacing:.12em}
+.nh-game-card-copy strong{
+  display:block;margin:3px 0 3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font:900 italic clamp(15px,1.65vw,22px)/1 "Inter";letter-spacing:-.025em;
+  background:linear-gradient(90deg,#d0a4ff,#ffb9dc,#ad78ff);
+  -webkit-background-clip:text;background-clip:text;color:transparent
 }
-.nh-game-icon::after{
-  content:"↗";position:absolute;right:4px;bottom:3px;color:#fff;font:800 10px Inter;
-  text-shadow:0 0 7px #d685ff;opacity:0;transform:translateY(4px);transition:.16s;
-}
-.nh-game-icon:hover{
-  transform:translateY(-2px) scale(1.07) rotate(-1.5deg);
-  border-color:rgba(255,205,232,.95);
-  box-shadow:0 0 22px rgba(187,87,255,.38),0 0 14px rgba(255,92,155,.18);
-}
-.nh-game-icon:hover::after{opacity:1;transform:none}
-.nh-game-icon img{width:100%;height:100%;display:block;object-fit:cover;border-radius:7px}
-.nh-game-copy{min-width:0;display:block}
-.nh-game-index{display:block;color:#ff6a9f;font:700 5px "JetBrains Mono";letter-spacing:.12em}
-.nh-game-title{
-  display:block;margin:4px 0 3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  font:900 italic clamp(12px,1.35vw,18px)/1 Inter;
-  background:linear-gradient(90deg,#cda2ff,#ffb7db,#af7aff);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.nh-game-meta{
+.nh-game-card-copy small{
   display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  color:#7f7389;font:5px "JetBrains Mono";letter-spacing:.05em
+  color:#84788f;font:5.5px "JetBrains Mono";letter-spacing:.05em
 }
-.nh-game-toggle{
-  display:inline-block;margin-top:6px;color:#c8b2cf;font:700 5px "JetBrains Mono";letter-spacing:.08em;
-  transition:.16s;
+.nh-game-card-copy em{
+  display:inline-block;margin-top:8px;color:#c7b5cf;font:700 5px "JetBrains Mono";font-style:normal;letter-spacing:.08em
 }
-.nh-game-card:hover .nh-game-toggle,.nh-game-card.is-open .nh-game-toggle{color:#ffb6d9;text-shadow:0 0 6px rgba(255,113,180,.55)}
-.nh-game-chevron{color:#c88fff;font:800 14px Inter;transition:.18s}
-.nh-game-card:hover .nh-game-chevron{transform:translate(2px,-2px) scale(1.08);text-shadow:0 0 9px #d88fff}
-.nh-game-card.is-open .nh-game-chevron{transform:rotate(90deg)}
-.nh-game-details-wrap{
-  display:grid;grid-template-rows:0fr;
-  transition:grid-template-rows .34s cubic-bezier(.2,.8,.2,1);
-}
-.nh-game-card[open] .nh-game-details-wrap{grid-template-rows:1fr}
-.nh-game-details{min-height:0;overflow:hidden;padding:0 9px;border-top:1px solid transparent;transition:padding .28s,border-color .22s}
-.nh-game-card[open] .nh-game-details{padding:9px;border-top-color:rgba(255,255,255,.08)}
-.nh-game-details-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
-.nh-game-details-grid span{
-  display:block;padding:6px;border:1px solid rgba(170,103,255,.20);border-radius:7px;
-  background:linear-gradient(145deg,rgba(255,68,136,.035),rgba(127,68,255,.06));
-  transition:.16s;
-}
-.nh-game-details-grid span:hover{border-color:rgba(255,174,222,.65);transform:translateY(-1px);box-shadow:0 0 11px rgba(171,85,255,.16)}
-.nh-game-details-grid small{display:block;color:#71647a;font:4.5px "JetBrains Mono";letter-spacing:.08em}
-.nh-game-details-grid b{display:block;margin-top:3px;color:#d9cde0;font:700 6.4px Inter;font-style:italic}
-.nh-game-details p{margin:7px 1px 8px;color:#95889d;font:6px/1.55 "JetBrains Mono"}
-.nh-game-open-detail{
-  padding:5px 6px;border:1px solid rgba(187,111,255,.34);border-radius:6px;
-  background:rgba(12,7,17,.76);color:#d9c7e4;cursor:pointer;font:700 4.7px "JetBrains Mono";letter-spacing:.08em;transition:.16s;
-}
-.nh-game-open-detail:hover{border-color:#ff9bcb;color:#fff;transform:translateY(-1px);box-shadow:0 0 12px rgba(177,84,255,.18)}
+.nh-game-card:hover .nh-game-card-copy em{color:#ffacd0;text-shadow:0 0 7px rgba(255,108,181,.6)}
+.nh-game-card-corner{font:800 15px Inter;color:#ce8dff;transition:.17s}
+.nh-game-card:hover .nh-game-card-corner{transform:translate(2px,-2px) scale(1.12);text-shadow:0 0 11px #d68eff}
 .nh-gacha-panel{
-  position:relative;padding:11px;border:1px solid rgba(191,111,255,.36);border-radius:12px;
+  position:relative;padding:13px;border:1px solid rgba(193,116,255,.43);border-radius:14px;
   background:
-    radial-gradient(circle at var(--gx) var(--gy),rgba(255,116,187,.07),transparent 35%),
-    linear-gradient(145deg,rgba(18,7,27,.95),rgba(7,5,12,.98));
-  box-shadow:0 0 20px rgba(148,69,255,.11),inset 0 0 24px rgba(142,64,255,.04);
-  overflow:hidden;
+    radial-gradient(circle at var(--gx) var(--gy),rgba(255,117,188,.07),transparent 38%),
+    linear-gradient(145deg,rgba(17,7,25,.96),rgba(7,5,12,.985));
+  box-shadow:0 0 25px rgba(146,68,255,.13),inset 0 0 29px rgba(143,64,255,.045);
+  overflow:hidden
 }
 .nh-gacha-panel::before{
-  content:"";position:absolute;inset:-1px;border:1px solid transparent;border-radius:12px;
-  background:linear-gradient(135deg,#ff5a9a,transparent 30%,#a36cff 70%,#ff72ae) border-box;
+  content:"";position:absolute;inset:-1px;border:1px solid transparent;border-radius:14px;
+  background:linear-gradient(135deg,#ff5d9f,transparent 30%,#9f6aff 72%,#ff72ad) border-box;
   -webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;opacity:.46;pointer-events:none;
+  -webkit-mask-composite:xor;mask-composite:exclude;opacity:.52
 }
 .nh-gacha-top{position:relative;z-index:2}
-.nh-gacha-kicker{display:block;color:#ff6eaa;font:700 5.2px "JetBrains Mono";letter-spacing:.12em}
+.nh-gacha-kicker{display:block;color:#ff71aa;font:700 5.5px "JetBrains Mono";letter-spacing:.13em}
 .nh-gacha-top strong{
-  display:block;margin:4px 0;font:900 italic 23px Inter;
-  background:linear-gradient(90deg,#d39cff,#ffb6d9,#aa78ff);
+  display:block;margin:4px 0;font:900 italic 27px Inter;
+  background:linear-gradient(90deg,#d39cff,#ffb6da,#aa78ff);
   -webkit-background-clip:text;background-clip:text;color:transparent
 }
-.nh-gacha-top p{margin:0;color:#897d91;font:5.8px/1.45 "JetBrains Mono"}
-.nh-gacha-list{display:grid;gap:5px;margin-top:9px;position:relative;z-index:2}
+.nh-gacha-top p{margin:0;color:#8b7f93;font:6px/1.5 "JetBrains Mono"}
+.nh-gacha-list{display:grid;gap:6px;margin-top:10px;position:relative;z-index:2}
 .nh-gacha-card{
-  border:1px solid rgba(183,110,255,.24);border-radius:8px;background:rgba(255,255,255,.018);
-  transition:.17s;overflow:hidden;
+  width:100%;display:grid;grid-template-columns:36px minmax(0,1fr) 12px;gap:8px;align-items:center;
+  padding:7px;border:1px solid rgba(183,110,255,.27);border-radius:9px;
+  background:rgba(255,255,255,.018);color:#fff;text-align:left;cursor:pointer;transition:.16s
 }
-.nh-gacha-card:hover,.nh-gacha-card[open]{border-color:rgba(255,177,225,.72);box-shadow:0 0 15px rgba(173,81,255,.16);transform:translateX(-2px)}
-.nh-gacha-card summary{display:grid;grid-template-columns:30px minmax(0,1fr) 12px;gap:7px;align-items:center;padding:6px 7px;cursor:pointer;list-style:none}
-.nh-gacha-card summary::-webkit-details-marker{display:none}
-.nh-gacha-icon{width:30px;height:30px;border:1px solid rgba(255,181,222,.35);border-radius:7px;display:grid;place-items:center;background:#0b0710;overflow:hidden}
-.nh-gacha-icon img{width:22px;height:22px;object-fit:contain}
-.nh-gacha-main{min-width:0}
-.nh-gacha-main strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#d9baff;font:800 7.4px Inter;font-style:italic}
-.nh-gacha-main small{display:block;margin-top:2px;color:#786d82;font:4.7px "JetBrains Mono"}
-.nh-gacha-arrow{color:#ff8fc4;font:800 10px Inter}
-.nh-gacha-detail{padding:0 7px 7px}
-.nh-gacha-detail p{margin:0 0 6px;color:#8e8197;font:5.5px/1.5 "JetBrains Mono"}
-.nh-gacha-link{
-  padding:5px 6px;border:1px solid rgba(181,109,255,.35);border-radius:6px;background:rgba(12,7,17,.7);
-  color:#ffbedc;cursor:pointer;font:700 4.7px "JetBrains Mono";transition:.16s;
+.nh-gacha-card:hover{
+  transform:translateX(-3px) scale(1.01);
+  border-color:rgba(255,184,226,.86);box-shadow:0 0 18px rgba(172,81,255,.20),0 0 12px rgba(255,91,158,.08);filter:brightness(1.06)
 }
-.nh-gacha-link:hover{border-color:#ff9bc9;box-shadow:0 0 11px rgba(177,84,255,.18);transform:translateY(-1px)}
+.nh-gacha-art{width:36px;height:36px;display:grid;place-items:center;border:1px solid rgba(255,183,224,.38);border-radius:8px;background:#0b0710;overflow:hidden}
+.nh-gacha-art img{width:24px;height:24px;object-fit:contain}
+.nh-gacha-card strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e0c7ef;font:800 8px Inter;font-style:italic}
+.nh-gacha-card small{display:block;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#7c7085;font:5px "JetBrains Mono"}
+.nh-gacha-card i{color:#ff8fc6;font:800 10px Inter;font-style:normal;transition:.16s}
+.nh-gacha-card:hover i{transform:translate(2px,-2px);text-shadow:0 0 8px #ff8fc6}
 .nh-gacha-foot,.nh-gaming-footer{
-  display:flex;align-items:center;justify-content:space-between;gap:8px;
-  color:#6f6478;font:5px "JetBrains Mono";letter-spacing:.1em;
+  position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;gap:9px;
+  color:#70647a;font:5.2px "JetBrains Mono";letter-spacing:.1em
 }
-.nh-gacha-foot{margin-top:8px;position:relative;z-index:2}
-.nh-gacha-foot b{color:#ac89cf;font-size:4.8px}
-.nh-gaming-footer{padding:10px 2px 0}
-.nh-gaming-footer strong{color:#c28cff}
-.nh-game-link-popover{
-  position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:15px;
-  background:rgba(10,3,18,.55);backdrop-filter:blur(9px);
-  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;
+.nh-gacha-foot{margin-top:9px}.nh-gacha-foot b{color:#b08cd0;font-size:4.8px}
+.nh-gaming-footer{padding:11px 2px 0}.nh-gaming-footer strong{color:#c68eff}
+
+.nh-game-viewer{
+  position:fixed!important;inset:0!important;z-index:999999!important;
+  display:grid!important;place-items:center!important;padding:16px!important;
+  background:rgba(8,2,14,.72)!important;backdrop-filter:blur(18px) saturate(1.08)!important;
+  opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s,visibility .22s
 }
-.nh-game-link-popover.open{opacity:1;visibility:visible;pointer-events:auto}
-.nh-game-link-panel{
-  width:min(360px,92vw);position:relative;padding:14px;border:1px solid rgba(255,172,222,.78);border-radius:13px;
-  background:linear-gradient(145deg,rgba(23,7,31,.99),rgba(6,4,10,.98));
-  box-shadow:0 0 48px rgba(160,73,255,.30),0 0 26px rgba(255,68,139,.12);
-  transform:translateY(8px) scale(.97);transition:.22s cubic-bezier(.2,.8,.2,1)
+.nh-game-viewer.open{opacity:1;visibility:visible;pointer-events:auto}
+.nh-game-viewer-panel{
+  width:min(980px,96vw);max-height:min(790px,90vh);overflow:auto;
+  display:grid;grid-template-columns:minmax(300px,.86fr) minmax(0,1.14fr);gap:0;
+  border:1px solid rgba(255,176,225,.82);border-radius:20px;
+  background:linear-gradient(145deg,rgba(23,8,32,.985),rgba(6,4,11,.99));
+  box-shadow:0 0 90px rgba(147,65,255,.32),0 0 44px rgba(255,71,142,.15),inset 0 0 54px rgba(137,64,255,.08);
+  transform:translateY(16px) scale(.975) rotateX(1deg);transition:transform .35s cubic-bezier(.18,.8,.2,1)
 }
-.nh-game-link-popover.open .nh-game-link-panel{transform:none}
-.nh-game-link-close{
-  position:absolute;right:8px;top:8px;width:28px;height:28px;border:1px solid rgba(255,168,219,.7);border-radius:7px;
-  background:rgba(10,5,15,.9);color:#fff;cursor:pointer;font:800 16px Inter;transition:.16s
+.nh-game-viewer-panel.ready{transform:none}
+.nh-viewer-art{
+  position:relative;min-height:470px;overflow:hidden;border-right:1px solid rgba(255,255,255,.08);
+  background:#0a0610
 }
-.nh-game-link-close:hover{transform:rotate(3deg) scale(1.06);box-shadow:0 0 16px rgba(255,91,160,.28)}
-.nh-game-link-kicker{color:#ff80b7;font:700 5.5px "JetBrains Mono";letter-spacing:.13em}
-.nh-game-link-title{
-  margin:5px 0;padding-right:35px;font:900 italic 21px Inter;
-  background:linear-gradient(90deg,#c89dff,#ffb9dd,#aa75ff);
+.nh-viewer-art::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 35%,rgba(6,4,10,.20) 55%,rgba(6,4,10,.92) 100%),linear-gradient(120deg,rgba(255,60,123,.18),transparent 40%,rgba(145,74,255,.20));
+  pointer-events:none;z-index:2
+}
+.nh-viewer-art img{width:100%;height:100%;min-height:470px;object-fit:cover;display:block;filter:saturate(.92) contrast(1.08)}
+.nh-viewer-scan{
+  position:absolute;left:0;right:0;top:-10%;height:2px;z-index:4;
+  background:linear-gradient(90deg,transparent,#ff79b4,#c07dff,transparent);
+  box-shadow:0 0 14px rgba(255,111,184,.85);animation:nhViewerScan 3s linear infinite
+}
+.nh-viewer-label{
+  position:absolute;left:14px;bottom:13px;z-index:4;color:#ffd0e5;
+  font:700 6px "JetBrains Mono";letter-spacing:.14em;text-shadow:0 0 8px rgba(255,115,178,.5)
+}
+.nh-viewer-content{position:relative;padding:25px 25px 22px;overflow:auto}
+.nh-game-viewer-close{
+  position:absolute;right:12px;top:12px;z-index:10;width:38px;height:38px;
+  border:1px solid rgba(255,180,226,.84);border-radius:10px;background:rgba(8,5,12,.82);color:#fff;cursor:pointer;
+  font:800 20px Inter;transition:.16s
+}
+.nh-game-viewer-close:hover{transform:scale(1.06) rotate(2deg);box-shadow:0 0 23px rgba(255,92,160,.3),0 0 18px rgba(146,78,255,.2)}
+.nh-viewer-kicker{color:#ff77ad;font:700 6.5px "JetBrains Mono";letter-spacing:.16em;padding-right:48px}
+.nh-viewer-content h3{
+  margin:7px 0 4px;font:900 italic clamp(30px,4.3vw,54px)/.9 Inter;letter-spacing:-.045em;
+  background:linear-gradient(95deg,#fff,#ffabd4 43%,#b77bff 86%);
   -webkit-background-clip:text;background-clip:text;color:transparent
 }
-.nh-game-link-url{margin:0 0 10px;color:#81748c;font:5.3px "JetBrains Mono";overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.nh-game-link-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.nh-game-copy,.nh-game-open{padding:7px 6px;border:1px solid rgba(181,110,255,.38);border-radius:7px;background:rgba(13,7,18,.82);cursor:pointer;font:700 5px "JetBrains Mono";letter-spacing:.06em;transition:.16s}
-.nh-game-copy{color:#d6c3ef}.nh-game-open{color:#ffc0dc}
-.nh-game-copy:hover,.nh-game-open:hover{transform:translateY(-1px);border-color:rgba(255,180,224,.9);box-shadow:0 0 15px rgba(178,86,255,.23);filter:brightness(1.08)}
-@keyframes nhGameBorderSpin{to{transform:rotate(360deg)}}
-@keyframes nhGameSpark{0%,100%{opacity:0;transform:scale(.4)}40%{opacity:.75;transform:scale(1.1)}65%{opacity:.18;transform:scale(.65)}85%{opacity:.9;transform:scale(.9)}}
-@keyframes nhGamingPulse{
-  0%,100%{box-shadow:0 0 36px rgba(143,55,255,.15),0 0 64px rgba(255,43,116,.07),inset 0 0 44px rgba(137,62,255,.05)}
-  50%{box-shadow:0 0 58px rgba(163,71,255,.28),0 0 94px rgba(255,53,128,.13),inset 0 0 56px rgba(144,65,255,.09)}
+.nh-viewer-subtitle{color:#aa96b3;font:6.5px "JetBrains Mono";letter-spacing:.1em}
+.nh-viewer-price-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:17px 0 10px}
+.nh-viewer-price-row span{
+  min-width:0;padding:9px 9px;border:1px solid rgba(188,116,255,.30);border-radius:9px;
+  background:linear-gradient(145deg,rgba(255,74,139,.05),rgba(135,70,255,.07))
 }
-.nh-gaming-section.pulse-active .nh-gaming-shell{animation:nhGamingPulse 1.35s ease-in-out infinite}
+.nh-viewer-price-row small{display:block;color:#71657b;font:4.7px "JetBrains Mono";letter-spacing:.1em}
+.nh-viewer-price-row strong{
+  display:block;margin-top:4px;overflow:hidden;text-overflow:ellipsis;color:#f4dff1;font:800 9px Inter;font-style:italic
+}
+.nh-viewer-details{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px}
+.nh-viewer-details span{padding:7px;border:1px solid rgba(180,108,255,.22);border-radius:8px;background:rgba(255,255,255,.018)}
+.nh-viewer-details small{display:block;color:#706279;font:4.6px "JetBrains Mono";letter-spacing:.08em}
+.nh-viewer-details strong{display:block;margin-top:3px;color:#d8c9df;font:700 6.5px Inter;font-style:italic}
+.nh-viewer-section{
+  margin-top:9px;padding:11px 12px;border-left:2px solid #ff74b0;border-top:1px solid rgba(180,109,255,.20);
+  background:linear-gradient(100deg,rgba(255,70,140,.045),rgba(133,70,255,.04));
+}
+.nh-viewer-section>span{display:block;color:#ff8fc0;font:700 5px "JetBrains Mono";letter-spacing:.11em}
+.nh-viewer-section p{margin:6px 0 0;color:#a69aaE;font:7.2px/1.7 "JetBrains Mono"}
+.nh-viewer-source{margin:11px 0 9px;color:#73677d;font:5px "JetBrains Mono";letter-spacing:.06em}
+.nh-viewer-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.nh-viewer-copy,.nh-viewer-open{
+  display:flex;align-items:center;justify-content:center;min-height:38px;
+  padding:8px 9px;border:1px solid rgba(190,116,255,.48);border-radius:9px;
+  background:rgba(11,6,17,.86);color:#e4cef3;text-decoration:none;cursor:pointer;
+  font:700 5.8px "JetBrains Mono";letter-spacing:.08em;transition:.17s
+}
+.nh-viewer-open{color:#ffc0da}
+.nh-viewer-copy:hover,.nh-viewer-open:hover{
+  transform:translateY(-2px);border-color:rgba(255,186,226,.94);
+  box-shadow:0 0 20px rgba(174,83,255,.27),0 0 10px rgba(255,87,151,.10);filter:brightness(1.10)
+}
+@keyframes nhGameBorderSpin{to{transform:rotate(360deg)}}
+@keyframes nhGameSpark{0%,100%{opacity:0;transform:scale(.4)}40%{opacity:.75;transform:scale(1.15)}65%{opacity:.16;transform:scale(.65)}85%{opacity:.9;transform:scale(.95)}}
+@keyframes nhViewerScan{0%{top:-4%}100%{top:104%}}
+@keyframes nhGamingPulse{
+  0%,100%{box-shadow:0 0 34px rgba(143,55,255,.16),0 0 84px rgba(255,43,116,.08),inset 0 0 48px rgba(137,62,255,.06)}
+  50%{box-shadow:0 0 55px rgba(163,71,255,.30),0 0 112px rgba(255,53,128,.13),inset 0 0 62px rgba(144,65,255,.10)}
+}
+.nh-gaming-section.pulse-active .nh-gaming-shell{animation:nhGamingPulse 1.45s ease-in-out infinite}
 @media(max-width:1050px){
   .nh-gaming-heading{grid-template-columns:1fr}
   .nh-gaming-matrix{grid-template-columns:1fr}
-  .nh-gacha-panel{max-width:620px;margin-left:auto}
-  .nh-game-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nh-gacha-panel{max-width:680px;margin-left:auto}
 }
-@media(max-width:680px){
-  .nh-gaming-shell{padding:11px}
-  .nh-gaming-topline{align-items:flex-start;flex-wrap:wrap}
-  .nh-gaming-heading{padding-top:13px}
-  .nh-gaming-heading h2{font-size:39px}
+@media(max-width:760px){
+  .nh-gaming-shell{padding:14px;border-radius:16px}
   .nh-game-grid{grid-template-columns:1fr}
-  .nh-game-summary{grid-template-columns:56px minmax(0,1fr) 14px;min-height:100px}
-  .nh-game-icon{width:56px;height:56px}
-  .nh-gaming-footer,.nh-gacha-foot{align-items:flex-start;flex-direction:column}
+  .nh-gaming-heading h2{font-size:42px}
+  .nh-gaming-matrix{grid-template-columns:1fr}
+  .nh-game-viewer-panel{grid-template-columns:1fr;width:96vw;max-height:90vh}
+  .nh-viewer-art{min-height:230px;max-height:300px;border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}
+  .nh-viewer-art img{min-height:230px;height:300px}
+  .nh-viewer-content{padding:19px}
+}
+@media(max-width:500px){
+  .nh-gaming-stats{grid-template-columns:1fr}
+  .nh-gaming-controls{align-items:flex-start}
+  .nh-game-card{grid-template-columns:64px minmax(0,1fr) 16px;min-height:110px;padding:8px}
+  .nh-game-card-art{width:64px;height:64px}
+  .nh-game-card-copy strong{font-size:15px}
+  .nh-viewer-details{grid-template-columns:1fr}
 }
