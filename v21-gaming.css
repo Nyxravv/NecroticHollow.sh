@@ -655,3 +655,83 @@
   .nh-gaming-matrix{grid-template-columns:1fr !important}
   .nh-gacha-panel{max-width:none !important}
 }
+
+/* V21.8 — interaction ceiling / no-white hover */
+.nh-gaming-section,
+.nh-gaming-shell{pointer-events:auto !important}
+.nh-gaming-section{z-index:2147480000 !important}
+.nh-gaming-shell{z-index:2 !important}
+.nh-gaming-section::before,
+.nh-gaming-section::after,
+.nh-gaming-shell::before,
+.nh-gaming-shell::after,
+.nh-gaming-particles,
+.nh-gaming-cursor-core,
+.nh-gaming-trail{pointer-events:none !important}
+.nh-gaming-section:hover .nh-gaming-shell{
+  box-shadow:
+    0 0 44px rgba(255,54,124,.22),
+    0 0 92px rgba(145,58,255,.18),
+    0 0 140px rgba(255,44,110,.08),
+    inset 0 0 70px rgba(147,62,255,.10) !important;
+}
+.nh-gaming-heading h2{font-size:clamp(46px,5.9vw,78px) !important}
+.nh-gaming-heading p{font-size:9px !important}
+.nh-gaming-topline{font-size:7.5px !important}
+.nh-gaming-kicker,.nh-gaming-index{font-size:7px !important}
+.nh-gaming-filter,.nh-gaming-action{font-size:6.5px !important}
+.nh-game-card-copy strong{font-size:clamp(18px,1.9vw,26px) !important}
+.nh-game-card-copy small,.nh-game-card-copy em{font-size:7px !important}
+.nh-gacha-kicker{font-size:6.5px !important}
+.nh-gacha-top p{font-size:7px !important}
+.nh-gacha-card strong{font-size:9.5px !important}
+.nh-gacha-card small{font-size:6.5px !important}
+.nh-gacha-foot,.nh-gaming-footer{font-size:6px !important}
+.nh-game-card:hover{
+  border-color:rgba(255,65,112,1) !important;
+  animation:nhCardRedPulse216 1.05s ease-in-out infinite !important;
+}
+.nh-game-card:focus-visible{
+  outline:1px solid rgba(255,101,148,.95) !important;
+  outline-offset:3px !important;
+}
+.nh-gaming-trail{
+  position:absolute !important;
+  inset:0 !important;
+  z-index:4 !important;
+  opacity:var(--cursor-visible,0);
+}
+.nh-gaming-trail i{
+  position:fixed !important;
+  width:6px !important;
+  height:6px !important;
+  margin:-3px 0 0 -3px !important;
+  border-radius:50% !important;
+  background:linear-gradient(135deg,#fff,#ff6c9f,#b978ff) !important;
+  box-shadow:0 0 7px #ff5b95,0 0 15px #bc7aff,0 0 26px rgba(255,67,130,.46) !important;
+  opacity:calc(1 - var(--trail-index) * .07) !important;
+  animation:nhTrail216 .85s ease-in-out infinite !important;
+  animation-delay:calc(var(--trail-index) * -.06s) !important;
+  pointer-events:none !important;
+}
+.nh-gaming-cursor-core{
+  width:310px !important;
+  height:310px !important;
+  opacity:var(--cursor-visible,.55) !important;
+  background:
+    radial-gradient(circle,rgba(255,59,127,.18),rgba(170,72,255,.13) 22%,rgba(117,63,255,.06) 42%,transparent 70%) !important;
+  filter:blur(8px) !important;
+}
+.nh-game-card::before{
+  opacity:.54 !important;
+  filter:drop-shadow(0 0 5px rgba(255,56,119,.54)) !important;
+}
+@keyframes nhCardRedPulse216{
+  0%,100%{box-shadow:0 0 18px rgba(255,45,108,.17),0 0 35px rgba(255,45,108,.06),inset 0 0 22px rgba(157,67,255,.06)}
+  50%{box-shadow:0 0 30px rgba(255,48,110,.42),0 0 66px rgba(255,42,108,.18),0 0 90px rgba(166,68,255,.10),inset 0 0 30px rgba(176,69,255,.10)}
+}
+@keyframes nhTrail216{
+  0%,100%{transform:translate(0,0) scale(.58);opacity:.22}
+  45%{transform:translate(0,0) scale(1.22);opacity:.95}
+  70%{transform:translate(0,0) scale(.78);opacity:.42}
+}
