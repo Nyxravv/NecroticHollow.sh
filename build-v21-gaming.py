@@ -172,11 +172,12 @@ html=html[:pos]+tail
 
 head=html.lower().rfind('</head>')
 if head<0: raise RuntimeError("Missing </head>.")
-html=html[:head]+CSS+"\\n"+html[head:]
+html=html[:head]+CSS+"\\n"+'<style id="nh-v22-repair-css">\\n'+REPAIR_CSS+'\\n</style>\\n'+html[head:]
 body=html.lower().rfind('</body>')
 if body<0: raise RuntimeError("Missing </body>.")
-Path("v21-gaming.css").write_text(dec(C)+REPAIR_CSS,encoding="utf-8")
-Path("v21-gaming.js").write_text(dec(J),encoding="utf-8")
+html=html[:head] + '<style id="nh-v22-repair-css">\\n' + REPAIR_CSS + '\\n</style>\\n' + html[head:]
+body=html.lower().rfind('</body>')
+if body<0: raise RuntimeError("Missing </body>.")
 html=html[:body]+JS+"\\n"+REPAIR_SCRIPT+"\\n"+html[body:]
 
 index.write_text(html,encoding="utf-8")
