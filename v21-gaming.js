@@ -13,17 +13,36 @@
   let selectedUrl = '';
 
   const setExpanded = (card, open) => {
+    if (!card) return;
     const details = card.querySelector('.nh-game-details');
     const button = card.querySelector('.nh-game-expand');
     card.classList.toggle('expanded', open);
     card.setAttribute('aria-expanded', String(open));
+
     if (details) {
-      details.style.maxHeight = open ? details.scrollHeight + 'px' : '0px';
-      details.style.opacity = open ? '1' : '0';
-      details.style.paddingTop = open ? '12px' : '0';
-      details.style.paddingBottom = open ? '14px' : '0';
+      details.hidden = false;
+      if (open) {
+        details.style.setProperty('max-height', Math.max(details.scrollHeight, 180) + 'px', 'important');
+        details.style.setProperty('opacity', '1', 'important');
+        details.style.setProperty('padding-top', '12px', 'important');
+        details.style.setProperty('padding-bottom', '14px', 'important');
+        details.style.setProperty('border-top-color', 'rgba(255,255,255,.08)', 'important');
+      } else {
+        details.style.setProperty('max-height', '0px', 'important');
+        details.style.setProperty('opacity', '0', 'important');
+        details.style.setProperty('padding-top', '0px', 'important');
+        details.style.setProperty('padding-bottom', '0px', 'important');
+        details.style.setProperty('border-top-color', 'transparent', 'important');
+        window.setTimeout(() => {
+          if (!card.classList.contains('expanded')) details.hidden = true;
+        }, 440);
+      }
     }
-    if (button) button.innerHTML = open ? 'COLLAPSE DETAIL' : 'EXPAND DETAIL';
+
+    if (button) {
+      button.textContent = open ? 'COLLAPSE DETAIL' : 'EXPAND DETAIL';
+      button.setAttribute('aria-expanded', String(open));
+    }
   };
 
   function closePopover() {
@@ -41,29 +60,7 @@
 
   function toggleCard(card, force) {
     if (!card) return;
-    const open = typeof force === 'boolean' ? force : !card.classList.contains('expanded');
-    card.classList.toggle('expanded', open);
-    card.setAttribute('aria-expanded', String(open));
-    const details = card.querySelector('.nh-game-details');
-    const button = card.querySelector('.nh-game-expand');
-    if (details) {
-      if (open) {
-        details.hidden = false;
-        details.hidden = false;
-      details.style.maxHeight = details.scrollHeight + 'px';
-        details.style.opacity = '1';
-      } else {
-        details.style.maxHeight = '0px';
-        details.style.opacity = '0';
-        window.setTimeout(() => {
-          if (!card.classList.contains('expanded')) details.hidden = true;
-        }, 430);
-      }
-    }
-    if (button) {
-      button.textContent = open ? 'COLLAPSE DETAIL' : 'EXPAND DETAIL';
-      button.setAttribute('aria-expanded', String(open));
-    }
+    setExpanded(card, typeof force === 'boolean' ? force : !card.classList.contains('expanded'));
   }
 
   cards.forEach(card => {
@@ -105,16 +102,6 @@
     });
   });
 
-  // Capture clicks at document level so the expand control still works even if
-  // another portfolio layer intercepts bubbling events.
-  document.addEventListener('click', (e) => {
-    const button = e.target.closest('#nhGamingHistory .nh-game-expand');
-    if (!button) return;
-    e.preventDefault();
-    e.stopPropagation();
-    const card = button.closest('.nh-game-card');
-    toggleCard(card);
-  }, true);
 
   root.querySelector('.nh-gaming-expand-all')?.addEventListener('click', () => {
     cards.forEach(card => setExpanded(card, true));
