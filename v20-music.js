@@ -26,7 +26,7 @@
   if(!dock||!playBtn||!openBtn||!listEl||!audio||!titleEl||!statusEl||!volume)return;
 
   const DEFAULT_VOLUME=0.08;
-  const MAX_OUTPUT_VOLUME=0.30;
+  const MAX_OUTPUT_VOLUME=0.165;
   let index=0;
   let userPaused=false;
   let started=false;
