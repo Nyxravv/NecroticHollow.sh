@@ -232,10 +232,14 @@ html = re.sub(r'<link\\b[^>]*href=["\\\']v21-gaming\\.css["\\\'][^>]*>\\s*', '',
 html = re.sub(r'<script\\b[^>]*src=["\\\']v21-gaming\\.js["\\\'][^>]*>\\s*</script>\\s*', '', html, flags=re.I)
 
 head_end = html.lower().rfind('</head>')
-body_end = html.lower().rfind('</body>')
-if head_end < 0 or body_end < 0:
-    raise RuntimeError("Missing document closing tags.")
+if head_end < 0:
+    raise RuntimeError("Missing </head>.")
 html = html[:head_end] + CSS + '\n' + html[head_end:]
+
+# Recompute after the <head> insertion because all later indices shift.
+body_end = html.lower().rfind('</body>')
+if body_end < 0:
+    raise RuntimeError("Missing </body>.")
 html = html[:body_end] + JS + '\n' + html[body_end:]
 
 index.write_text(html, encoding="utf-8")
