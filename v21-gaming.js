@@ -39,22 +39,44 @@
     popover.setAttribute('aria-hidden', 'false');
   }
 
+  function toggleCard(card, force) {
+    if (!card) return;
+    const open = typeof force === 'boolean' ? force : !card.classList.contains('expanded');
+    card.classList.toggle('expanded', open);
+    card.setAttribute('aria-expanded', String(open));
+    const details = card.querySelector('.nh-game-details');
+    const button = card.querySelector('.nh-game-expand');
+    if (details) {
+      if (open) {
+        details.hidden = false;
+        details.hidden = false;
+      details.style.maxHeight = details.scrollHeight + 'px';
+        details.style.opacity = '1';
+      } else {
+        details.style.maxHeight = '0px';
+        details.style.opacity = '0';
+        window.setTimeout(() => {
+          if (!card.classList.contains('expanded')) details.hidden = true;
+        }, 430);
+      }
+    }
+    if (button) {
+      button.textContent = open ? 'COLLAPSE DETAIL' : 'EXPAND DETAIL';
+      button.setAttribute('aria-expanded', String(open));
+    }
+  }
+
   cards.forEach(card => {
     const body = card.querySelector('.nh-game-body');
     const icon = card.querySelector('.nh-game-icon');
-    const expand = card.querySelector('.nh-game-expand');
 
-    setExpanded(card, false);
+    const details = card.querySelector('.nh-game-details');
+    if (details) details.hidden = true;
+    toggleCard(card, false);
 
     body?.addEventListener('click', (e) => {
       if (e.target.closest('button')) return;
-      setExpanded(card, !card.classList.contains('expanded'));
-    });
-
-    expand?.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setExpanded(card, !card.classList.contains('expanded'));
+      toggleCard(card);
     });
 
     icon?.addEventListener('click', (e) => {
@@ -82,6 +104,17 @@
       card.style.setProperty('--glow', '0');
     });
   });
+
+  // Capture clicks at document level so the expand control still works even if
+  // another portfolio layer intercepts bubbling events.
+  document.addEventListener('click', (e) => {
+    const button = e.target.closest('#nhGamingHistory .nh-game-expand');
+    if (!button) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const card = button.closest('.nh-game-card');
+    toggleCard(card);
+  }, true);
 
   root.querySelector('.nh-gaming-expand-all')?.addEventListener('click', () => {
     cards.forEach(card => setExpanded(card, true));
