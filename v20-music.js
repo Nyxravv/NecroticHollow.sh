@@ -27,7 +27,7 @@
 
   const DEFAULT_VOLUME=0.08;
   const MAX_OUTPUT_VOLUME=0.165;
-  const MAX_CEILING=0.1155;
+  const MAX_CEILING=0.08085;
   let index=0;
   let userPaused=false;
   let started=false;
