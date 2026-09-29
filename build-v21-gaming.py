@@ -7,240 +7,34 @@ html = index.read_text(encoding="utf-8")
 CSS = '<link rel="stylesheet" href="v21-gaming.css">'
 JS = '<script src="v21-gaming.js"></script>'
 
-section = r'''
-<section class="section nh-gaming-section" id="gaming-history">
-  <div class="nh-gaming-shell">
-    <div class="nh-gaming-topline">
-      <span>08 // GAMING ARCHIVE</span>
-      <strong>NON-CYBERPUNK INTERESTS // SIGNAL PRESERVED</strong>
-    </div>
-
-    <div class="nh-gaming-heading">
-      <div>
-        <div class="nh-gaming-kicker">PERSONAL ARCHIVE // GAME HISTORY</div>
-        <h2>MY GAMING<br/><em>HISTORY.</em></h2>
-        <p>
-          A separate branch of the archive for the games I come back to, explore, study,
-          and get inspired by outside of Cyberpunk. Expand a title to open its detail layer.
-          Click a game image for the external-link controls.
-        </p>
-      </div>
-
-      <div class="nh-gaming-stats">
-        <div class="nh-gaming-stat"><span>ARCHIVED</span><b>07 GAMES</b></div>
-        <div class="nh-gaming-stat"><span>MODE</span><b>INTERACTIVE</b></div>
-        <div class="nh-gaming-stat"><span>VISUAL</span><b>NEON / GLOW</b></div>
-      </div>
-    </div>
-
-    <div class="nh-gaming-controls">
-      <div class="nh-gaming-filter-row">
-        <button class="nh-gaming-filter active" data-filter="all">ALL</button>
-        <button class="nh-gaming-filter" data-filter="openworld">OPEN WORLD</button>
-        <button class="nh-gaming-filter" data-filter="action">ACTION</button>
-        <button class="nh-gaming-filter" data-filter="souls">SOULS-LIKE</button>
-        <button class="nh-gaming-filter" data-filter="2d">2D</button>
-      </div>
-      <div class="nh-gaming-action-row">
-        <button class="nh-gaming-action nh-gaming-pulse" type="button">VFX // WAKE</button>
-        <button class="nh-gaming-action nh-gaming-expand-all" type="button">EXPAND ALL</button>
-        <button class="nh-gaming-action nh-gaming-collapse-all" type="button">COLLAPSE ALL</button>
-      </div>
-    </div>
-
-    <div class="nh-game-grid">
-      <article class="nh-game-card" data-tags="all openworld action" data-game="Ghost of Tsushima" data-url="https://store.steampowered.com/app/2215430/Ghost_of_Tsushima_DIRECTORS_CUT/" aria-expanded="false">
-        <div class="nh-game-body">
-          <button class="nh-game-icon" type="button" aria-label="Ghost of Tsushima link options"><img loading="lazy" alt="Ghost of Tsushima game artwork" src="https://cdn.cloudflare.steamstatic.com/steam/apps/2215430/header.jpg"/></button>
-          <div class="nh-game-copy">
-            <div class="nh-game-index">01 // OPEN WORLD</div>
-            <h3 class="nh-game-title"><span>GHOST OF TSUSHIMA</span></h3>
-            <div class="nh-game-meta">SUCKER PUNCH // NIXes // ACTION-ADVENTURE</div>
-            <button class="nh-game-expand" type="button">EXPAND DETAIL</button>
-          </div>
-        </div>
-        <div class="nh-game-details">
-          <div class="nh-game-details-grid">
-            <div class="nh-game-detail-box"><span>STYLE</span><b>OPEN WORLD</b></div>
-            <div class="nh-game-detail-box"><span>FOCUS</span><b>SAMURAI / EXPLORATION</b></div>
-            <div class="nh-game-detail-box"><span>PC PAGE</span><b>STEAM STORE</b></div>
-          </div>
-          <p>An open-world action adventure centered on exploration, combat, and Jin Sakai's journey through Tsushima. The PC edition is the DIRECTOR'S CUT, published by PlayStation Publishing.</p>
-        </div>
-      </article>
-
-      <article class="nh-game-card" data-tags="all openworld action souls" data-game="ELDEN RING" data-url="https://store.steampowered.com/app/1245620/ELDEN_RING/" aria-expanded="false">
-        <div class="nh-game-body">
-          <button class="nh-game-icon" type="button" aria-label="ELDEN RING link options"><img loading="lazy" alt="ELDEN RING game artwork" src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg"/></button>
-          <div class="nh-game-copy">
-            <div class="nh-game-index">02 // OPEN WORLD</div>
-            <h3 class="nh-game-title"><span>ELDEN RING</span></h3>
-            <div class="nh-game-meta">FROM SOFTWARE // BANDAI NAMCO // ACTION RPG</div>
-            <button class="nh-game-expand" type="button">EXPAND DETAIL</button>
-          </div>
-        </div>
-        <div class="nh-game-details">
-          <div class="nh-game-details-grid">
-            <div class="nh-game-detail-box"><span>STYLE</span><b>OPEN WORLD</b></div>
-            <div class="nh-game-detail-box"><span>FOCUS</span><b>EXPLORATION / BUILDCRAFT</b></div>
-            <div class="nh-game-detail-box"><span>PC PAGE</span><b>STEAM STORE</b></div>
-          </div>
-          <p>An open-world action RPG in the Lands Between, built around exploration, character builds, challenging encounters, and a large interconnected world.</p>
-        </div>
-      </article>
-
-      <article class="nh-game-card" data-tags="all action" data-game="NieR:Automata" data-url="https://store.steampowered.com/app/524220/NieRAutomata/" aria-expanded="false">
-        <div class="nh-game-body">
-          <button class="nh-game-icon" type="button" aria-label="NieR Automata link options"><img loading="lazy" alt="NieR Automata game artwork" src="https://cdn.cloudflare.steamstatic.com/steam/apps/524220/header.jpg"/></button>
-          <div class="nh-game-copy">
-            <div class="nh-game-index">03 // ARCHIVE SIGNAL</div>
-            <h3 class="nh-game-title"><span>NIER:AUTOMATA</span></h3>
-            <div class="nh-game-meta">SQUARE ENIX // PLATINUMGAMES // ACTION RPG</div>
-            <button class="nh-game-expand" type="button">EXPAND DETAIL</button>
-          </div>
-        </div>
-        <div class="nh-game-details">
-          <div class="nh-game-details-grid">
-            <div class="nh-game-detail-box"><span>STYLE</span><b>ACTION RPG</b></div>
-            <div class="nh-game-detail-box"><span>FOCUS</span><b>COMBAT / WORLD / STORY</b></div>
-            <div class="nh-game-detail-box"><span>PC PAGE</span><b>STEAM STORE</b></div>
-          </div>
-          <p>An action RPG following androids 2B, 9S, and A2 in a machine-driven dystopian world, mixing fast combat, exploration, and a story-heavy campaign.</p>
-        </div>
-      </article>
-
-      <article class="nh-game-card" data-tags="all action souls" data-game="Sekiro: Shadows Die Twice" data-url="https://store.steampowered.com/app/814380/SekiroShadows_Die_Twice__GOTY_Edition/" aria-expanded="false">
-        <div class="nh-game-body">
-          <button class="nh-game-icon" type="button" aria-label="Sekiro link options"><img loading="lazy" alt="Sekiro Shadows Die Twice game artwork" src="https://cdn.cloudflare.steamstatic.com/steam/apps/814380/header.jpg"/></button>
-          <div class="nh-game-copy">
-            <div class="nh-game-index">04 // PRECISION</div>
-            <h3 class="nh-game-title"><span>SEKIRO</span></h3>
-            <div class="nh-game-meta">FROM SOFTWARE // ACTIVISION // ACTION-ADVENTURE</div>
-            <button class="nh-game-expand" type="button">EXPAND DETAIL</button>
-          </div>
-        </div>
-        <div class="nh-game-details">
-          <div class="nh-game-details-grid">
-            <div class="nh-game-detail-box"><span>STYLE</span><b>PRECISION ACTION</b></div>
-            <div class="nh-game-detail-box"><span>FOCUS</span><b>PARRY / MOBILITY</b></div>
-            <div class="nh-game-detail-box"><span>PC PAGE</span><b>STEAM STORE</b></div>
-          </div>
-          <p>A fast action-adventure built around precise swordplay, movement, stealth, and timing in a dark Sengoku-era setting.</p>
-        </div>
-      </article>
-
-      <article class="nh-game-card" data-tags="all 2d action souls" data-game="Hollow Knight" data-url="https://store.steampowered.com/app/367520/Hollow_Knight/" aria-expanded="false">
-        <div class="nh-game-body">
-          <button class="nh-game-icon" type="button" aria-label="Hollow Knight link options"><img loading="lazy" alt="Hollow Knight game artwork" src="https://cdn.cloudflare.steamstatic.com/steam/apps/367520/header.jpg"/></button>
-          <div class="nh-game-copy">
-            <div class="nh-game-index">05 // 2D WORLD</div>
-            <h3 class="nh-game-title"><span>HOLLOW KNIGHT</span></h3>
-            <div class="nh-game-meta">TEAM CHERRY // ACTION-ADVENTURE // 2D</div>
-            <button class="nh-game-expand" type="button">EXPAND DETAIL</button>
-          </div>
-        </div>
-        <div class="nh-game-details">
-          <div class="nh-game-details-grid">
-            <div class="nh-game-detail-box"><span>STYLE</span><b>2D METROIDVANIA</b></div>
-            <div class="nh-game-detail-box"><span>FOCUS</span><b>EXPLORATION / ATMOSPHERE</b></div>
-            <div class="nh-game-detail-box"><span>PC PAGE</span><b>STEAM STORE</b></div>
-          </div>
-          <p>A hand-drawn 2D action adventure set in a vast ruined kingdom, built around interconnected exploration, combat, secrets, and atmospheric world design.</p>
-        </div>
-      </article>
-
-      <article class="nh-game-card" data-tags="all action" data-game="Devil May Cry 5" data-url="https://store.steampowered.com/app/601150/Devil_May_Cry_5/" aria-expanded="false">
-        <div class="nh-game-body">
-          <button class="nh-game-icon" type="button" aria-label="Devil May Cry 5 link options"><img loading="lazy" alt="Devil May Cry 5 game artwork" src="https://cdn.cloudflare.steamstatic.com/steam/apps/601150/header.jpg"/></button>
-          <div class="nh-game-copy">
-            <div class="nh-game-index">06 // STYLE SYSTEM</div>
-            <h3 class="nh-game-title"><span>DEVIL MAY CRY 5</span></h3>
-            <div class="nh-game-meta">CAPCOM // CHARACTER ACTION // COMBAT</div>
-            <button class="nh-game-expand" type="button">EXPAND DETAIL</button>
-          </div>
-        </div>
-        <div class="nh-game-details">
-          <div class="nh-game-details-grid">
-            <div class="nh-game-detail-box"><span>STYLE</span><b>CHARACTER ACTION</b></div>
-            <div class="nh-game-detail-box"><span>FOCUS</span><b>COMBO / MOVEMENT</b></div>
-            <div class="nh-game-detail-box"><span>PC PAGE</span><b>STEAM STORE</b></div>
-          </div>
-          <p>A character-action game focused on expressive combat, movement, spectacle, and chaining attacks across its campaign.</p>
-        </div>
-      </article>
-
-      <article class="nh-game-card" data-tags="all action souls" data-game="DARK SOULS III" data-url="https://store.steampowered.com/app/374320/DARK_SOULS_III/" aria-expanded="false">
-        <div class="nh-game-body">
-          <button class="nh-game-icon" type="button" aria-label="Dark Souls III link options"><img loading="lazy" alt="Dark Souls III game artwork" src="https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg"/></button>
-          <div class="nh-game-copy">
-            <div class="nh-game-index">07 // DARK ARCHIVE</div>
-            <h3 class="nh-game-title"><span>DARK SOULS III</span></h3>
-            <div class="nh-game-meta">FROM SOFTWARE // BANDAI NAMCO // ACTION RPG</div>
-            <button class="nh-game-expand" type="button">EXPAND DETAIL</button>
-          </div>
-        </div>
-        <div class="nh-game-details">
-          <div class="nh-game-details-grid">
-            <div class="nh-game-detail-box"><span>STYLE</span><b>DARK FANTASY</b></div>
-            <div class="nh-game-detail-box"><span>FOCUS</span><b>EXPLORATION / COMBAT</b></div>
-            <div class="nh-game-detail-box"><span>PC PAGE</span><b>STEAM STORE</b></div>
-          </div>
-          <p>A dark-fantasy action RPG from FromSoftware, with layered areas, deliberate combat, character builds, and a lore-heavy world.</p>
-        </div>
-      </article>
-    </div>
-
-    <div class="nh-gaming-footer">
-      <span>HOVER // EXPAND // INSPECT // EXTERNAL LINK</span>
-      <strong>08 // ARCHIVE ONLINE</strong>
-    </div>
-  </div>
-
-  <div class="nh-game-link-popover" id="nhGameLinkPopover" aria-hidden="true">
-    <div class="nh-game-link-panel" role="dialog" aria-modal="true" aria-label="Game link options">
-      <button class="nh-game-link-close" type="button" aria-label="Close link options">×</button>
-      <div class="nh-game-link-kicker">EXTERNAL LINK // GAME PAGE</div>
-      <div class="nh-game-link-title">GAME</div>
-      <p class="nh-game-link-url">store.steampowered.com/</p>
-      <div class="nh-game-link-actions">
-        <button class="nh-game-copy" type="button">COPY LINK</button>
-        <button class="nh-game-open" type="button">OPEN GAME PAGE ↗</button>
-      </div>
-    </div>
-  </div>
-</section>
-'''
-
-# Keep the existing portfolio as the base and inject exactly one gaming section.
-marker = '<section class="section links v150-links" id="links">'
-if 'id="gaming-history"' not in html:
-    pos = html.find(marker)
-    if pos < 0:
-        raise RuntimeError("Section 8 marker not found.")
-    html = html[:pos] + section + '\n' + html[pos:]
-
-# Renumber the existing network section from 08 to 09 so the new archive is Section 8.
-links_pos = html.find(marker)
-if links_pos >= 0:
-    tail = html[links_pos:]
-    tail = tail.replace('<span>08 // NETWORK</span>', '<span>09 // NETWORK</span>', 1)
-    tail = tail.replace('ARCHIVE // 08 // ENDPOINT', 'ARCHIVE // 09 // ENDPOINT', 1)
-    html = html[:links_pos] + tail
-
-# Ensure asset references exist only once.
+# The source index does not permanently contain the generated gaming section.
+# Remove stale asset references so the deploy artifact receives exactly one set.
 html = re.sub(r'<link\\b[^>]*href=["\\\']v21-gaming\\.css["\\\'][^>]*>\\s*', '', html, flags=re.I)
 html = re.sub(r'<script\\b[^>]*src=["\\\']v21-gaming\\.js["\\\'][^>]*>\\s*</script>\\s*', '', html, flags=re.I)
 
-head_end = html.lower().rfind('</head>')
+section = "\n<section class=\"section nh-gaming-section\" id=\"gaming-history\">\n  <div class=\"nh-gaming-shell\">\n    <div class=\"nh-gaming-particles\" aria-hidden=\"true\"><i style=\"--i:0\"></i><i style=\"--i:1\"></i><i style=\"--i:2\"></i><i style=\"--i:3\"></i><i style=\"--i:4\"></i><i style=\"--i:5\"></i><i style=\"--i:6\"></i><i style=\"--i:7\"></i><i style=\"--i:8\"></i><i style=\"--i:9\"></i><i style=\"--i:10\"></i><i style=\"--i:11\"></i><i style=\"--i:12\"></i><i style=\"--i:13\"></i><i style=\"--i:14\"></i><i style=\"--i:15\"></i><i style=\"--i:16\"></i><i style=\"--i:17\"></i></div>\n\n    <div class=\"nh-gaming-topline\">\n      <span>08 // GAMING ARCHIVE</span>\n      <strong>BEYOND CYBERPUNK // PERSONAL INTERESTS</strong>\n      <b>LIVE // INTERACTIVE</b>\n    </div>\n\n    <div class=\"nh-gaming-heading\">\n      <div>\n        <span class=\"nh-gaming-kicker\">PLAY LOG // PERSONAL HISTORY</span>\n        <h2>MY GAMING <em>HISTORY.</em></h2>\n        <p>Games I return to for worlds, mechanics, atmosphere, competition, and inspiration. Click a card to expand it. Click an icon to open its link controls.</p>\n      </div>\n      <div class=\"nh-gaming-stats\">\n        <span><small>ARCHIVE</small><b>10</b><em>TITLES</em></span>\n        <span><small>MODE</small><b>ACTIVE</b><em>INTERACTIVE</em></span>\n        <span><small>VFX</small><b>MAX</b><em>REACTIVE</em></span>\n      </div>\n    </div>\n\n    <div class=\"nh-gaming-controls\">\n      <div class=\"nh-gaming-filter-row\">\n        <button class=\"nh-gaming-filter active\" data-filter=\"all\" type=\"button\">ALL</button>\n        <button class=\"nh-gaming-filter\" data-filter=\"openworld\" type=\"button\">OPEN WORLD</button>\n        <button class=\"nh-gaming-filter\" data-filter=\"action\" type=\"button\">ACTION</button>\n        <button class=\"nh-gaming-filter\" data-filter=\"souls\" type=\"button\">SOULS-LIKE</button>\n        <button class=\"nh-gaming-filter\" data-filter=\"competitive\" type=\"button\">COMPETITIVE</button>\n      </div>\n      <div class=\"nh-gaming-action-row\">\n        <button class=\"nh-gaming-action nh-gaming-pulse\" type=\"button\">VFX // WAKE</button>\n        <button class=\"nh-gaming-action nh-gaming-expand-all\" type=\"button\">EXPAND ALL</button>\n        <button class=\"nh-gaming-action nh-gaming-collapse-all\" type=\"button\">COLLAPSE ALL</button>\n      </div>\n    </div>\n\n    <div class=\"nh-gaming-matrix\">\n      <div class=\"nh-game-grid\">\n      <details class=\"nh-game-card\" data-tags=\"all openworld action\" data-game=\"GHOST OF TSUSHIMA\" data-url=\"https://store.steampowered.com/app/2215430/\">\n        <summary class=\"nh-game-summary\">\n          <button class=\"nh-game-icon\" type=\"button\" aria-label=\"GHOST OF TSUSHIMA link options\"><img loading=\"lazy\" alt=\"GHOST OF TSUSHIMA artwork\" src=\"https://cdn.cloudflare.steamstatic.com/steam/apps/2215430/header.jpg\"/></button>\n          <span class=\"nh-game-copy\">\n            <span class=\"nh-game-index\">01 // OPEN WORLD</span>\n            <span class=\"nh-game-title\">GHOST OF TSUSHIMA</span>\n            <span class=\"nh-game-meta\">OPEN WORLD // ACTION-ADVENTURE</span>\n            <span class=\"nh-game-toggle\">EXPAND DETAIL +</span>\n          </span>\n          <span class=\"nh-game-chevron\" aria-hidden=\"true\">↘</span>\n        </summary>\n        <div class=\"nh-game-details-wrap\">\n          <div class=\"nh-game-details\">\n            <div class=\"nh-game-details-grid\">\n              <span><small>STYLE</small><b>OPEN WORLD</b></span>\n              <span><small>FOCUS</small><b>EXPLORATION / DUELS</b></span>\n              <span><small>LINK</small><b>GAME PAGE ↗</b></span>\n            </div>\n            <p>A cinematic open-world journey across Tsushima, with exploration, traversal, combat, and a strong visual identity.</p>\n            <button class=\"nh-game-open-detail\" type=\"button\">OPEN GAME LINK ↗</button>\n          </div>\n        </div>\n      </details>\n\n      <details class=\"nh-game-card\" data-tags=\"all openworld souls action\" data-game=\"ELDEN RING\" data-url=\"https://store.steampowered.com/app/1245620/\">\n        <summary class=\"nh-game-summary\">\n          <button class=\"nh-game-icon\" type=\"button\" aria-label=\"ELDEN RING link options\"><img loading=\"lazy\" alt=\"ELDEN RING artwork\" src=\"https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg\"/></button>\n          <span class=\"nh-game-copy\">\n            <span class=\"nh-game-index\">02 // OPEN WORLD</span>\n            <span class=\"nh-game-title\">ELDEN RING</span>\n            <span class=\"nh-game-meta\">OPEN WORLD // ACTION RPG</span>\n            <span class=\"nh-game-toggle\">EXPAND DETAIL +</span>\n          </span>\n          <span class=\"nh-game-chevron\" aria-hidden=\"true\">↘</span>\n        </summary>\n        <div class=\"nh-game-details-wrap\">\n          <div class=\"nh-game-details\">\n            <div class=\"nh-game-details-grid\">\n              <span><small>STYLE</small><b>OPEN WORLD</b></span>\n              <span><small>FOCUS</small><b>EXPLORATION / BUILDCRAFT</b></span>\n              <span><small>LINK</small><b>GAME PAGE ↗</b></span>\n            </div>\n            <p>A huge interconnected fantasy world built around exploration, character builds, discovery, and difficult encounters.</p>\n            <button class=\"nh-game-open-detail\" type=\"button\">OPEN GAME LINK ↗</button>\n          </div>\n        </div>\n      </details>\n\n      <details class=\"nh-game-card\" data-tags=\"all action\" data-game=\"NIER:AUTOMATA\" data-url=\"https://store.steampowered.com/app/524220/\">\n        <summary class=\"nh-game-summary\">\n          <button class=\"nh-game-icon\" type=\"button\" aria-label=\"NIER:AUTOMATA link options\"><img loading=\"lazy\" alt=\"NIER:AUTOMATA artwork\" src=\"https://cdn.cloudflare.steamstatic.com/steam/apps/524220/header.jpg\"/></button>\n          <span class=\"nh-game-copy\">\n            <span class=\"nh-game-index\">03 // ACTION RPG</span>\n            <span class=\"nh-game-title\">NIER:AUTOMATA</span>\n            <span class=\"nh-game-meta\">ACTION RPG // STORY-DRIVEN</span>\n            <span class=\"nh-game-toggle\">EXPAND DETAIL +</span>\n          </span>\n          <span class=\"nh-game-chevron\" aria-hidden=\"true\">↘</span>\n        </summary>\n        <div class=\"nh-game-details-wrap\">\n          <div class=\"nh-game-details\">\n            <div class=\"nh-game-details-grid\">\n              <span><small>STYLE</small><b>ACTION RPG</b></span>\n              <span><small>FOCUS</small><b>STORY / COMBAT / ATMOSPHERE</b></span>\n              <span><small>LINK</small><b>GAME PAGE ↗</b></span>\n            </div>\n            <p>A striking action RPG that mixes fast combat, exploration, layered storytelling, and a machine-driven dystopian setting.</p>\n            <button class=\"nh-game-open-detail\" type=\"button\">OPEN GAME LINK ↗</button>\n          </div>\n        </div>\n      </details>\n\n      <details class=\"nh-game-card\" data-tags=\"all action souls\" data-game=\"BLACK MYTH: WUKONG\" data-url=\"https://store.steampowered.com/app/2358720/\">\n        <summary class=\"nh-game-summary\">\n          <button class=\"nh-game-icon\" type=\"button\" aria-label=\"BLACK MYTH: WUKONG link options\"><img loading=\"lazy\" alt=\"BLACK MYTH: WUKONG artwork\" src=\"https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg\"/></button>\n          <span class=\"nh-game-copy\">\n            <span class=\"nh-game-index\">04 // ACTION RPG</span>\n            <span class=\"nh-game-title\">BLACK MYTH: WUKONG</span>\n            <span class=\"nh-game-meta\">ACTION RPG // MYTHOLOGY</span>\n            <span class=\"nh-game-toggle\">EXPAND DETAIL +</span>\n          </span>\n          <span class=\"nh-game-chevron\" aria-hidden=\"true\">↘</span>\n        </summary>\n        <div class=\"nh-game-details-wrap\">\n          <div class=\"nh-game-details\">\n            <div class=\"nh-game-details-grid\">\n              <span><small>STYLE</small><b>ACTION RPG</b></span>\n              <span><small>FOCUS</small><b>MYTHOLOGY / COMBAT</b></span>\n              <span><small>LINK</small><b>GAME PAGE ↗</b></span>\n            </div>\n            <p>A visually rich action RPG rooted in Chinese mythology, with a focused combat system and dramatic environments.</p>\n            <button class=\"nh-game-open-detail\" type=\"button\">OPEN GAME LINK ↗</button>\n          </div>\n        </div>\n      </details>\n\n      <details class=\"nh-game-card\" data-tags=\"all action fps\" data-game=\"BORDERLANDS 4\" data-url=\"https://store.steampowered.com/app/1285190/\">\n        <summary class=\"nh-game-summary\">\n          <button class=\"nh-game-icon\" type=\"button\" aria-label=\"BORDERLANDS 4 link options\"><img loading=\"lazy\" alt=\"BORDERLANDS 4 artwork\" src=\"https://cdn.cloudflare.steamstatic.com/steam/apps/1285190/header.jpg\"/></button>\n          <span class=\"nh-game-copy\">\n            <span class=\"nh-game-index\">05 // LOOTER SHOOTER</span>\n            <span class=\"nh-game-title\">BORDERLANDS 4</span>\n            <span class=\"nh-game-meta\">LOOTER SHOOTER // CO-OP</span>\n            <span class=\"nh-game-toggle\">EXPAND DETAIL +</span>\n          </span>\n          <span class=\"nh-game-chevron\" aria-hidden=\"true\">↘</span>\n        </summary>\n        <div class=\"nh-game-details-wrap\">\n          <div class=\"nh-game-details\">\n            <div class=\"nh-game-details-grid\">\n              <span><small>STYLE</small><b>LOOTER SHOOTER</b></span>\n              <span><small>FOCUS</small><b>LOOT / CO-OP / WORLD</b></span>\n              <span><small>LINK</small><b>GAME PAGE ↗</b></span>\n            </div>\n            <p>A fast-moving co-op adventure with extensive customization, exploration, and a colourful sci-fi world.</p>\n            <button class=\"nh-game-open-detail\" type=\"button\">OPEN GAME LINK ↗</button>\n          </div>\n        </div>\n      </details>\n\n      <details class=\"nh-game-card\" data-tags=\"all stealth action\" data-game=\"HITMAN 3\" data-url=\"https://store.steampowered.com/app/1659040/\">\n        <summary class=\"nh-game-summary\">\n          <button class=\"nh-game-icon\" type=\"button\" aria-label=\"HITMAN 3 link options\"><img loading=\"lazy\" alt=\"HITMAN 3 artwork\" src=\"https://cdn.cloudflare.steamstatic.com/steam/apps/1659040/header.jpg\"/></button>\n          <span class=\"nh-game-copy\">\n            <span class=\"nh-game-index\">06 // STEALTH</span>\n            <span class=\"nh-game-title\">HITMAN 3</span>\n            <span class=\"nh-game-meta\">STEALTH // SANDBOX</span>\n            <span class=\"nh-game-toggle\">EXPAND DETAIL +</span>\n          </span>\n          <span class=\"nh-game-chevron\" aria-hidden=\"true\">↘</span>\n        </summary>\n        <div class=\"nh-game-details-wrap\">\n          <div class=\"nh-game-details\">\n            <div class=\"nh-game-details-grid\">\n              <span><small>STYLE</small><b>STEALTH SANDBOX</b></span>\n              <span><small>FOCUS</small><b>LEVEL DESIGN / FREEDOM</b></span>\n              <span><small>LINK</small><b>GAME PAGE ↗</b></span>\n            </div>\n            <p>The current HITMAN World of Assassination package includes the HITMAN 3 campaign, contracts, escalations, and featured content.</p>\n            <button class=\"nh-game-open-detail\" type=\"button\">OPEN GAME LINK ↗</button>\n          </div>\n        </div>\n      </details>\n\n      <details class=\"nh-game-card\" data-tags=\"all souls action openworld\" data-game=\"WUCHANG: FALLEN FEATHERS\" data-url=\"https://store.steampowered.com/app/2277560/\">\n        <summary class=\"nh-game-summary\">\n          <button class=\"nh-game-icon\" type=\"button\" aria-label=\"WUCHANG: FALLEN FEATHERS link options\"><img loading=\"lazy\" alt=\"WUCHANG: FALLEN FEATHERS artwork\" src=\"https://cdn.cloudflare.steamstatic.com/steam/apps/2277560/header.jpg\"/></button>\n          <span class=\"nh-game-copy\">\n            <span class=\"nh-game-index\">07 // SOULS-LIKE</span>\n            <span class=\"nh-game-title\">WUCHANG: FALLEN FEATHERS</span>\n            <span class=\"nh-game-meta\">SOULS-LIKE // ACTION RPG</span>\n            <span class=\"nh-game-toggle\">EXPAND DETAIL +</span>\n          </span>\n          <span class=\"nh-game-chevron\" aria-hidden=\"true\">↘</span>\n        </summary>\n        <div class=\"nh-game-details-wrap\">\n          <div class=\"nh-game-details\">\n            <div class=\"nh-game-details-grid\">\n              <span><small>STYLE</small><b>SOULS-LIKE</b></span>\n              <span><small>FOCUS</small><b>COMBAT / EXPLORATION</b></span>\n              <span><small>LINK</small><b>GAME PAGE ↗</b></span>\n            </div>\n            <p>A dark action RPG with interconnected areas, character progression, exploration, and demanding encounters.</p>\n            <button class=\"nh-game-open-detail\" type=\"button\">OPEN GAME LINK ↗</button>\n          </div>\n        </div>\n      </details>\n\n      <details class=\"nh-game-card\" data-tags=\"all action\" data-game=\"ONIMUSHA: WAY OF THE SWORD\" data-url=\"https://store.steampowered.com/app/2638890/\">\n        <summary class=\"nh-game-summary\">\n          <button class=\"nh-game-icon\" type=\"button\" aria-label=\"ONIMUSHA: WAY OF THE SWORD link options\"><img loading=\"lazy\" alt=\"ONIMUSHA: WAY OF THE SWORD artwork\" src=\"https://cdn.cloudflare.steamstatic.com/steam/apps/2638890/header.jpg\"/></button>\n          <span class=\"nh-game-copy\">\n            <span class=\"nh-game-index\">08 // ACTION RPG</span>\n            <span class=\"nh-game-title\">ONIMUSHA: WAY OF THE SWORD</span>\n            <span class=\"nh-game-meta\">ACTION RPG // SAMURAI</span>\n            <span class=\"nh-game-toggle\">EXPAND DETAIL +</span>\n          </span>\n          <span class=\"nh-game-chevron\" aria-hidden=\"true\">↘</span>\n        </summary>\n        <div class=\"nh-game-details-wrap\">\n          <div class=\"nh-game-details\">\n            <div class=\"nh-game-details-grid\">\n              <span><small>STYLE</small><b>ACTION RPG</b></span>\n              <span><small>FOCUS</small><b>SWORDPLAY / KYOTO</b></span>\n              <span><small>LINK</small><b>GAME PAGE ↗</b></span>\n            </div>\n            <p>A new Onimusha entry focused on fast swordplay, exploration, and a dark historical-fantasy setting.</p>\n            <button class=\"nh-game-open-detail\" type=\"button\">OPEN GAME LINK ↗</button>\n          </div>\n        </div>\n      </details>\n\n      <details class=\"nh-game-card\" data-tags=\"all competitive\" data-game=\"VALORANT\" data-url=\"https://playvalorant.com/en-gb/\">\n        <summary class=\"nh-game-summary\">\n          <button class=\"nh-game-icon\" type=\"button\" aria-label=\"VALORANT link options\"><img loading=\"lazy\" alt=\"VALORANT artwork\" src=\"data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' rx='36' fill='%23100a18'/%3E%3Cpath d='M57 49h57l34 59-43 73H70l27-47zM151 49h48l-31 54-25-43z' fill='%23ff477d'/%3E%3Cpath d='M113 152h76l16 28h-108z' fill='%23b86aff'/%3E%3C/svg%3E\"/></button>\n          <span class=\"nh-game-copy\">\n            <span class=\"nh-game-index\">09 // 5V5 TACTICAL</span>\n            <span class=\"nh-game-title\">VALORANT</span>\n            <span class=\"nh-game-meta\">5V5 TACTICAL // COMPETITIVE</span>\n            <span class=\"nh-game-toggle\">EXPAND DETAIL +</span>\n          </span>\n          <span class=\"nh-game-chevron\" aria-hidden=\"true\">↘</span>\n        </summary>\n        <div class=\"nh-game-details-wrap\">\n          <div class=\"nh-game-details\">\n            <div class=\"nh-game-details-grid\">\n              <span><small>STYLE</small><b>COMPETITIVE</b></span>\n              <span><small>FOCUS</small><b>TEAMPLAY / MECHANICS</b></span>\n              <span><small>LINK</small><b>GAME PAGE ↗</b></span>\n            </div>\n            <p>My competitive archive entry. Personal note: I placed top 28 in tournaments.</p>\n            <button class=\"nh-game-open-detail\" type=\"button\">OPEN GAME LINK ↗</button>\n          </div>\n        </div>\n      </details>\n\n      <details class=\"nh-game-card\" data-tags=\"all action\" data-game=\"WARFRAME\" data-url=\"https://www.warframe.com/\">\n        <summary class=\"nh-game-summary\">\n          <button class=\"nh-game-icon\" type=\"button\" aria-label=\"WARFRAME link options\"><img loading=\"lazy\" alt=\"WARFRAME artwork\" src=\"https://cdn.cloudflare.steamstatic.com/steam/apps/230410/header.jpg\"/></button>\n          <span class=\"nh-game-copy\">\n            <span class=\"nh-game-index\">10 // ONLINE ACTION</span>\n            <span class=\"nh-game-title\">WARFRAME</span>\n            <span class=\"nh-game-meta\">ONLINE ACTION // SCI-FI</span>\n            <span class=\"nh-game-toggle\">EXPAND DETAIL +</span>\n          </span>\n          <span class=\"nh-game-chevron\" aria-hidden=\"true\">↘</span>\n        </summary>\n        <div class=\"nh-game-details-wrap\">\n          <div class=\"nh-game-details\">\n            <div class=\"nh-game-details-grid\">\n              <span><small>STYLE</small><b>ONLINE ACTION</b></span>\n              <span><small>FOCUS</small><b>BUILDING / MISSIONS</b></span>\n              <span><small>LINK</small><b>GAME PAGE ↗</b></span>\n            </div>\n            <p>A long-running sci-fi action game built around progression, customisation, missions, and a large evolving universe.</p>\n            <button class=\"nh-game-open-detail\" type=\"button\">OPEN GAME LINK ↗</button>\n          </div>\n        </div>\n      </details></div>\n\n      <aside class=\"nh-gacha-panel\">\n        <div class=\"nh-gacha-top\">\n          <span class=\"nh-gacha-kicker\">SIDE ARCHIVE // COLLECTION LOG</span>\n          <strong>GACHA // COMPLETION</strong>\n          <p>Personal tracking module. Expand a game to reveal its completion attachment.</p>\n        </div>\n        <div class=\"nh-gacha-list\">\n          <details class=\"nh-gacha-card\">\n            <summary>\n              <span class=\"nh-gacha-icon\"><img loading=\"lazy\" alt=\"ZENLESS ZONE ZERO icon\" src=\"https://www.google.com/s2/favicons?domain=zenless.hoyoverse.com&sz=128\"/></span>\n              <span class=\"nh-gacha-main\"><strong>ZENLESS ZONE ZERO</strong><small>zenless.hoyoverse.com</small></span>\n              <span class=\"nh-gacha-arrow\">+</span>\n            </summary>\n            <div class=\"nh-gacha-detail\">\n              <p>Completion log entry. Track story, agents, events, and personal collection milestones here.</p>\n              <button class=\"nh-gacha-link\" type=\"button\" data-url=\"https://zenless.hoyoverse.com/en-us/\" data-game=\"ZENLESS ZONE ZERO\">OPEN OFFICIAL PAGE ↗</button>\n            </div>\n          </details>\n\n          <details class=\"nh-gacha-card\">\n            <summary>\n              <span class=\"nh-gacha-icon\"><img loading=\"lazy\" alt=\"WUTHERING WAVES icon\" src=\"https://www.google.com/s2/favicons?domain=wutheringwaves.kurogames.com&sz=128\"/></span>\n              <span class=\"nh-gacha-main\"><strong>WUTHERING WAVES</strong><small>wutheringwaves.kurogames.com</small></span>\n              <span class=\"nh-gacha-arrow\">+</span>\n            </summary>\n            <div class=\"nh-gacha-detail\">\n              <p>Completion log entry. Track exploration, characters, progression, and long-term account milestones.</p>\n              <button class=\"nh-gacha-link\" type=\"button\" data-url=\"https://wutheringwaves.kurogames.com/en/\" data-game=\"WUTHERING WAVES\">OPEN OFFICIAL PAGE ↗</button>\n            </div>\n          </details>\n\n          <details class=\"nh-gacha-card\">\n            <summary>\n              <span class=\"nh-gacha-icon\"><img loading=\"lazy\" alt=\"GENSHIN IMPACT icon\" src=\"https://www.google.com/s2/favicons?domain=genshin.hoyoverse.com&sz=128\"/></span>\n              <span class=\"nh-gacha-main\"><strong>GENSHIN IMPACT</strong><small>genshin.hoyoverse.com</small></span>\n              <span class=\"nh-gacha-arrow\">+</span>\n            </summary>\n            <div class=\"nh-gacha-detail\">\n              <p>Completion log entry. Track regions, characters, quests, achievements, and personal goals.</p>\n              <button class=\"nh-gacha-link\" type=\"button\" data-url=\"https://genshin.hoyoverse.com/en/\" data-game=\"GENSHIN IMPACT\">OPEN OFFICIAL PAGE ↗</button>\n            </div>\n          </details>\n\n          <details class=\"nh-gacha-card\">\n            <summary>\n              <span class=\"nh-gacha-icon\"><img loading=\"lazy\" alt=\"SNOWBREAK: CONTAINMENT ZONE icon\" src=\"https://www.google.com/s2/favicons?domain=snowbreak.amazingseasun.com&sz=128\"/></span>\n              <span class=\"nh-gacha-main\"><strong>SNOWBREAK: CONTAINMENT ZONE</strong><small>snowbreak.amazingseasun.com</small></span>\n              <span class=\"nh-gacha-arrow\">+</span>\n            </summary>\n            <div class=\"nh-gacha-detail\">\n              <p>Completion log entry. Track personal progression, characters, story chapters, and milestones.</p>\n              <button class=\"nh-gacha-link\" type=\"button\" data-url=\"https://snowbreak.amazingseasun.com/\" data-game=\"SNOWBREAK: CONTAINMENT ZONE\">OPEN OFFICIAL PAGE ↗</button>\n            </div>\n          </details>\n\n          <details class=\"nh-gacha-card\">\n            <summary>\n              <span class=\"nh-gacha-icon\"><img loading=\"lazy\" alt=\"ARKNIGHTS: ENDFIELD icon\" src=\"https://www.google.com/s2/favicons?domain=endfield.gryphline.com&sz=128\"/></span>\n              <span class=\"nh-gacha-main\"><strong>ARKNIGHTS: ENDFIELD</strong><small>endfield.gryphline.com</small></span>\n              <span class=\"nh-gacha-arrow\">+</span>\n            </summary>\n            <div class=\"nh-gacha-detail\">\n              <p>Completion log entry. Track story progression, roster development, exploration, and future milestones.</p>\n              <button class=\"nh-gacha-link\" type=\"button\" data-url=\"https://endfield.gryphline.com/\" data-game=\"ARKNIGHTS: ENDFIELD\">OPEN OFFICIAL PAGE ↗</button>\n            </div>\n          </details></div>\n        <div class=\"nh-gacha-foot\"><span>05 TITLES // TRACKING READY</span><b>RIGHT // LOWER ARCHIVE</b></div>\n      </aside>\n    </div>\n\n    <div class=\"nh-gaming-footer\">\n      <span>HOVER // MOVE // EXPAND // INSPECT</span>\n      <strong>08 // ARCHIVE ONLINE</strong>\n    </div>\n  </div>\n\n  <div class=\"nh-game-link-popover\" id=\"nhGameLinkPopover\" aria-hidden=\"true\">\n    <div class=\"nh-game-link-panel\" role=\"dialog\" aria-modal=\"true\" aria-label=\"Game link options\">\n      <button class=\"nh-game-link-close\" type=\"button\" aria-label=\"Close link options\">×</button>\n      <div class=\"nh-game-link-kicker\">EXTERNAL LINK // GAME PAGE</div>\n      <div class=\"nh-game-link-title\">GAME</div>\n      <p class=\"nh-game-link-url\">game.example/</p>\n      <div class=\"nh-game-link-actions\">\n        <button class=\"nh-game-copy\" type=\"button\">COPY LINK</button>\n        <button class=\"nh-game-open\" type=\"button\">OPEN GAME PAGE ↗</button>\n      </div>\n    </div>\n  </div>\n</section>"
+
+marker = '<section class="section links v150-links" id="links">'
+if marker not in html:
+    raise RuntimeError("Section 9/network marker not found.")
+html = html.replace(marker, section + "\\n" + marker, 1)
+
+# Renumber the existing Network block from 08 to 09.
+pos = html.find(marker)
+tail = html[pos:]
+tail = tail.replace('<span>08 // NETWORK</span>', '<span>09 // NETWORK</span>', 1)
+tail = tail.replace('ARCHIVE // 08 // ENDPOINT', 'ARCHIVE // 09 // ENDPOINT', 1)
+html = html[:pos] + tail
+
+head_end = html.lower().rfind("</head>")
 if head_end < 0:
     raise RuntimeError("Missing </head>.")
-html = html[:head_end] + CSS + '\n' + html[head_end:]
+html = html[:head_end] + CSS + "\\n" + html[head_end:]
 
-# Recompute after the <head> insertion because all later indices shift.
-body_end = html.lower().rfind('</body>')
+body_end = html.lower().rfind("</body>")
 if body_end < 0:
     raise RuntimeError("Missing </body>.")
-html = html[:body_end] + JS + '\n' + html[body_end:]
+html = html[:body_end] + JS + "\\n" + html[body_end:]
 
 index.write_text(html, encoding="utf-8")
-print("V21.0 gaming history section injected before Section 9.")
+print("V21.3 gaming archive injected.")
