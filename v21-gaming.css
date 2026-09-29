@@ -498,3 +498,160 @@
     font-size:17px !important;
   }
 }
+
+/* V21.7 — wider, shorter, red-reactive flagship treatment */
+.nh-gaming-section{
+  width:min(100%,1400px) !important;
+  margin:clamp(30px,4vw,58px) auto 0 !important;
+  padding-bottom:clamp(34px,3.5vw,52px) !important;
+}
+.nh-gaming-shell{
+  padding:18px !important;
+  border-radius:18px !important;
+  min-height:0 !important;
+  transition:box-shadow .2s ease,border-color .2s ease,transform .2s ease,filter .2s ease !important;
+}
+.nh-gaming-section:hover .nh-gaming-shell{
+  border-color:rgba(255,92,144,.9) !important;
+  transform:translateY(-1px) !important;
+  filter:saturate(1.08) !important;
+}
+.nh-gaming-section::before{
+  inset:-26px -36px 0 !important;
+  background:
+    radial-gradient(circle at var(--gx) var(--gy),rgba(255,57,130,.18),transparent 20%),
+    radial-gradient(circle at 14% 26%,rgba(255,37,102,.18),transparent 25%),
+    radial-gradient(circle at 86% 64%,rgba(133,56,255,.20),transparent 29%) !important;
+  filter:blur(30px) !important;
+}
+.nh-gaming-section::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:-7px -11px !important;
+  z-index:-1 !important;
+  pointer-events:none !important;
+  border:1px solid rgba(255,60,124,.24) !important;
+  clip-path:polygon(0 4%,4% 0,92% 0,100% 7%,100% 94%,95% 100%,6% 100%,0 93%) !important;
+  box-shadow:0 0 32px rgba(175,67,255,.10),inset 0 0 28px rgba(255,52,125,.06) !important;
+}
+.nh-gaming-heading{
+  padding:16px 3px 11px !important;
+}
+.nh-gaming-heading h2{
+  font-size:clamp(42px,5.7vw,74px) !important;
+  margin:4px 0 7px !important;
+}
+.nh-gaming-heading p{
+  font-size:8px !important;
+  line-height:1.58 !important;
+}
+.nh-gaming-topline{
+  padding-bottom:9px !important;
+}
+.nh-gaming-controls{
+  padding:6px 2px 9px !important;
+}
+.nh-gaming-matrix{
+  grid-template-columns:minmax(0,1fr) 330px !important;
+  gap:10px !important;
+}
+.nh-game-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:8px !important;
+}
+.nh-game-card{
+  min-height:118px !important;
+  padding:9px !important;
+  z-index:22 !important;
+  pointer-events:auto !important;
+  border-color:rgba(183,93,145,.34) !important;
+}
+.nh-game-card:hover{
+  border-color:rgba(255,67,115,.96) !important;
+  animation:nhGamingRedPulse 1.15s ease-in-out infinite !important;
+}
+.nh-game-card-art{
+  width:76px !important;
+  height:76px !important;
+}
+.nh-game-card-copy strong{
+  font-size:clamp(17px,1.75vw,24px) !important;
+}
+.nh-game-card-copy small,
+.nh-game-card-copy em,
+.nh-game-index,
+.nh-gaming-topline,
+.nh-gaming-filter,
+.nh-gaming-action,
+.nh-gacha-kicker,
+.nh-gacha-top p,
+.nh-gacha-foot,
+.nh-gaming-footer{
+  font-size:6.5px !important;
+}
+.nh-gacha-panel{
+  padding:12px !important;
+}
+.nh-gacha-top strong{font-size:27px !important}
+.nh-gacha-card{
+  z-index:22 !important;
+  pointer-events:auto !important;
+}
+.nh-gaming-trail{
+  position:absolute;
+  inset:0;
+  z-index:21;
+  pointer-events:none;
+  opacity:var(--cursor-visible,0);
+}
+.nh-gaming-trail i{
+  position:absolute;
+  width:5px;
+  height:5px;
+  margin:-2px 0 0 -2px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#fff,#c57aff);
+  box-shadow:0 0 6px #dc8dff,0 0 15px rgba(255,63,130,.55);
+  transform:translate(
+    calc(var(--trail-index) * -5px),
+    calc(var(--trail-index) * 3px)
+  ) scale(calc(1 - var(--trail-index) * .07));
+  animation:nhGamingTrailPulse 1.1s ease-in-out infinite;
+  animation-delay:calc(var(--trail-index) * -.08s);
+  transition:left .04s linear,top .04s linear;
+}
+.nh-gaming-trail i:nth-child(odd){
+  background:linear-gradient(135deg,#fff,#ff78a9);
+  box-shadow:0 0 7px #ff5e95,0 0 15px rgba(177,91,255,.50);
+}
+.nh-gaming-section:hover .nh-gaming-cursor-core{
+  opacity:1 !important;
+  transform:translate(-50%,-50%) scale(1.05) !important;
+}
+.nh-gaming-cursor-core{
+  transition:left .05s linear,top .05s linear,opacity .15s,transform .15s !important;
+}
+.nh-game-viewer{
+  z-index:2147483000 !important;
+}
+.nh-game-card,.nh-gacha-card{
+  cursor:pointer !important;
+}
+@keyframes nhGamingRedPulse{
+  0%,100%{
+    box-shadow:0 0 18px rgba(255,48,113,.16),0 0 32px rgba(255,47,111,.06),inset 0 0 22px rgba(157,67,255,.05);
+  }
+  50%{
+    box-shadow:0 0 28px rgba(255,46,113,.38),0 0 54px rgba(255,43,111,.15),0 0 75px rgba(170,68,255,.08),inset 0 0 30px rgba(171,70,255,.09);
+  }
+}
+@keyframes nhGamingTrailPulse{
+  0%,100%{opacity:.25}
+  45%{opacity:1}
+  70%{opacity:.38}
+}
+@media(max-width:1100px){
+  .nh-gaming-section{width:min(100%,1180px) !important}
+  .nh-gaming-matrix{grid-template-columns:1fr !important}
+  .nh-gacha-panel{max-width:none !important}
+}
