@@ -51,6 +51,204 @@ REPAIR_CSS = r'''
 @media(max-width:920px){.nh-v22-layout{grid-template-columns:1fr}.nh-v22-gacha-bottom .nh-gacha-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.nh-v22-gacha-bottom .nh-gacha-list{grid-template-columns:1fr}}
 
+/* V22.11 — sharp perimeter VFX, clean viewer chrome, no cursor trail */
+.nh-gaming-section .nh-gaming-trail{display:none!important;visibility:hidden!important;opacity:0!important}
+.nh-gaming-section .nh-gaming-cursor-core{opacity:0!important}
+.nh-game-card,.nh-gacha-card,.nh-v22-note,.nh-v22-disc{
+  position:relative!important;
+  isolation:isolate!important;
+}
+.nh-game-card::before,.nh-gacha-card::before,.nh-v22-note::before,.nh-v22-disc::before{
+  content:""!important;
+  position:absolute!important;
+  inset:-1px!important;
+  border-radius:inherit!important;
+  pointer-events:none!important;
+  z-index:5!important;
+  padding:1px!important;
+  background:conic-gradient(
+    from 0deg,
+    rgba(255,46,115,.95),
+    rgba(255,92,157,.98) 18%,
+    rgba(168,75,255,.95) 38%,
+    rgba(104,73,255,.94) 55%,
+    rgba(183,76,255,.92) 73%,
+    rgba(255,53,124,.98) 91%,
+    rgba(255,46,115,.95)
+  )!important;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
+  -webkit-mask-composite:xor!important;
+  mask-composite:exclude!important;
+  opacity:.62!important;
+  animation:nhV2211Perimeter 2.8s linear infinite!important;
+}
+.nh-game-card::after,.nh-gacha-card::after,.nh-v22-note::after,.nh-v22-disc::after{
+  content:""!important;
+  position:absolute!important;
+  inset:2px!important;
+  border-radius:inherit!important;
+  pointer-events:none!important;
+  z-index:1!important;
+  background:
+    linear-gradient(90deg,rgba(255,49,118,.10),transparent 21%,rgba(170,72,255,.08) 52%,transparent 80%,rgba(255,48,122,.10)),
+    radial-gradient(circle at 12% 50%,rgba(255,62,131,.12),transparent 24%),
+    radial-gradient(circle at 88% 50%,rgba(156,70,255,.12),transparent 24%)!important;
+  opacity:.78!important;
+  animation:nhV2211EdgeFade 2.15s ease-in-out infinite!important;
+}
+.nh-game-card:hover,.nh-game-card:focus-visible,
+.nh-gacha-card:hover,.nh-gacha-card:focus-visible,
+.nh-v22-note:hover,.nh-v22-disc:hover{
+  border-color:rgba(255,101,165,1)!important;
+  box-shadow:
+    0 0 0 1px rgba(255,77,148,.92),
+    0 0 18px rgba(255,38,116,.35),
+    0 0 38px rgba(164,65,255,.24),
+    inset 0 0 22px rgba(255,45,123,.10)!important;
+}
+.nh-game-card-copy,.nh-gacha-card span,.nh-v22-note-title,.nh-v22-disc-title{
+  position:relative!important;z-index:8!important;
+}
+.nh-game-card-copy strong,.nh-gacha-card strong,.nh-v22-note-title,.nh-v22-disc-title{
+  text-shadow:
+    0 0 7px rgba(255,105,171,.34),
+    0 0 16px rgba(165,74,255,.20)!important;
+}
+.nh-game-card:hover .nh-game-card-copy strong,
+.nh-gacha-card:hover strong,
+.nh-v22-note:hover .nh-v22-note-title,
+.nh-v22-disc:hover .nh-v22-disc-title{
+  text-shadow:
+    0 0 7px rgba(255,225,244,.78),
+    0 0 16px rgba(255,72,143,.72),
+    0 0 28px rgba(160,73,255,.52)!important;
+}
+.nh-game-card-copy small,.nh-game-card-copy em,.nh-game-index,
+.nh-gacha-card small,.nh-gacha-card i,
+.nh-v22-note-sub,.nh-v22-disc-sub{
+  position:relative!important;z-index:8!important;
+  transition:text-shadow .16s ease,color .16s ease!important;
+  text-shadow:0 0 6px rgba(173,77,255,.16)!important;
+}
+.nh-game-card:hover .nh-game-card-copy small,
+.nh-game-card:hover .nh-game-card-copy em,
+.nh-game-card:hover .nh-game-index,
+.nh-gacha-card:hover small,.nh-gacha-card:hover i,
+.nh-v22-note:hover .nh-v22-note-sub,.nh-v22-disc:hover .nh-v22-disc-sub{
+  text-shadow:
+    0 0 6px rgba(255,102,163,.66),
+    0 0 13px rgba(164,70,255,.48)!important;
+}
+@keyframes nhV2211Perimeter{
+  0%{transform:rotate(0deg);opacity:.48}
+  22%{opacity:.78}
+  50%{opacity:.60}
+  74%{opacity:.90}
+  100%{transform:rotate(360deg);opacity:.48}
+}
+@keyframes nhV2211EdgeFade{
+  0%,100%{opacity:.38}
+  50%{opacity:.92}
+}
+
+.nh-game-viewer-panel{
+  position:relative!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  scrollbar-width:none!important;
+  border-color:rgba(255,132,191,.96)!important;
+  box-shadow:
+    0 0 0 1px rgba(163,76,255,.78),
+    0 0 22px rgba(255,48,121,.34),
+    0 0 58px rgba(153,62,255,.25),
+    0 0 96px rgba(255,48,126,.10),
+    inset 0 0 42px rgba(151,62,255,.08)!important;
+}
+.nh-game-viewer-panel::-webkit-scrollbar{width:0;height:0!important}
+.nh-game-viewer-panel::before{
+  content:""!important;
+  position:absolute!important;
+  inset:-2px!important;
+  border-radius:22px!important;
+  pointer-events:none!important;
+  z-index:25!important;
+  padding:1px!important;
+  background:conic-gradient(
+    from 0deg,
+    rgba(255,48,120,1),
+    rgba(255,109,174,.95) 14%,
+    rgba(167,72,255,1) 34%,
+    rgba(102,80,255,.98) 53%,
+    rgba(193,77,255,.96) 71%,
+    rgba(255,49,124,1) 89%,
+    rgba(255,48,120,1)
+  );
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
+  -webkit-mask-composite:xor!important;
+  mask-composite:exclude!important;
+  opacity:.82!important;
+  animation:nhV2211ViewerBorder 4.8s linear infinite!important;
+}
+.nh-game-viewer-panel::after{
+  content:"// ARCHIVE // LIVE //"!important;
+  position:absolute!important;
+  top:6px!important;
+  left:18px!important;
+  color:rgba(255,110,173,.34)!important;
+  font:700 5px "JetBrains Mono"!important;
+  letter-spacing:.18em!important;
+  pointer-events:none!important;
+  z-index:26!important;
+  opacity:.70!important;
+  text-shadow:0 0 10px rgba(255,70,143,.38)!important;
+}
+@keyframes nhV2211ViewerBorder{
+  0%{transform:rotate(0deg);opacity:.58}
+  32%{opacity:.95}
+  60%{opacity:.72}
+  82%{opacity:1}
+  100%{transform:rotate(360deg);opacity:.58}
+}
+.nh-viewer-content h3{
+  text-shadow:
+    0 0 9px rgba(255,154,205,.24),
+    0 0 22px rgba(164,72,255,.20)!important;
+}
+.nh-viewer-section{
+  border-color:rgba(255,95,157,.66)!important;
+  box-shadow:
+    0 0 0 1px rgba(166,76,255,.10),
+    inset 0 0 20px rgba(169,69,255,.035)!important;
+  transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease!important;
+}
+.nh-viewer-section:hover{
+  transform:translateX(2px)!important;
+  border-color:rgba(255,132,190,.96)!important;
+  box-shadow:
+    0 0 0 1px rgba(255,72,145,.46),
+    0 0 18px rgba(255,44,123,.18),
+    0 0 28px rgba(161,68,255,.16),
+    inset 0 0 22px rgba(157,65,255,.06)!important;
+}
+.nh-viewer-section>span,
+.nh-viewer-section p{
+  text-shadow:0 0 7px rgba(170,71,255,.16)!important;
+}
+.nh-viewer-section:hover>span,
+.nh-viewer-section:hover p{
+  text-shadow:
+    0 0 7px rgba(255,113,174,.54),
+    0 0 15px rgba(166,70,255,.42)!important;
+}
+.nh-game-viewer-close{
+  box-shadow:
+    0 0 0 1px rgba(164,77,255,.82),
+    0 0 15px rgba(255,49,127,.52),
+    0 0 30px rgba(162,67,255,.34),
+    inset 0 0 16px rgba(255,70,145,.18)!important;
+}
+
+
 /* V22.10 precision layout / typography / viewer close control */
 .nh-gaming-section{width:min(100%,1640px)!important;margin-left:auto!important;margin-right:auto!important}
 .nh-gaming-shell{padding:24px!important}
