@@ -111,25 +111,6 @@
     card.dataset.nhBound = '1';
     card.tabIndex = 0;
     card.setAttribute('role','button');
-
-    card.addEventListener('pointermove', e => {
-      const r = card.getBoundingClientRect();
-      const x = ((e.clientX-r.left)/Math.max(1,r.width))*100;
-      const y = ((e.clientY-r.top)/Math.max(1,r.height))*100;
-      card.style.setProperty('--mx',x.toFixed(1)+'%');
-      card.style.setProperty('--my',y.toFixed(1)+'%');
-      card.style.setProperty('--rx',((50-y)/20).toFixed(2)+'deg');
-      card.style.setProperty('--ry',((x-50)/24).toFixed(2)+'deg');
-      card.style.setProperty('--hovered','1');
-    }, {passive:true});
-
-    card.addEventListener('pointerleave', () => {
-      card.style.setProperty('--mx','50%');
-      card.style.setProperty('--my','50%');
-      card.style.setProperty('--rx','0deg');
-      card.style.setProperty('--ry','0deg');
-      card.style.setProperty('--hovered','0');
-    }, {passive:true});
   }
 
   root.querySelectorAll('.nh-game-card,.nh-gacha-card').forEach(bindCard);
@@ -258,42 +239,61 @@
     root.classList.toggle('pulse-active');
   });
 
-  // VFX layer 1: cursor core / area light.
-  root.addEventListener('pointermove', e => {
+  // V22.12 — one RAF-throttled pointer field for the whole archive.
+  const interactiveSelector = '.nh-game-card,.nh-gacha-card,.nh-v22-note,.nh-v22-disc,.nh-gaming-stats span';
+  let pointerRAF = 0;
+  let pointerX = 0;
+  let pointerY = 0;
+  let pointerInside = false;
+
+  function paintPointerField(){
+    pointerRAF = 0;
     const r = root.getBoundingClientRect();
-    const x = ((e.clientX-r.left)/Math.max(1,r.width))*100;
-    const y = ((e.clientY-r.top)/Math.max(1,r.height))*100;
-    root.style.setProperty('--gx',x.toFixed(2)+'%');
-    root.style.setProperty('--gy',y.toFixed(2)+'%');
-    root.style.setProperty('--cursor-visible','1');
-  }, {passive:true});
-  root.addEventListener('pointerleave', () => root.style.setProperty('--cursor-visible','0'), {passive:true});
+    const x = pointerX - r.left;
+    const y = pointerY - r.top;
+    root.style.setProperty('--gx', ((x / Math.max(1,r.width))*100).toFixed(2) + '%');
+    root.style.setProperty('--gy', ((y / Math.max(1,r.height))*100).toFixed(2) + '%');
 
-  // VFX layer 2: pulsing cursor trail.
-  const trail = document.createElement('div');
-  trail.className = 'nh-gaming-trail';
-  for(let i=0;i<10;i++){
-    const dot=document.createElement('i');
-    dot.style.setProperty('--trail-index',i);
-    trail.appendChild(dot);
-  }
-  root.appendChild(trail);
-  const trailDots=[...trail.children];
-  root.addEventListener('pointermove',e=>{
-    trailDots.forEach((dot,i)=>{
-      dot.style.left=e.clientX+'px';
-      dot.style.top=e.clientY+'px';
+    const hit = document.elementFromPoint(pointerX,pointerY);
+    const card = hit instanceof Element ? hit.closest(interactiveSelector) : null;
+
+    root.querySelectorAll('.nh-v22-pointer-active').forEach(el=>{
+      if(el!==card) el.classList.remove('nh-v22-pointer-active');
     });
-  },{passive:true});
+    if(card && card.closest('#nhGamingHistory')){
+      const box = card.getBoundingClientRect();
+      const px = ((pointerX-box.left)/Math.max(1,box.width))*100;
+      const py = ((pointerY-box.top)/Math.max(1,box.height))*100;
+      card.style.setProperty('--mx',px.toFixed(1)+'%');
+      card.style.setProperty('--my',py.toFixed(1)+'%');
+      card.classList.add('nh-v22-pointer-active');
+    }
 
-  // VFX layer 3: animated ambient spark/particle system follows the same cursor field.
-  const sparks=root.querySelectorAll('.nh-gaming-particles i');
-  let lastMove=0;
-  root.addEventListener('pointermove',e=>{
-    const now=performance.now();
-    if(now-lastMove<30)return;
-    lastMove=now;
-    root.style.setProperty('--spark-x',e.clientX+'px');
-    root.style.setProperty('--spark-y',e.clientY+'px');
-  },{passive:true});
+    root.classList.toggle('nh-v22-pointer-live',pointerInside);
+  }
+
+  root.addEventListener('pointermove', e=>{
+    pointerX=e.clientX;
+    pointerY=e.clientY;
+    pointerInside=true;
+    if(!pointerRAF) pointerRAF=requestAnimationFrame(paintPointerField);
+  }, {passive:true});
+
+  root.addEventListener('pointerleave', ()=>{
+    pointerInside=false;
+    root.classList.remove('nh-v22-pointer-live');
+  }, {passive:true});
+
+  root.addEventListener('pointerover', e=>{
+    const hit=e.target instanceof Element ? e.target.closest(interactiveSelector) : null;
+    if(hit && hit.closest('#nhGamingHistory')){
+      hit.classList.add('nh-v22-pointer-active');
+    }
+  }, {passive:true});
+
+  root.addEventListener('pointerout', e=>{
+    const hit=e.target instanceof Element ? e.target.closest(interactiveSelector) : null;
+    hit?.classList.remove('nh-v22-pointer-active');
+  }, {passive:true});
+
 })();
