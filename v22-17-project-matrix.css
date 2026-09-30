@@ -1,0 +1,45 @@
+/* V22.17 — Project Matrix / Blender animation gallery */
+#blenderProjectGrid.nh-v2217-gallery{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:14px!important;
+  min-height:0!important;
+}
+.nh-v2217-card{
+  position:relative!important;
+  display:block!important;
+  min-height:255px!important;
+  overflow:hidden!important;
+  border:1px solid rgba(181,87,255,.48)!important;
+  border-radius:10px!important;
+  background:#08050d!important;
+  text-decoration:none!important;
+  color:#fff!important;
+  isolation:isolate!important;
+  cursor:pointer!important;
+  box-shadow:0 0 0 1px rgba(255,48,128,.06),0 0 22px rgba(133,55,255,.08)!important;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease!important;
+}
+.nh-v2217-card:hover{
+  transform:translateY(-4px)!important;
+  border-color:rgba(255,70,151,.96)!important;
+  box-shadow:0 0 0 1px rgba(255,70,151,.68),0 0 24px rgba(255,44,128,.2),0 0 42px rgba(141,62,255,.18)!important;
+}
+.nh-v2217-scene{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 38%,rgba(166,73,255,.22),transparent 32%),linear-gradient(145deg,#14081e,#05040a 70%)!important}
+.nh-v2217-grid{position:absolute;left:-15%;right:-15%;bottom:-22%;height:58%;transform:perspective(260px) rotateX(60deg);background:linear-gradient(rgba(255,61,145,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(151,73,255,.14) 1px,transparent 1px);background-size:28px 28px;opacity:.62}
+.nh-v2217-ring{position:absolute;left:50%;top:42%;width:150px;height:150px;transform:translate(-50%,-50%);border:1px solid rgba(255,64,145,.58);border-radius:50%;box-shadow:0 0 18px rgba(255,46,133,.18),inset 0 0 18px rgba(142,67,255,.15);animation:nhV2217Ring 4.5s ease-in-out infinite}
+.nh-v2217-core{position:absolute;left:50%;top:45%;width:74px;height:116px;transform:translate(-50%,-50%) skewX(-5deg);border:1px solid rgba(210,145,255,.7);background:linear-gradient(150deg,rgba(255,82,157,.18),rgba(108,55,190,.12));clip-path:polygon(38% 0,66% 0,82% 23%,100% 38%,77% 55%,88% 100%,50% 84%,12% 100%,23% 55%,0 38%,18% 23%);box-shadow:0 0 18px rgba(255,55,140,.18),0 0 30px rgba(129,58,255,.14);animation:nhV2217Float 3.8s ease-in-out infinite}
+.nh-v2217-core::before{content:"";position:absolute;left:28%;right:28%;top:14%;height:28%;border:1px solid rgba(255,188,221,.62);box-shadow:0 0 9px rgba(255,79,154,.28)}
+.nh-v2217-scan{position:absolute;left:0;right:0;top:25%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,72,151,.8),transparent);box-shadow:0 0 10px rgba(255,64,143,.5);animation:nhV2217Scan 3.2s linear infinite}
+.nh-v2217-play{position:absolute;right:14px;top:14px;width:34px;height:34px;border:1px solid rgba(255,94,165,.9);border-radius:50%;display:grid;place-items:center;background:rgba(8,4,13,.68);box-shadow:0 0 15px rgba(255,55,140,.2);z-index:4;transition:transform .2s ease,box-shadow .2s ease}
+.nh-v2217-play::after{content:"";width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:9px solid #ff82bb;margin-left:2px;filter:drop-shadow(0 0 5px rgba(255,85,157,.8))}
+.nh-v2217-card:hover .nh-v2217-play{transform:scale(1.14) rotate(3deg);box-shadow:0 0 0 1px rgba(255,87,155,.55),0 0 22px rgba(255,51,132,.28)}
+.nh-v2217-meta{position:absolute;z-index:5;left:0;right:0;bottom:0;padding:38px 14px 13px;background:linear-gradient(180deg,transparent,rgba(4,2,8,.97) 54%)}
+.nh-v2217-kicker{font:700 7px/1 "JetBrains Mono",monospace;letter-spacing:.14em;color:#ff72ac;text-transform:uppercase}
+.nh-v2217-title{margin-top:5px;font:900 italic 18px/1.05 Inter,sans-serif;color:#f2d8ec;text-shadow:0 0 8px rgba(255,78,151,.22)}
+.nh-v2217-sub{margin-top:5px;font:6.5px/1.4 "JetBrains Mono",monospace;color:#9c8ca2}
+@keyframes nhV2217Float{0%,100%{transform:translate(-50%,-48%) skewX(-5deg)}50%{transform:translate(-50%,-54%) skewX(3deg)}}
+@keyframes nhV2217Ring{0%,100%{transform:translate(-50%,-50%) scale(.96);opacity:.55}50%{transform:translate(-50%,-50%) scale(1.04);opacity:.95}}
+@keyframes nhV2217Scan{0%{top:18%;opacity:0}15%{opacity:.8}85%{opacity:.8}100%{top:76%;opacity:0}}
+@media(max-width:760px){#blenderProjectGrid.nh-v2217-gallery{grid-template-columns:1fr!important}.nh-v2217-card{min-height:235px!important}}
+@media(prefers-reduced-motion:reduce){.nh-v2217-ring,.nh-v2217-core,.nh-v2217-scan{animation:none!important}.nh-v2217-card{transition:none!important}}
