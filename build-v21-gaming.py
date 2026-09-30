@@ -52,6 +52,36 @@ REPAIR_CSS = r'''
 @media(max-width:560px){.nh-v22-gacha-bottom .nh-gacha-list{grid-template-columns:1fr}}
 
 /* V22.12 — lightweight sharp interaction pass */
+
+/* V22.13 — nearly invisible ambient diagonals + slightly tighter game cards */
+.nh-gaming-shell::before{
+  background:
+    radial-gradient(circle at var(--gx) var(--gy),rgba(184,76,255,.055),transparent 22%)!important;
+  opacity:.42!important;
+}
+.nh-gaming-shell::after{
+  opacity:.20!important;
+}
+.nh-gaming-shell{
+  overflow:hidden!important;
+}
+.nh-v22-center .nh-game-grid{gap:8px!important}
+.nh-v22-center .nh-game-card{
+  min-height:112px!important;
+  padding:8px!important;
+}
+.nh-v22-center .nh-game-card-art{
+  width:64px!important;
+  height:64px!important;
+}
+.nh-v22-center .nh-game-card-copy strong{
+  font-size:clamp(17px,1.62vw,22px)!important;
+}
+.nh-v22-center .nh-game-card-copy small,
+.nh-v22-center .nh-game-card-copy em,
+.nh-v22-center .nh-game-index{
+  font-size:6px!important;
+}
 html{scroll-behavior:smooth}
 body{-webkit-overflow-scrolling:touch}
 .nh-gaming-section{width:min(100%,1500px)!important}
