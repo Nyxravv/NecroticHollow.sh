@@ -50,6 +50,120 @@ REPAIR_CSS = r'''
 @media(max-width:1180px){.nh-v22-layout{grid-template-columns:210px minmax(0,1fr) 230px}.nh-v22-gacha-bottom .nh-gacha-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:920px){.nh-v22-layout{grid-template-columns:1fr}.nh-v22-gacha-bottom .nh-gacha-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.nh-v22-gacha-bottom .nh-gacha-list{grid-template-columns:1fr}}
+
+/* V22.10 precision layout / typography / viewer close control */
+.nh-gaming-section{width:min(100%,1640px)!important;margin-left:auto!important;margin-right:auto!important}
+.nh-gaming-shell{padding:24px!important}
+.nh-v22-layout{display:block!important;margin-top:14px!important}
+.nh-v22-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start;margin-bottom:18px}
+.nh-v22-top .nh-v22-rail{min-width:0}
+.nh-v22-rail{padding:18px!important;border-radius:16px!important}
+.nh-v22-rail-head small{font-size:7px!important}
+.nh-v22-rail-head strong{font-size:30px!important;line-height:.94!important}
+.nh-v22-rail-head p{font-size:7.5px!important;line-height:1.55!important;margin-bottom:14px!important}
+.nh-v22-note,.nh-v22-disc{margin-top:10px!important;border-radius:12px!important}
+.nh-v22-note button,.nh-v22-disc button{padding:14px 15px!important}
+.nh-v22-note-title,.nh-v22-disc-title{font-size:13px!important}
+.nh-v22-note-title span:first-child,.nh-v22-disc-title span:first-child{font-size:9px!important}
+.nh-v22-note-sub,.nh-v22-disc-sub{font-size:7px!important;margin-top:5px!important}
+.nh-v22-note-detail,.nh-v22-disc-detail{font-size:8px!important;line-height:1.7!important;padding:0 15px 14px!important}
+.nh-v22-center{width:100%!important}
+.nh-v22-center .nh-game-grid{gap:14px!important}
+.nh-v22-center .nh-game-card{min-height:150px!important;padding:12px!important}
+.nh-v22-center .nh-game-card-art{width:88px!important;height:88px!important}
+.nh-v22-center .nh-game-card-copy strong{font-size:clamp(21px,2.15vw,30px)!important}
+.nh-v22-center .nh-game-card-copy small,.nh-v22-center .nh-game-card-copy em,.nh-v22-center .nh-game-index{font-size:8px!important}
+.nh-v22-gacha-bottom{margin-top:18px!important;padding:18px!important}
+.nh-v22-gacha-title small{font-size:7px!important}
+.nh-v22-gacha-title strong{font-size:32px!important}
+.nh-v22-gacha-title p{font-size:7.5px!important}
+.nh-v22-gacha-bottom .nh-gacha-list{gap:10px!important}
+.nh-v22-gacha-bottom .nh-gacha-card strong{font-size:11px!important}
+.nh-v22-gacha-bottom .nh-gacha-card small{font-size:7px!important}
+
+.nh-game-viewer-panel{position:relative!important}
+.nh-game-viewer-close{
+  position:absolute!important;
+  top:15px!important;
+  right:15px!important;
+  width:54px!important;
+  height:54px!important;
+  z-index:30!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1px solid rgba(255,125,181,.94)!important;
+  border-radius:12px!important;
+  background:
+    linear-gradient(145deg,rgba(30,7,27,.98),rgba(8,4,13,.98))!important;
+  color:#fff!important;
+  font:900 27px/1 Inter!important;
+  text-shadow:0 0 10px rgba(255,173,216,.9)!important;
+  box-shadow:
+    0 0 0 1px rgba(156,83,255,.72),
+    0 0 12px rgba(255,55,132,.48),
+    0 0 26px rgba(155,65,255,.26),
+    inset 0 0 14px rgba(255,70,145,.14)!important;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease!important;
+  animation:nhV2210ClosePulse 2.2s ease-in-out infinite!important;
+}
+.nh-game-viewer-close::before,.nh-game-viewer-close::after{
+  content:"";position:absolute;pointer-events:none;inset:-6px;border-radius:15px;
+}
+.nh-game-viewer-close::before{
+  border:1px solid rgba(255,84,149,.65);
+  clip-path:polygon(0 18%,18% 0,82% 0,100% 18%,100% 82%,82% 100%,18% 100%,0 82%);
+  animation:nhV2210CloseOrbit 3.6s linear infinite;
+}
+.nh-game-viewer-close::after{
+  inset:4px;
+  border:1px solid rgba(177,91,255,.52);
+  border-radius:9px;
+}
+.nh-game-viewer-close:hover{
+  transform:scale(1.10) rotate(-3deg)!important;
+  border-color:#fff!important;
+  background:linear-gradient(145deg,rgba(52,8,38,.99),rgba(12,5,18,.99))!important;
+  box-shadow:
+    0 0 0 2px rgba(255,90,153,.85),
+    0 0 16px rgba(255,45,126,.68),
+    0 0 34px rgba(168,77,255,.54),
+    inset 0 0 20px rgba(255,90,153,.24)!important;
+  animation:none!important;
+}
+.nh-game-viewer-close:active{transform:scale(.94)!important}
+@keyframes nhV2210ClosePulse{
+  0%,100%{box-shadow:0 0 0 1px rgba(156,83,255,.62),0 0 10px rgba(255,55,132,.34),0 0 22px rgba(155,65,255,.18),inset 0 0 12px rgba(255,70,145,.10)}
+  50%{box-shadow:0 0 0 2px rgba(255,92,158,.92),0 0 19px rgba(255,55,132,.62),0 0 36px rgba(155,65,255,.34),inset 0 0 18px rgba(255,70,145,.18)}
+}
+@keyframes nhV2210CloseOrbit{to{transform:rotate(360deg)}}
+
+.nh-viewer-kicker{font-size:7.5px!important}
+.nh-viewer-content h3{padding-right:66px!important}
+.nh-viewer-subtitle{font-size:7.5px!important}
+.nh-viewer-price-row small,.nh-viewer-details small{font-size:5.8px!important}
+.nh-viewer-price-row strong{font-size:10px!important}
+.nh-viewer-details strong{font-size:7.5px!important}
+.nh-viewer-section>span{font-size:6px!important}
+.nh-viewer-section p{font-size:8px!important;line-height:1.75!important}
+.nh-viewer-source{font-size:6px!important}
+.nh-viewer-copy,.nh-viewer-open{font-size:7px!important}
+.nh-v22-top+.nh-v22-center{margin-top:0!important}
+
+@media(max-width:1100px){
+  .nh-v22-top{grid-template-columns:1fr!important}
+}
+@media(max-width:760px){
+  .nh-gaming-section{width:100%!important}
+  .nh-gaming-shell{padding:14px!important}
+  .nh-v22-top{gap:12px!important}
+  .nh-v22-rail-head strong{font-size:24px!important}
+  .nh-v22-note-title,.nh-v22-disc-title{font-size:11px!important}
+  .nh-v22-note-sub,.nh-v22-disc-sub{font-size:6px!important}
+  .nh-v22-note-detail,.nh-v22-disc-detail{font-size:7px!important}
+  .nh-game-viewer-close{width:46px!important;height:46px!important;top:10px!important;right:10px!important}
+}
+
+
 '''
 REPAIR_SCRIPT = r'''<script>
 (()=> {
@@ -76,7 +190,11 @@ REPAIR_SCRIPT = r'''<script>
       ['D','// COMPETITIVE MODE','Valorant // Mastery','I placed top 28 in tournaments. Competitive games become interesting when mechanical improvement is measurable.']
     ];
     discussions.forEach(([n,t,s,d])=>{const box=document.createElement('div');box.className='nh-v22-disc';box.innerHTML='<button type="button"><div class="nh-v22-disc-title"><span>'+n+'</span><span>+</span></div><div class="nh-v22-disc-sub">'+t.replace('// ','')+' // '+s+'</div></button><div class="nh-v22-disc-detail">'+d+'</div>';box.querySelector('button').addEventListener('click',()=>{box.classList.toggle('open');box.querySelector('.nh-v22-disc-title span:last-child').textContent=box.classList.contains('open')?'×':'+'});right.appendChild(box)});
-    layout.append(left,center,right);matrix.replaceWith(layout);
+    const top=document.createElement('div');
+    top.className='nh-v22-top';
+    top.append(left,right);
+    layout.append(top,center);
+    matrix.replaceWith(layout);
     if(gacha){
       const shell=root.querySelector('.nh-gaming-shell'),list=gacha.querySelector('.nh-gacha-list'),bottom=document.createElement('div');bottom.className='nh-v22-gacha-bottom';
       const title=document.createElement('div');title.className='nh-v22-gacha-title';title.innerHTML='<small>08-C // COMPLETION ARCHIVE</small><strong>GACHA // COMPLETION</strong><p>Five additional titles tracked as completed archive entries. Select one to inspect its detail layer.</p>';
