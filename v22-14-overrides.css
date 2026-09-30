@@ -1,19 +1,20 @@
 /* V22.14 — ultra-faint ambient geometry + sharper red/purple interaction VFX */
 
-/* The large diagonal geometry is ambient only. Keep it effectively invisible. */
+/* V22.15: remove the intrusive diagonal/angled geometry completely. */
 .nh-gaming-shell::before{
-  background:
-    radial-gradient(circle at var(--gx) var(--gy),rgba(205,91,255,.035),transparent 24%),
-    radial-gradient(circle at 12% 18%,rgba(255,38,108,.018),transparent 26%),
-    radial-gradient(circle at 88% 72%,rgba(133,61,255,.018),transparent 28%) !important;
-  opacity:.20 !important;
-  filter:blur(30px) !important;
+  display:none !important;
+  content:none !important;
+  background:none !important;
+  background-image:none !important;
+  opacity:0 !important;
+  filter:none !important;
+  box-shadow:none !important;
 }
 
-/* Suppress any inherited decorative line geometry on the gaming shell. */
+/* Keep the gaming shell clean while retaining its actual perimeter frame. */
 .nh-gaming-shell{
   background-image:
-    radial-gradient(circle at var(--gx) var(--gy),rgba(181,80,255,.075),transparent 22%),
+    radial-gradient(circle at var(--gx) var(--gy),rgba(181,80,255,.045),transparent 22%),
     linear-gradient(145deg,rgba(14,6,23,.975),rgba(7,5,12,.985) 56%,rgba(22,5,17,.97)) !important;
 }
 
@@ -37,9 +38,7 @@
     box-shadow .16s ease,
     filter .16s ease !important;
 }
-.nh-v22-center .nh-game-card::before{
-  opacity:.42 !important;
-}
+.nh-v22-center .nh-game-card::before{opacity:.42 !important}
 .nh-v22-center .nh-game-card:hover,
 .nh-v22-center .nh-game-card.nh-v22-pointer-active{
   border-color:rgba(255,92,158,.98) !important;
@@ -54,9 +53,7 @@
 .nh-v22-center .nh-game-card.nh-v22-pointer-active::before{opacity:.82 !important}
 .nh-v22-center .nh-game-card:hover .nh-game-card-copy strong,
 .nh-v22-center .nh-game-card.nh-v22-pointer-active .nh-game-card-copy strong{
-  text-shadow:
-    0 0 8px rgba(255,105,173,.48),
-    0 0 18px rgba(165,70,255,.34) !important;
+  text-shadow:0 0 8px rgba(255,105,173,.48),0 0 18px rgba(165,70,255,.34) !important;
 }
 
 /* Player Notes / Game Discussions */
@@ -85,10 +82,7 @@
 .nh-v22-gacha-bottom .nh-gacha-card:hover,
 .nh-v22-gacha-bottom .nh-gacha-card.nh-v22-pointer-active{
   border-color:rgba(255,88,155,.98) !important;
-  box-shadow:
-    0 0 0 1px rgba(255,59,132,.68),
-    0 0 18px rgba(255,42,119,.20),
-    0 0 30px rgba(146,59,255,.17) !important;
+  box-shadow:0 0 0 1px rgba(255,59,132,.68),0 0 18px rgba(255,42,119,.20),0 0 30px rgba(146,59,255,.17) !important;
 }
 
 /* Stats / filters / VFX wake control */
@@ -99,20 +93,12 @@
 .nh-gaming-action:hover,
 .nh-gaming-action.nh-v22-pointer-active{
   border-color:rgba(255,88,155,.98) !important;
-  box-shadow:
-    0 0 0 1px rgba(255,55,129,.58),
-    0 0 17px rgba(255,42,118,.18),
-    0 0 26px rgba(149,60,255,.16) !important;
+  box-shadow:0 0 0 1px rgba(255,55,129,.58),0 0 17px rgba(255,42,118,.18),0 0 26px rgba(149,60,255,.16) !important;
 }
 
 /* Make the shell's red/purple response follow the pointer without adding another trail. */
-.nh-gaming-shell{
-  transition:box-shadow .18s ease,border-color .18s ease !important;
-}
+.nh-gaming-shell{transition:box-shadow .18s ease,border-color .18s ease !important}
 .nh-gaming-shell.nh-v22-pointer-active{
   border-color:rgba(214,118,255,.80) !important;
-  box-shadow:
-    0 0 30px rgba(143,55,255,.20),
-    0 0 60px rgba(255,40,116,.075),
-    inset 0 0 48px rgba(145,58,255,.06) !important;
+  box-shadow:0 0 30px rgba(143,55,255,.20),0 0 60px rgba(255,40,116,.075),inset 0 0 48px rgba(145,58,255,.06) !important;
 }
