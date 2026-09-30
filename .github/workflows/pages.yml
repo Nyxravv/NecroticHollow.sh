@@ -36,8 +36,23 @@ jobs:
           link = '<link rel="stylesheet" href="v22-14-overrides.css">'
           if link not in s:
               s = s.replace('</head>', f'  {link}\n</head>', 1)
-              p.write_text(s, encoding="utf-8")
+          p.write_text(s, encoding="utf-8")
           print("V22.14 stylesheet loaded")
+          PY
+      - name: Load V22.17 Project Matrix gallery
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("index.html")
+          s = p.read_text(encoding="utf-8")
+          css = '<link rel="stylesheet" href="v22-17-project-matrix.css">'
+          js = '<script src="v22-17-project-matrix.js" defer></script>'
+          if css not in s:
+              s = s.replace('</head>', f'  {css}\n</head>', 1)
+          if js not in s:
+              s = s.replace('</body>', f'  {js}\n</body>', 1)
+          p.write_text(s, encoding="utf-8")
+          print("V22.17 Project Matrix gallery loaded")
           PY
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
