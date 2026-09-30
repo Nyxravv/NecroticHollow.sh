@@ -1,104 +1,126 @@
 /* V22.14 — ultra-faint ambient geometry + sharper red/purple interaction VFX */
 
-/* V22.15: remove the intrusive diagonal/angled geometry completely. */
-.nh-gaming-shell::before{
+/* V22.16 — HARD REMOVE the intrusive diagonal/circuit geometry.
+   These rules intentionally disable decorative pseudo-elements on the gaming
+   containers and cards. Border VFX are recreated with the real element's
+   border/box-shadow so no diagonal overlay can reappear. */
+.nh-gaming-section::before,
+.nh-gaming-section::after,
+.nh-gaming-shell::before,
+.nh-gaming-shell::after,
+.nh-v22-layout::before,
+.nh-v22-layout::after,
+.nh-v22-top::before,
+.nh-v22-top::after,
+.nh-v22-center::before,
+.nh-v22-center::after,
+.nh-v22-rail::before,
+.nh-v22-rail::after,
+.nh-v22-gacha-bottom::before,
+.nh-v22-gacha-bottom::after,
+.nh-gaming-particles,
+.nh-gaming-cursor-core,
+.nh-gaming-trail{
   display:none !important;
   content:none !important;
   background:none !important;
   background-image:none !important;
-  opacity:0 !important;
-  filter:none !important;
   box-shadow:none !important;
+  filter:none !important;
+  animation:none !important;
+  opacity:0 !important;
 }
 
-/* Keep the gaming shell clean while retaining its actual perimeter frame. */
+/* Remove the card-generated decorative sweep/border overlays too. */
+.nh-game-card::before,
+.nh-game-card::after,
+.nh-gacha-card::before,
+.nh-gacha-card::after,
+.nh-v22-note::before,
+.nh-v22-note::after,
+.nh-v22-disc::before,
+.nh-v22-disc::after{
+  display:none !important;
+  content:none !important;
+  background:none !important;
+  background-image:none !important;
+  filter:none !important;
+  animation:none !important;
+  opacity:0 !important;
+}
+
+/* Keep the shell clean and dark; no decorative diagonal background layers. */
 .nh-gaming-shell{
-  background-image:
+  background:
     radial-gradient(circle at var(--gx) var(--gy),rgba(181,80,255,.045),transparent 22%),
     linear-gradient(145deg,rgba(14,6,23,.975),rgba(7,5,12,.985) 56%,rgba(22,5,17,.97)) !important;
-}
-
-/* Stronger but controlled red/purple perimeter energy. */
-.nh-gaming-shell::after{
-  opacity:.42 !important;
-  box-shadow:0 0 22px rgba(255,43,119,.16),0 0 44px rgba(145,64,255,.12) !important;
-}
-.nh-gaming-shell:hover::after{opacity:.68 !important}
-
-/* Game cards: sharper perimeter, cursor-reactive lighting, and stronger hover lift. */
-.nh-v22-center .nh-game-card{
-  border-color:rgba(183,91,255,.38) !important;
+  border-color:rgba(193,116,255,.64) !important;
   box-shadow:
-    0 0 0 1px rgba(145,64,255,.08),
-    0 0 14px rgba(139,55,255,.06),
-    inset 0 0 22px rgba(255,45,126,.025) !important;
+    0 0 22px rgba(145,62,255,.13),
+    0 0 42px rgba(255,46,119,.045),
+    inset 0 0 30px rgba(139,60,255,.035) !important;
+}
+.nh-gaming-shell:hover,
+.nh-gaming-shell.nh-v22-pointer-active{
+  border-color:rgba(235,137,255,.88) !important;
+  box-shadow:
+    0 0 30px rgba(145,62,255,.20),
+    0 0 52px rgba(255,46,119,.07),
+    inset 0 0 34px rgba(139,60,255,.055) !important;
+}
+
+/* Sharp perimeter pulse without pseudo-elements or blur behind content. */
+.nh-v22-center .nh-game-card,
+.nh-v22-gacha-bottom .nh-gacha-card,
+.nh-v22-note,
+.nh-v22-disc{
+  border:1px solid rgba(177,86,255,.48) !important;
+  box-shadow:
+    0 0 0 1px rgba(149,64,255,.08),
+    0 0 9px rgba(149,64,255,.055) !important;
   transition:
-    transform .16s cubic-bezier(.2,.75,.25,1),
     border-color .16s ease,
     box-shadow .16s ease,
-    filter .16s ease !important;
+    transform .16s cubic-bezier(.2,.75,.25,1) !important;
+  animation:nhV216BorderPulse 2.6s ease-in-out infinite !important;
 }
-.nh-v22-center .nh-game-card::before{opacity:.42 !important}
+@keyframes nhV216BorderPulse{
+  0%,100%{
+    border-color:rgba(154,70,255,.42);
+    box-shadow:0 0 0 1px rgba(154,70,255,.06),0 0 8px rgba(154,70,255,.035);
+  }
+  50%{
+    border-color:rgba(255,63,137,.82);
+    box-shadow:0 0 0 1px rgba(255,63,137,.20),0 0 15px rgba(255,63,137,.10),0 0 20px rgba(154,70,255,.07);
+  }
+}
 .nh-v22-center .nh-game-card:hover,
-.nh-v22-center .nh-game-card.nh-v22-pointer-active{
-  border-color:rgba(255,92,158,.98) !important;
+.nh-v22-center .nh-game-card.nh-v22-pointer-active,
+.nh-v22-gacha-bottom .nh-gacha-card:hover,
+.nh-v22-gacha-bottom .nh-gacha-card.nh-v22-pointer-active,
+.nh-v22-note:hover,
+.nh-v22-note.nh-v22-pointer-active,
+.nh-v22-disc:hover,
+.nh-v22-disc.nh-v22-pointer-active{
+  border-color:rgba(255,82,151,.98) !important;
   box-shadow:
     0 0 0 1px rgba(255,62,135,.72),
-    0 0 18px rgba(255,39,117,.22),
-    0 0 34px rgba(150,57,255,.20),
-    inset 0 0 28px rgba(255,45,126,.055) !important;
-  filter:brightness(1.08) saturate(1.08) !important;
+    0 0 14px rgba(255,39,117,.17),
+    0 0 24px rgba(150,57,255,.12) !important;
 }
-.nh-v22-center .nh-game-card:hover::before,
-.nh-v22-center .nh-game-card.nh-v22-pointer-active::before{opacity:.82 !important}
+
+/* Preserve readable, reactive text without decorative overlays. */
+.nh-v22-center .nh-game-card-copy strong,
+.nh-v22-gacha-bottom .nh-gacha-card strong,
+.nh-v22-note-title,
+.nh-v22-disc-title{
+  transition:text-shadow .16s ease !important;
+}
 .nh-v22-center .nh-game-card:hover .nh-game-card-copy strong,
-.nh-v22-center .nh-game-card.nh-v22-pointer-active .nh-game-card-copy strong{
-  text-shadow:0 0 8px rgba(255,105,173,.48),0 0 18px rgba(165,70,255,.34) !important;
-}
-
-/* Player Notes / Game Discussions */
-.nh-v22-note,.nh-v22-disc{
-  border-color:rgba(173,84,255,.38) !important;
-  box-shadow:0 0 0 1px rgba(142,61,255,.06),0 0 12px rgba(145,61,255,.045) !important;
-  transition:transform .16s cubic-bezier(.2,.75,.25,1),border-color .16s,box-shadow .16s,filter .16s !important;
-}
-.nh-v22-note:hover,.nh-v22-disc:hover,
-.nh-v22-note.nh-v22-pointer-active,.nh-v22-disc.nh-v22-pointer-active{
-  transform:translateY(-3px) !important;
-  border-color:rgba(255,81,151,.98) !important;
-  box-shadow:
-    0 0 0 1px rgba(255,57,132,.62),
-    0 0 17px rgba(255,40,119,.18),
-    0 0 28px rgba(145,58,255,.18),
-    inset 0 0 20px rgba(255,44,126,.035) !important;
-  filter:brightness(1.06) !important;
-}
-
-/* Gacha cards and panel */
-.nh-v22-gacha-bottom{
-  border-color:rgba(183,92,255,.48) !important;
-  box-shadow:0 0 22px rgba(143,57,255,.09),inset 0 0 30px rgba(255,43,123,.025) !important;
-}
-.nh-v22-gacha-bottom .nh-gacha-card:hover,
-.nh-v22-gacha-bottom .nh-gacha-card.nh-v22-pointer-active{
-  border-color:rgba(255,88,155,.98) !important;
-  box-shadow:0 0 0 1px rgba(255,59,132,.68),0 0 18px rgba(255,42,119,.20),0 0 30px rgba(146,59,255,.17) !important;
-}
-
-/* Stats / filters / VFX wake control */
-.nh-gaming-stats span:hover,
-.nh-gaming-stats span.nh-v22-pointer-active,
-.nh-gaming-filter:hover,
-.nh-gaming-filter.active,
-.nh-gaming-action:hover,
-.nh-gaming-action.nh-v22-pointer-active{
-  border-color:rgba(255,88,155,.98) !important;
-  box-shadow:0 0 0 1px rgba(255,55,129,.58),0 0 17px rgba(255,42,118,.18),0 0 26px rgba(149,60,255,.16) !important;
-}
-
-/* Make the shell's red/purple response follow the pointer without adding another trail. */
-.nh-gaming-shell{transition:box-shadow .18s ease,border-color .18s ease !important}
-.nh-gaming-shell.nh-v22-pointer-active{
-  border-color:rgba(214,118,255,.80) !important;
-  box-shadow:0 0 30px rgba(143,55,255,.20),0 0 60px rgba(255,40,116,.075),inset 0 0 48px rgba(145,58,255,.06) !important;
+.nh-v22-center .nh-game-card.nh-v22-pointer-active .nh-game-card-copy strong,
+.nh-v22-gacha-bottom .nh-gacha-card:hover strong,
+.nh-v22-gacha-bottom .nh-gacha-card.nh-v22-pointer-active strong,
+.nh-v22-note:hover .nh-v22-note-title,
+.nh-v22-disc:hover .nh-v22-disc-title{
+  text-shadow:0 0 7px rgba(255,91,159,.42),0 0 14px rgba(157,69,255,.24) !important;
 }
