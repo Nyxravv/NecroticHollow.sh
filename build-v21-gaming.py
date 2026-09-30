@@ -51,6 +51,136 @@ REPAIR_CSS = r'''
 @media(max-width:920px){.nh-v22-layout{grid-template-columns:1fr}.nh-v22-gacha-bottom .nh-gacha-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.nh-v22-gacha-bottom .nh-gacha-list{grid-template-columns:1fr}}
 
+/* V22.12 — lightweight sharp interaction pass */
+html{scroll-behavior:smooth}
+body{-webkit-overflow-scrolling:touch}
+.nh-gaming-section{width:min(100%,1500px)!important}
+.nh-gaming-shell{
+  padding:18px!important;
+  box-shadow:0 0 24px rgba(145,62,255,.12),0 0 45px rgba(255,46,119,.045),inset 0 0 36px rgba(139,60,255,.045)!important;
+}
+.nh-gaming-shell::before{
+  background:radial-gradient(circle at var(--gx) var(--gy),rgba(184,76,255,.075),transparent 22%)!important;
+  opacity:.55!important;
+}
+.nh-gaming-shell::after{opacity:.32!important;animation-duration:11s!important}
+.nh-gaming-particles{display:none!important}
+.nh-gaming-cursor-core,.nh-gaming-trail{display:none!important}
+.nh-gaming-heading{padding:13px 3px 10px!important}
+.nh-gaming-heading h2{font-size:clamp(40px,5.1vw,67px)!important}
+.nh-gaming-heading p{font-size:8px!important}
+.nh-gaming-stats{gap:6px!important}
+.nh-gaming-stats span{
+  position:relative!important;
+  overflow:hidden!important;
+  min-height:54px!important;
+  padding:8px 9px!important;
+  background:
+    radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,67,139,.12),transparent 52%),
+    linear-gradient(145deg,rgba(255,68,140,.04),rgba(135,72,255,.055))!important;
+  box-shadow:0 0 0 1px rgba(157,69,255,.10)!important;
+  transition:border-color .16s ease,box-shadow .16s ease!important;
+}
+.nh-gaming-stats span::after{
+  content:""!important;position:absolute!important;inset:0!important;pointer-events:none!important;
+  border:1px solid rgba(255,70,139,.22)!important;border-radius:inherit!important;
+  animation:nhV2212StatPulse 2.4s ease-in-out infinite!important;
+}
+.nh-gaming-stats span:hover,.nh-gaming-stats span.nh-v22-pointer-active{
+  border-color:rgba(255,92,154,.98)!important;
+  box-shadow:0 0 0 1px rgba(255,62,132,.62),0 0 17px rgba(255,48,121,.15),0 0 25px rgba(150,65,255,.12)!important;
+}
+.nh-gaming-stats b{font-size:15px!important;text-shadow:0 0 7px rgba(255,101,168,.22),0 0 14px rgba(157,69,255,.13)!important}
+
+.nh-v22-top{gap:14px!important;margin-bottom:14px!important}
+.nh-v22-rail{padding:14px!important}
+.nh-v22-rail-head strong{font-size:26px!important}
+.nh-v22-rail-head p{font-size:7px!important;margin-bottom:9px!important}
+.nh-v22-note,.nh-v22-disc{
+  --mx:50%;--my:50%;
+  margin-top:8px!important;
+  min-height:0!important;
+  background:
+    radial-gradient(circle at var(--mx) var(--my),rgba(255,65,139,.11),transparent 42%),
+    linear-gradient(145deg,rgba(25,10,36,.82),rgba(8,5,13,.92))!important;
+}
+.nh-v22-note button,.nh-v22-disc button{padding:11px 12px!important}
+.nh-v22-note-title,.nh-v22-disc-title{font-size:11px!important}
+.nh-v22-note-sub,.nh-v22-disc-sub{font-size:6px!important}
+.nh-v22-note-detail,.nh-v22-disc-detail{font-size:7px!important;line-height:1.58!important;padding:0 12px 11px!important}
+
+.nh-v22-center .nh-game-grid{gap:9px!important}
+.nh-v22-center .nh-game-card{
+  --mx:50%;--my:50%;
+  min-height:120px!important;
+  padding:9px!important;
+  background:
+    radial-gradient(circle at var(--mx) var(--my),rgba(255,64,137,.16),transparent 31%),
+    linear-gradient(145deg,rgba(18,9,27,.95),rgba(7,5,12,.985) 65%,rgba(25,6,17,.94))!important;
+  box-shadow:0 0 0 1px rgba(155,69,255,.10),0 0 13px rgba(147,61,255,.04)!important;
+  filter:none!important;
+}
+.nh-v22-center .nh-game-card-art{width:70px!important;height:70px!important;transform:none!important}
+.nh-v22-center .nh-game-card-copy strong{
+  font-size:clamp(18px,1.7vw,23px)!important;
+  text-shadow:0 0 7px rgba(255,103,170,.26),0 0 14px rgba(155,72,255,.17)!important;
+}
+.nh-v22-center .nh-game-card-copy small,.nh-v22-center .nh-game-card-copy em,.nh-v22-center .nh-game-index{font-size:6.5px!important}
+.nh-v22-center .nh-game-card:hover .nh-game-card-art{transform:none!important}
+.nh-v22-center .nh-game-card::after{opacity:.0!important}
+
+.nh-game-card,.nh-gacha-card,.nh-v22-note,.nh-v22-disc{
+  will-change:box-shadow,border-color!important;
+}
+.nh-game-card:hover,.nh-game-card:focus-visible,
+.nh-gacha-card:hover,.nh-gacha-card:focus-visible,
+.nh-v22-note:hover,.nh-v22-note.nh-v22-pointer-active,
+.nh-v22-disc:hover,.nh-v22-disc.nh-v22-pointer-active{
+  border-color:rgba(255,79,145,1)!important;
+  box-shadow:
+    0 0 0 1px rgba(255,69,139,.88),
+    0 0 16px rgba(255,44,116,.22),
+    0 0 30px rgba(154,68,255,.16),
+    inset 0 0 16px rgba(255,48,124,.07)!important;
+}
+.nh-game-card.nh-v22-pointer-active,.nh-gacha-card.nh-v22-pointer-active{
+  background:
+    radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,91,157,.22),transparent 28%),
+    linear-gradient(145deg,rgba(22,8,31,.97),rgba(7,5,12,.99) 66%,rgba(28,5,17,.95))!important;
+}
+.nh-gacha-card{
+  --mx:50%;--my:50%;
+  background:
+    radial-gradient(circle at var(--mx) var(--my),rgba(255,66,138,.14),transparent 43%),
+    linear-gradient(145deg,rgba(17,7,25,.96),rgba(7,5,12,.985))!important;
+}
+.nh-gacha-card strong{font-size:9px!important;text-shadow:0 0 6px rgba(255,104,169,.24),0 0 12px rgba(155,69,255,.15)!important}
+.nh-gacha-card small{font-size:6.2px!important}
+
+.nh-v22-gacha-bottom{margin-top:14px!important;padding:14px!important}
+.nh-v22-gacha-title strong{font-size:28px!important}
+.nh-v22-gacha-title p{font-size:7px!important}
+.nh-v22-gacha-bottom .nh-gacha-list{gap:7px!important}
+
+.nh-game-viewer-panel{
+  overflow-x:hidden!important;
+  scrollbar-width:none!important;
+}
+.nh-game-viewer-panel::-webkit-scrollbar{display:none!important}
+@keyframes nhV2212StatPulse{
+  0%,100%{opacity:.20}
+  50%{opacity:.68}
+}
+@media(max-width:920px){
+  .nh-gaming-section{width:min(100%,1180px)!important}
+  .nh-v22-top{grid-template-columns:1fr!important}
+}
+@media(max-width:560px){
+  .nh-v22-center .nh-game-card{min-height:112px!important}
+  .nh-v22-center .nh-game-card-art{width:64px!important;height:64px!important}
+}
+
+
 /* V22.11 — sharp perimeter VFX, clean viewer chrome, no cursor trail */
 .nh-gaming-section .nh-gaming-trail{display:none!important;visibility:hidden!important;opacity:0!important}
 .nh-gaming-section .nh-gaming-cursor-core{opacity:0!important}
