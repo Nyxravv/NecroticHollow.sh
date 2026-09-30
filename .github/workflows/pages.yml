@@ -27,6 +27,17 @@ jobs:
         run: python3 build-v20-music.py
       - name: Inject V21 gaming history section
         run: python3 build-v21-gaming.py
+      - name: Load V22.14 gaming VFX overrides
+        run: python3 - <<'PY'
+          from pathlib import Path
+          p = Path("index.html")
+          s = p.read_text(encoding="utf-8")
+          link = '<link rel="stylesheet" href="v22-14-overrides.css">'
+          if link not in s:
+              s = s.replace('</head>', f'  {link}\n</head>', 1)
+              p.write_text(s, encoding="utf-8")
+          print("V22.14 stylesheet loaded")
+          PY
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
