@@ -40,6 +40,8 @@
     const heading=document.createElement('div');heading.className='nh-v2220-heading';
     heading.innerHTML='<span class="nh-v2220-heading-title">MY WORK</span><span class="nh-v2220-heading-note">DISCORD COMMUNITY // SERVER OWNER</span>';
     grid.parentNode.insertBefore(heading,grid);
+    heading.addEventListener('pointermove',e=>{const rect=heading.getBoundingClientRect();heading.style.setProperty('--mouse-x',(e.clientX-rect.left)+'px');heading.style.setProperty('--mouse-y',(e.clientY-rect.top)+'px');});
+    heading.addEventListener('pointerleave',()=>{heading.style.removeProperty('--mouse-x');heading.style.removeProperty('--mouse-y');});
     grid.classList.add('nh-v2217-gallery');grid.innerHTML=items.map(card).join('');
     grid.addEventListener('pointermove',e=>{const card=e.target.closest('.nh-v2220-card');if(!card)return;const rect=card.getBoundingClientRect();card.style.setProperty('--mouse-x',(e.clientX-rect.left)+'px');card.style.setProperty('--mouse-y',(e.clientY-rect.top)+'px');});
     grid.addEventListener('pointerleave',()=>grid.querySelectorAll('.nh-v2220-card').forEach(card=>{card.style.removeProperty('--mouse-x');card.style.removeProperty('--mouse-y');}));
