@@ -111,7 +111,7 @@ body.nh-v2219-open{overflow:hidden}
 .nh-v2220-card:hover::after{opacity:.2;animation-duration:5s}
 .nh-v2220-card:focus-visible{outline:2px solid #f7b5ff!important;outline-offset:3px;box-shadow:0 0 0 4px rgba(191,72,255,.28),0 0 30px rgba(255,45,130,.35)!important}
 .nh-v2220-heading-title,.nh-v2220-heading-note,.nh-v2220-credit,.nh-v2217-title,.nh-v2217-sub,.nh-v2217-kicker{transition:color .25s ease,text-shadow .25s ease,filter .25s ease}
-.nh-v2220-gallery:has(.nh-v2220-card:hover) .nh-v2220-heading-title,.nh-v2220-gallery:has(.nh-v2220-card:hover) .nh-v2220-heading-note{color:#f7caff;text-shadow:0 0 7px rgba(190,70,255,.8),0 0 17px rgba(255,45,135,.6);animation:nh2221-textpulse 1.7s ease-in-out infinite}
+.nh-v2217-gallery:has(.nh-v2220-card:hover) .nh-v2220-heading-title,.nh-v2217-gallery:has(.nh-v2220-card:hover) .nh-v2220-heading-note{color:#f7caff;text-shadow:0 0 7px rgba(190,70,255,.8),0 0 17px rgba(255,45,135,.6);animation:nh2221-textpulse 1.7s ease-in-out infinite}
 .nh-v2220-card:hover .nh-v2217-title,.nh-v2220-card:hover .nh-v2217-kicker,.nh-v2220-card:hover .nh-v2217-sub,.nh-v2220-card:hover .nh-v2220-credit{color:#ffe0f7!important;text-shadow:0 0 6px rgba(192,85,255,.75),0 0 13px rgba(255,47,142,.55)!important;filter:brightness(1.12)}
 .nh-v2220-card:hover .nh-v2217-play{border-color:#ffd0f0;box-shadow:0 0 0 2px rgba(192,85,255,.3),0 0 22px rgba(255,45,142,.65),0 0 30px rgba(152,62,255,.48)}
 .nh-v2220-dialog{position:relative!important;isolation:isolate;border:1px solid rgba(222,103,255,.94)!important;box-shadow:0 0 0 1px rgba(255,57,151,.5),0 0 28px rgba(175,57,255,.32),0 0 65px rgba(255,44,133,.2),inset 0 0 24px rgba(158,56,255,.07)!important}
