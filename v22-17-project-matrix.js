@@ -28,6 +28,7 @@
         const response=await fetch('https://www.youtube.com/oembed?url='+encodeURIComponent(watch(item))+'&format=json');
         if(!response.ok)throw new Error('metadata unavailable');
         const data=await response.json();
+        if(data.title){item.title=data.title;const title=document.querySelector('[data-motion-index="'+index+'"] .nh-v2217-title');if(title)title.textContent=data.title;}
         const credit=document.querySelector('[data-credit-index="'+index+'"]');
         if(credit)credit.textContent='BY '+(data.author_name||'YOUTUBE CREATOR');
       }catch(_){/* Source link remains available if public metadata is unavailable. */}
