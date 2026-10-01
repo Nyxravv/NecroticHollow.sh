@@ -21,7 +21,7 @@
       ||document.querySelector('.project-window-grid');
     if(direct)return direct;
     const sections=[...document.querySelectorAll('section, .section, [id]')];
-    const matrix=sections.find(el=>/PROJECT\\s+MATRIX/i.test(el.textContent||''));
+    const matrix=sections.find(el=>/PROJECT\s+MATRIX/i.test(el.textContent||''));
     if(matrix)return matrix.querySelector('.project-window-grid, .project-grid, .projects-grid, .blender-projects, .project-matrix-grid, .grid, [class*="project"]')||null;
     return null;
   }
