@@ -1,10 +1,10 @@
 /* V22.20 — credited YouTube showcases in Project Matrix */
 (() => {
   const items = [
-    {id:'KTAQvNiNP1g', title:'ROOFTOP // SPARRING', kicker:'MOTION STUDY 01', sub:'ROBLOX RIGS / CINEMATIC CHOREOGRAPHY', detail:'Featured animation video. Open the original source to view the creator, description, and full context.'},
-    {id:'2v-EwewqxTQ', title:'VOID // AWAKENING', kicker:'MOTION STUDY 02', sub:'CHARACTER RIG / ENERGY REVEAL', detail:'Featured animation video. Open the original source to view the creator, description, and full context.'},
-    {id:'tbsymX_D9PI', title:'NEON // DUEL', kicker:'MOTION STUDY 03', sub:'TWO-RIG PERFORMANCE / ANIME-INSPIRED', detail:'Featured animation video. Open the original source to view the creator, description, and full context.'},
-    {id:'PaCQ7pqESWA', title:'HOLLOW // ASCENSION', kicker:'MOTION STUDY 04', sub:'BLENDER-STYLE RIG / FINISHING POSE', detail:'Featured animation video. Open the original source to view the creator, description, and full context.'}
+    {id:'KTAQvNiNP1g', title:'ROOFTOP // SPARRING', kicker:'MOTION STUDY 01', sub:'ROBLOX RIGS / CINEMATIC CHOREOGRAPHY', detail:'A curated motion-study feature from the Roblox animation community. This portfolio entry presents the original video in a cinematic viewer, with the source retained so visitors can explore the creator’s full work and context.'},
+    {id:'2v-EwewqxTQ', title:'VOID // AWAKENING', kicker:'MOTION STUDY 02', sub:'CHARACTER RIG / ENERGY REVEAL', detail:'A curated motion-study feature from the Roblox animation community. This portfolio entry presents the original video in a cinematic viewer, with the source retained so visitors can explore the creator’s full work and context.'},
+    {id:'tbsymX_D9PI', title:'NEON // DUEL', kicker:'MOTION STUDY 03', sub:'TWO-RIG PERFORMANCE / ANIME-INSPIRED', detail:'A curated motion-study feature from the Roblox animation community. This portfolio entry presents the original video in a cinematic viewer, with the source retained so visitors can explore the creator’s full work and context.'},
+    {id:'PaCQ7pqESWA', title:'HOLLOW // ASCENSION', kicker:'MOTION STUDY 04', sub:'BLENDER-STYLE RIG / FINISHING POSE', detail:'A curated motion-study feature from the Roblox animation community. This portfolio entry presents the original video in a cinematic viewer, with the source retained so visitors can explore the creator’s full work and context.'}
   ];
   const watch = item => 'https://www.youtube.com/watch?v='+item.id;
   const embed = item => 'https://www.youtube-nocookie.com/embed/'+item.id+'?autoplay=1&rel=0';
