@@ -18,6 +18,7 @@
     // The source layout uses .project-window-grid (not #blenderProjectGrid).
     const direct=document.getElementById('blenderProjectGrid')
       ||document.querySelector('.blender-project-grid')
+      ||document.querySelector('.project-window-grid-empty')
       ||document.querySelector('.project-window-grid');
     if(direct)return direct;
     const sections=[...document.querySelectorAll('section, .section, [id]')];
