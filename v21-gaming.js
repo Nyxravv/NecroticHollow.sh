@@ -142,6 +142,25 @@
   window.addEventListener('pointerdown', routeGamePointer, {capture:true, passive:false});
   window.addEventListener('mousedown', routeGamePointer, {capture:true, passive:false});
 
+  // V22.18 — prevent click-through when a cinematic viewer is open.
+  // Some portfolio overlays can win hit-testing; suppress events aimed outside
+  // the viewer whenever the pointer is geometrically inside its visible overlay.
+  function blockViewerClickThrough(event) {
+    if (!viewer?.classList.contains('open')) return;
+    const x = event.clientX, y = event.clientY;
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+    const overlayRect = viewer.getBoundingClientRect();
+    if (x < overlayRect.left || x > overlayRect.right || y < overlayRect.top || y > overlayRect.bottom) return;
+    const target = event.target instanceof Element ? event.target : null;
+    if (target && viewer.contains(target)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation?.();
+  }
+  ['pointerdown','pointerup','click','mousedown','mouseup','touchstart','touchend'].forEach(type => {
+    window.addEventListener(type, blockViewerClickThrough, {capture:true, passive:false});
+  });
+
   // Normal click path.
   root.addEventListener('click', e => {
     const target = e.target instanceof Element ? e.target : null;
