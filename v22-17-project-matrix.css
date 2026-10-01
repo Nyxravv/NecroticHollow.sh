@@ -1,5 +1,5 @@
 /* V22.17 — Project Matrix / Blender animation gallery */
-#blenderProjectGrid.nh-v2217-gallery{
+.nh-v2217-gallery{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:14px!important;
@@ -41,11 +41,11 @@
 @keyframes nhV2217Float{0%,100%{transform:translate(-50%,-48%) skewX(-5deg)}50%{transform:translate(-50%,-54%) skewX(3deg)}}
 @keyframes nhV2217Ring{0%,100%{transform:translate(-50%,-50%) scale(.96);opacity:.55}50%{transform:translate(-50%,-50%) scale(1.04);opacity:.95}}
 @keyframes nhV2217Scan{0%{top:18%;opacity:0}15%{opacity:.8}85%{opacity:.8}100%{top:76%;opacity:0}}
-@media(max-width:760px){#blenderProjectGrid.nh-v2217-gallery{grid-template-columns:1fr!important}.nh-v2217-card{min-height:235px!important}}
+@media(max-width:760px){.nh-v2217-gallery{grid-template-columns:1fr!important}.nh-v2217-card{min-height:235px!important}}
 @media(prefers-reduced-motion:reduce){.nh-v2217-ring,.nh-v2217-core,.nh-v2217-scan{animation:none!important}.nh-v2217-card{transition:none!important}}
 
 /* V22.19 — four interactive original rig-motion showcases */
-#blenderProjectGrid.nh-v2217-gallery .nh-v2219-card{width:100%;padding:0;text-align:left;font:inherit;appearance:none;}
+.nh-v2217-gallery .nh-v2219-card{width:100%;padding:0;text-align:left;font:inherit;appearance:none;}
 .nh-v2219-scene{isolation:isolate;background:radial-gradient(ellipse at 50% 62%,rgba(173,56,255,.2),transparent 43%),linear-gradient(150deg,#180821,#06040c 68%,#170514)!important}
 .nh-v2219-stage{position:absolute;left:8%;right:8%;bottom:15%;height:2px;background:linear-gradient(90deg,transparent,#ff4e9a,#b86cff,transparent);box-shadow:0 0 16px #a94dff;}
 .nh-v2219-rig{position:absolute;z-index:2;left:50%;top:52%;width:72px;height:145px;transform:translate(-50%,-50%);animation:nh2219-idle 2.4s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(255,61,149,.42));}
