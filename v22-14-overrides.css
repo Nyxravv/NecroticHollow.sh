@@ -69,29 +69,24 @@
     inset 0 0 34px rgba(139,60,255,.055) !important;
 }
 
-/* Sharp perimeter pulse without pseudo-elements or blur behind content. */
+/* Visible perimeter pulse using the real card border (no pseudo-element overlays). */
 .nh-v22-center .nh-game-card,
 .nh-v22-gacha-bottom .nh-gacha-card,
 .nh-v22-note,
 .nh-v22-disc{
-  border:1px solid rgba(177,86,255,.48) !important;
-  box-shadow:
-    0 0 0 1px rgba(149,64,255,.08),
-    0 0 9px rgba(149,64,255,.055) !important;
-  transition:
-    border-color .16s ease,
-    box-shadow .16s ease,
-    transform .16s cubic-bezier(.2,.75,.25,1) !important;
-  animation:nhV216BorderPulse 2.6s ease-in-out infinite !important;
+  border:1px solid rgba(177,86,255,.62);
+  box-shadow:0 0 0 1px rgba(149,64,255,.16),0 0 12px rgba(149,64,255,.10);
+  transition:border-color .16s ease,box-shadow .16s ease,transform .16s cubic-bezier(.2,.75,.25,1);
+  animation:nhV216BorderPulse 2.15s ease-in-out infinite !important;
 }
 @keyframes nhV216BorderPulse{
   0%,100%{
-    border-color:rgba(154,70,255,.42);
-    box-shadow:0 0 0 1px rgba(154,70,255,.06),0 0 8px rgba(154,70,255,.035);
+    border-color:rgba(174,76,255,.62);
+    box-shadow:0 0 0 1px rgba(154,70,255,.14),0 0 11px rgba(154,70,255,.10),0 0 18px rgba(154,70,255,.05);
   }
   50%{
-    border-color:rgba(255,63,137,.82);
-    box-shadow:0 0 0 1px rgba(255,63,137,.20),0 0 15px rgba(255,63,137,.10),0 0 20px rgba(154,70,255,.07);
+    border-color:rgba(255,55,126,.98);
+    box-shadow:0 0 0 2px rgba(255,63,137,.68),0 0 19px rgba(255,43,121,.28),0 0 31px rgba(154,69,255,.16);
   }
 }
 .nh-v22-center .nh-game-card:hover,
@@ -103,10 +98,13 @@
 .nh-v22-disc:hover,
 .nh-v22-disc.nh-v22-pointer-active{
   border-color:rgba(255,82,151,.98) !important;
-  box-shadow:
-    0 0 0 1px rgba(255,62,135,.72),
-    0 0 14px rgba(255,39,117,.17),
-    0 0 24px rgba(150,57,255,.12) !important;
+  box-shadow:0 0 0 1px rgba(255,62,135,.72),0 0 14px rgba(255,39,117,.17),0 0 24px rgba(150,57,255,.12) !important;
+}
+@media(prefers-reduced-motion:reduce){
+  .nh-v22-center .nh-game-card,
+  .nh-v22-gacha-bottom .nh-gacha-card,
+  .nh-v22-note,
+  .nh-v22-disc{animation:none !important;}
 }
 
 /* Preserve readable, reactive text without decorative overlays. */
