@@ -14,8 +14,16 @@
       <span class="nh-v2217-meta"><span class="nh-v2217-kicker">${item.kicker} // 0${index+1}</span><span class="nh-v2217-title">${item.title}</span><span class="nh-v2217-sub">${item.sub}</span></span>
     </button>`;
   }
+  function findProjectGrid(){
+    const direct=document.getElementById('blenderProjectGrid')||document.querySelector('.blender-project-grid');
+    if(direct)return direct;
+    const sections=[...document.querySelectorAll('section, .section, [id]')];
+    const matrix=sections.find(el=>/PROJECT\\s+MATRIX/i.test(el.textContent||''));
+    if(matrix)return matrix.querySelector('.project-grid, .projects-grid, .blender-projects, .project-matrix-grid, .grid, [class*="project"]')||null;
+    return null;
+  }
   function init(){
-    const grid=document.getElementById('blenderProjectGrid'); if(!grid||grid.dataset.nh2219==='1')return;
+    const grid=findProjectGrid(); if(!grid||grid.dataset.nh2219==='1')return false;
     grid.dataset.nh2219='1'; grid.classList.add('nh-v2217-gallery'); grid.innerHTML=items.map(card).join('');
     const modal=document.createElement('div'); modal.className='nh-v2219-modal'; modal.hidden=true; modal.setAttribute('aria-hidden','true');
     modal.innerHTML='<div class="nh-v2219-dialog" role="dialog" aria-modal="true" aria-labelledby="nh2219-title"><button class="nh-v2219-close" type="button" aria-label="Close showcase">×</button><div class="nh-v2219-modal-scene"></div><div class="nh-v2219-copy"><small class="nh-v2217-kicker" id="nh2219-kicker"></small><h3 id="nh2219-title"></h3><p id="nh2219-detail"></p><span class="nh-v2219-note">ANIMATED VISUAL STUDY // ORIGINAL CSS RIG PREVIEW</span></div></div>';
@@ -30,5 +38,6 @@
     modal.addEventListener('click',e=>{if(e.target===modal)close()});
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+  const boot=()=>{if(init())return;const observer=new MutationObserver(()=>{if(init())observer.disconnect()});observer.observe(document.documentElement,{childList:true,subtree:true});};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
