@@ -126,3 +126,18 @@ body.nh-v2219-open{overflow:hidden}
 @keyframes nh2221-drift{0%{transform:translateX(-45%)}100%{transform:translateX(45%)}}
 @keyframes nh2221-textpulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.28)}}
 @media(prefers-reduced-motion:reduce){.nh-v2220-card,.nh-v2220-card::after,.nh-v2220-card::before,.nh-v2220-heading-title,.nh-v2220-heading-note,.nh-v2219-close,.nh-v2220-action::after,.nh-v2220-dialog::after{animation:none!important;transition:none!important}}
+
+/* V22.22 — remove viewer scroll rail and polish information panel */
+.nh-v2220-modal{overflow:hidden!important;overflow-y:hidden!important;overscroll-behavior:contain;scrollbar-width:none!important;-ms-overflow-style:none!important}
+.nh-v2220-modal::-webkit-scrollbar,.nh-v2220-dialog::-webkit-scrollbar,.nh-v2220-copy::-webkit-scrollbar,.nh-v2220-player::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+.nh-v2220-dialog{max-height:min(88vh,900px)!important;overflow:hidden!important;overscroll-behavior:contain}
+.nh-v2220-copy{min-width:0;max-height:100%;overflow-y:auto;scrollbar-width:none!important;-ms-overflow-style:none!important;padding:30px!important}
+.nh-v2220-copy p{font-size:12px!important;line-height:1.85!important;color:rgba(237,211,244,.82)!important}
+.nh-v2220-copy h3{line-height:1.12!important;text-wrap:balance;text-shadow:0 0 12px rgba(178,74,255,.28);transition:color .2s ease,text-shadow .2s ease,transform .2s ease}
+.nh-v2220-copy:hover h3{color:#ffe4fb;text-shadow:0 0 9px rgba(192,77,255,.78),0 0 21px rgba(255,48,139,.48);transform:translateX(2px)}
+.nh-v2220-copy:hover .nh-v2220-creator{color:#ffd0ed;text-shadow:0 0 10px rgba(196,72,255,.48)}
+.nh-v2220-creator{padding:10px 0;border-top:1px solid rgba(190,86,255,.22);border-bottom:1px solid rgba(190,86,255,.22);transition:color .2s ease,text-shadow .2s ease}
+.nh-v2220-dialog::before,.nh-v2220-dialog::after{z-index:0!important}
+.nh-v2220-copy,.nh-v2220-player,.nh-v2219-close{z-index:2;position:relative}
+.nh-v2220-player{overflow:hidden!important;min-width:0}
+@media(max-width:700px){.nh-v2220-dialog{max-height:90vh!important;overflow-y:auto!important;scrollbar-width:none!important}.nh-v2220-copy{overflow:visible;max-height:none}}
