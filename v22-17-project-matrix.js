@@ -41,6 +41,8 @@
     heading.innerHTML='<span class="nh-v2220-heading-title">MY WORK</span><span class="nh-v2220-heading-note">DISCORD COMMUNITY // SERVER OWNER</span>';
     grid.parentNode.insertBefore(heading,grid);
     grid.classList.add('nh-v2217-gallery');grid.innerHTML=items.map(card).join('');
+    grid.addEventListener('pointermove',e=>{const card=e.target.closest('.nh-v2220-card');if(!card)return;const rect=card.getBoundingClientRect();card.style.setProperty('--mouse-x',(e.clientX-rect.left)+'px');card.style.setProperty('--mouse-y',(e.clientY-rect.top)+'px');});
+    grid.addEventListener('pointerleave',()=>grid.querySelectorAll('.nh-v2220-card').forEach(card=>{card.style.removeProperty('--mouse-x');card.style.removeProperty('--mouse-y');}));
     const modal=document.createElement('div');modal.className='nh-v2219-modal nh-v2220-modal';modal.hidden=true;modal.setAttribute('aria-hidden','true');
     modal.innerHTML='<div class="nh-v2219-dialog nh-v2220-dialog" role="dialog" aria-modal="true" aria-labelledby="nh2220-title"><button class="nh-v2219-close" type="button" aria-label="Close video viewer">×</button><div class="nh-v2220-player"></div><div class="nh-v2219-copy nh-v2220-copy"><small class="nh-v2217-kicker" id="nh2220-kicker"></small><h3 id="nh2220-title"></h3><p id="nh2220-detail"></p><p class="nh-v2220-creator" id="nh2220-creator">Creator: see original YouTube source</p><div class="nh-v2220-actions"><a class="nh-v2220-action" id="nh2220-source" target="_blank" rel="noopener noreferrer">OPEN SOURCE</a><button class="nh-v2220-action" id="nh2220-copy" type="button">COPY LINK</button></div><span class="nh-v2219-note">VIDEO EMBED // ORIGINAL CREATOR RETAINS CREDIT</span></div></div>';
     document.body.appendChild(modal);
