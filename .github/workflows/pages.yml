@@ -27,6 +27,8 @@ jobs:
         run: python3 build-v20-music.py
       - name: Inject V21 gaming history section
         run: python3 build-v21-gaming.py
+      - name: Apply V22 YBA tier list changes
+        run: python3 build-v22-yba-tierlist.py
       - name: Load V22.14 gaming VFX overrides
         run: |
           python3 - <<'PY'
@@ -35,7 +37,7 @@ jobs:
           s = p.read_text(encoding="utf-8")
           link = '<link rel="stylesheet" href="v22-14-overrides.css">'
           if link not in s:
-              s = s.replace('</head>', f'  {link}\n</head>', 1)
+              s = s.replace('</head>', f'  {link}\\n</head>', 1)
           p.write_text(s, encoding="utf-8")
           print("V22.14 stylesheet loaded")
           PY
@@ -48,9 +50,9 @@ jobs:
           css = '<link rel="stylesheet" href="v22-17-project-matrix.css">'
           js = '<script src="v22-17-project-matrix.js" defer></script>'
           if css not in s:
-              s = s.replace('</head>', f'  {css}\n</head>', 1)
+              s = s.replace('</head>', f'  {css}\\n</head>', 1)
           if js not in s:
-              s = s.replace('</body>', f'  {js}\n</body>', 1)
+              s = s.replace('</body>', f'  {js}\\n</body>', 1)
           p.write_text(s, encoding="utf-8")
           print("V22.17 Project Matrix gallery loaded")
           PY
