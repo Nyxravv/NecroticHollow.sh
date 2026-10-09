@@ -11,44 +11,44 @@ if not match:
 
 data = json.loads(match.group(2))
 
-def remove_player(name):
-    for players in data.values():
-        while name in players:
-            players.remove(name)
+# Exact roster and tier order from the user's reference screenshot.
+# Names not shown in that screenshot are deliberately removed from every tier.
+visible_tiers = {
+    "One Above All": ["Tornado"],
+    "GOAT": ["Sketch", "Fanta", "Smg", "Preqnox", "Vano"],
+    "Z": ["Prayer", "Elfish", "Sinnkow", "Jameslol7", "Zitler", "Flare", "Kono", "MasterKlinge", "sigmaoriol", "Digger"],
+    "SSS": ["Raze", "M4k", "Cxstom", "Cgg", "Fleemo", "Zenwydd", "Slater", "Saer", "Mickey", "Wex", "Seikiro", "Chickward", "Vxoow", "Sanyapep", "Doggone"],
+    "SS": [
+        "RANDOMYBA", "Duckmaster", "Xdusts", "Heary", "Mukankie", "Frozen", "dintion_j",
+        "Kiril", "KiraniPro", "00Inx", "Sima", "Vendeur", "Q20ez", "Xezzir", "Blindwawa",
+        "Yesmyst", "Gator", "Cam", "Workman", "Klet", "Arca / RetroAlex", "Garlic",
+        "Lcanrblx", "Sympaths", "Elkhan", "MaliciousLobster", "Ryuma", "Kevin", "Faruk",
+        "Sky", "Sacar", "Wyturz", "Raiden", "Arkanior"
+    ],
+    "S+": [
+        "Ceresriot", "Zie", "=", "Alexandros", "Cd", "Emir", "Oj", "Eweoh", "Summerhater",
+        "Shavrain", "spiritcourser", "Areeb", "Viper", "Sir_Diesalot", "Mureli", "Josh", "Stan",
+        "=", "Uglymoon", "Zwqn", "mascarasleev", "Zero", "Hinjaku", "Meepo", "Termidog",
+        "Hoshie", "Andrija", "Zarth1", "Lowzz", "sanches_plygg", "Azerty", "Puerta",
+        "Zuchengs", "Chalk", "Clift", "Kuzym5", "Miraz", "Queks", "Bigdmariop", "Canner",
+        "Nord", "Mathzz", "Igor", "Phenomenon", "MasterHalo666"
+    ],
+    "S": [
+        "Greyandromeda", "Oxz", "Asassin", "Irinel", "Grx", "Bulagra", "Darin",
+        "HaroldTheGoose", "77BountyHunter77", "Siebrink", "Zeet", "Brazagi", "Adwait",
+        "Nebel", "Staine", "Camper", "Envy", "YutoSenpai", "Crwmn", "Kopek", "resent",
+        "W0rldmach1ne", "Cmg", "Imraanis", "Crashjps", "James", "Ponosebebras", "Amedeo",
+        "Instant", "rhysmlg", "Keplersync", "Bellasync", "Fool", "Loshad", "Cookie", "Autty",
+        "Godzzplayzz", "YousayNu", "kuin", "Aprilsheep", "Zlatov", "Corza", "Jt", "s7lents",
+        "Nova", "Vovaogg", "Memo", "Auxsty", "Down", "Sloth", "Yozzly", "Bbay eren1544"
+    ],
+}
 
-def set_visible_order(tier, names):
-    # Move these players into the shown tier and place them in the exact
-    # left-to-right order from the supplied reference; preserve other entries.
-    for name in names:
-        remove_player(name)
-    remaining = data.get(tier, [])
-    data[tier] = names + remaining
-
-# Previous requested placements.
-for player in ("Zero", "Sir_Diesalot", "Faruk"):
-    remove_player(player)
-set_visible_order("S+", ["Viper", "Sir_Diesalot", "Mureli", "Josh", "Stan", "=", "Uglymoon", "Zwqn", "mascarasleev", "Zero"])
-
-# Match the newly supplied tier-list reference. Names shown are ordered exactly
-# as in the screenshot; additional players not visible in its crop are retained.
-set_visible_order("One Above All", ["Tornado"])
-set_visible_order("GOAT", ["Sketch", "Fanta", "Smg", "Preqnox", "Vano"])
-set_visible_order("Z", ["Prayer", "Elfish", "Sinnkow", "Jameslol7", "Zitler", "Flare", "Kono", "MasterKlinge", "sigmaoriol", "Digger"])
-set_visible_order("SSS", ["Raze", "M4k", "Cxstom", "Cgg", "Fleemo", "Zenwydd", "Slater", "Saer", "Mickey", "Wex", "Seikiro", "Chickward", "Vxoow", "Sanyapep", "Doggone"])
-set_visible_order("SS", ["RANDOMYBA", "Duckmaster", "Xdusts", "Heary", "Mukankie", "Frozen", "dintion_j", "Kiril", "KiraniPro", "00Inx", "Sima", "Vendeur", "Q20ez", "Xezzir", "Blindwawa", "Yesmyst", "Gator", "Cam", "Workman", "Klet", "Arca / RetroAlex", "Garlic", "Lcanrblx", "Sympaths"])
-
-# Ensure Faruk is in SS at the requested exact visible placement.
-remove_player("Faruk")
-if "Kevin" in data["SS"]:
-    data["SS"].insert(data["SS"].index("Kevin") + 1, "Faruk")
-else:
-    data["SS"].append("Faruk")
-
-# These players must not appear in the Z tier; preserve them elsewhere if present.
-excluded_from_z = {"NECROTICHOLLOW", "Aqualicz"}
-data["Z"] = [player for player in data.get("Z", []) if player not in excluded_from_z]
+# Keep the site's existing tier keys, but clear every tier not represented in
+# the reference screenshot so no unlisted names survive elsewhere on the site.
+data = {tier: visible_tiers.get(tier, []) for tier in data.keys()}
 
 replacement = match.group(1) + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + match.group(3)
 html = html[:match.start()] + replacement + html[match.end():]
 path.write_text(html, encoding="utf-8")
-print("YBA tier list synchronized; NECROTICHOLLOW and Aqualicz removed from Z.")
+print("YBA tier list replaced with only the names shown in the reference screenshot.")
