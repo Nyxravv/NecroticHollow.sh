@@ -16,21 +16,35 @@ def remove_player(name):
         while name in players:
             players.remove(name)
 
-def insert_after(tier, anchor, name):
-    players = data.get(tier, [])
-    if anchor not in players:
-        raise SystemExit(f"Expected placement anchor {anchor!r} missing from {tier}")
-    players.insert(players.index(anchor) + 1, name)
+def set_visible_order(tier, names):
+    # Move these players into the shown tier and place them in the exact
+    # left-to-right order from the supplied reference; preserve other entries.
+    for name in names:
+        remove_player(name)
+    remaining = data.get(tier, [])
+    data[tier] = names + remaining
 
-# Reposition the requested names deterministically on every build.
+# Previous requested placements.
 for player in ("Zero", "Sir_Diesalot", "Faruk"):
     remove_player(player)
+set_visible_order("S+", ["Viper", "Sir_Diesalot", "Mureli", "Josh", "Stan", "=", "Uglymoon", "Zwqn", "mascarasleev", "Zero"])
 
-insert_after("S+", "Viper", "Sir_Diesalot")
-insert_after("S+", "mascarasleev", "Zero")
-insert_after("SS", "Kevin", "Faruk")
+# Match the newly supplied tier-list reference. Names shown are ordered exactly
+# as in the screenshot; additional players not visible in its crop are retained.
+set_visible_order("One Above All", ["Tornado"])
+set_visible_order("GOAT", ["Sketch", "Fanta", "Smg", "Preqnox", "Vano"])
+set_visible_order("Z", ["Prayer", "Elfish", "Sinnkow", "Jameslol7", "Zitler", "Flare", "Kono", "MasterKlinge", "sigmaoriol", "Digger"])
+set_visible_order("SSS", ["Raze", "M4k", "Cxstom", "Cgg", "Fleemo", "Zenwydd", "Slater", "Saer", "Mickey", "Wex", "Seikiro", "Chickward", "Vxoow", "Sanyapep", "Doggone"])
+set_visible_order("SS", ["RANDOMYBA", "Duckmaster", "Xdusts", "Heary", "Mukankie", "Frozen", "dintion_j", "Kiril", "KiraniPro", "00Inx", "Sima", "Vendeur", "Q20ez", "Xezzir", "Blindwawa", "Yesmyst", "Gator", "Cam", "Workman", "Klet", "Arca / RetroAlex", "Garlic", "Lcanrblx", "Sympaths"])
+
+# Ensure Faruk is in SS at the requested exact visible placement.
+remove_player("Faruk")
+if "Kevin" in data["SS"]:
+    data["SS"].insert(data["SS"].index("Kevin") + 1, "Faruk")
+else:
+    data["SS"].append("Faruk")
 
 replacement = match.group(1) + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + match.group(3)
 html = html[:match.start()] + replacement + html[match.end():]
 path.write_text(html, encoding="utf-8")
-print("YBA tierlist placements set: Sir_Diesalot after Viper; Zero after mascarasleev; Faruk after Kevin.")
+print("YBA tier list synchronized with the supplied reference for all visible tiers.")
