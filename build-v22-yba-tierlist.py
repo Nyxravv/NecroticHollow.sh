@@ -48,7 +48,45 @@ visible_tiers = {
 # the reference screenshot so no unlisted names survive elsewhere on the site.
 data = {tier: visible_tiers.get(tier, []) for tier in data.keys()}
 
+# Hard-remove these names from all tier data, regardless of capitalization.
+for tier, players in data.items():
+    data[tier] = [
+        player for player in players
+        if player.strip().casefold() not in {"necrotichollow", "aqualicz"}
+    ]
+
 replacement = match.group(1) + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + match.group(3)
 html = html[:match.start()] + replacement + html[match.end():]
+
+# Extra guard for a stale or duplicate client-rendered player chip.
+guard = r'''
+<script id="nh-remove-user-from-yba-tierlist">
+(() => {
+  const forbidden = new Set(["necrotichollow", "aqualicz"]);
+  const removeForbiddenTierChips = () => {
+    document.querySelectorAll("button, a, span, div, li").forEach((el) => {
+      if (el.children.length !== 0) return;
+      const name = (el.textContent || "").trim().toLowerCase();
+      if (!forbidden.has(name)) return;
+      const chip = el.closest("button, a, .yba-tier-player, .tier-player, .tierlist-player, .player-card, .player-tag") || el;
+      chip.remove();
+    });
+  };
+  removeForbiddenTierChips();
+  const observer = new MutationObserver(removeForbiddenTierChips);
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+'''
+marker = '<script id="nh-remove-user-from-yba-tierlist">'
+if marker in html:
+    start_guard = html.index(marker)
+    end_guard = html.index("</script>", start_guard) + len("</script>")
+    html = html[:start_guard] + html[end_guard:]
+body = html.lower().rfind("</body>")
+if body < 0:
+    raise SystemExit("Missing </body> while adding YBA removal guard.")
+html = html[:body] + guard + "\n" + html[body:]
+
 path.write_text(html, encoding="utf-8")
-print("YBA tier list replaced with only the names shown in the reference screenshot.")
+print("YBA tier list synchronized; NecroticHollow and Aqualicz are filtered from data and rendered chips.")
