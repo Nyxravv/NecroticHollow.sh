@@ -44,7 +44,11 @@ if "Kevin" in data["SS"]:
 else:
     data["SS"].append("Faruk")
 
+# These players must not appear in the Z tier; preserve them elsewhere if present.
+excluded_from_z = {"NECROTICHOLLOW", "Aqualicz"}
+data["Z"] = [player for player in data.get("Z", []) if player not in excluded_from_z]
+
 replacement = match.group(1) + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + match.group(3)
 html = html[:match.start()] + replacement + html[match.end():]
 path.write_text(html, encoding="utf-8")
-print("YBA tier list synchronized with the supplied reference for all visible tiers.")
+print("YBA tier list synchronized; NECROTICHOLLOW and Aqualicz removed from Z.")
