@@ -48,7 +48,7 @@ visible_tiers = {
 # the reference screenshot so no unlisted names survive elsewhere on the site.
 data = {tier: visible_tiers.get(tier, []) for tier in data.keys()}
 
-# Hard-remove these names from all tier data, regardless of capitalization.
+# Hard-remove the requested names from all tier data, regardless of capitalization.
 for tier, players in data.items():
     data[tier] = [
         player for player in players
@@ -58,35 +58,36 @@ for tier, players in data.items():
 replacement = match.group(1) + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + match.group(3)
 html = html[:match.start()] + replacement + html[match.end():]
 
-# Extra guard for a stale or duplicate client-rendered player chip.
-guard = r'''
-<script id="nh-remove-user-from-yba-tierlist">
-(() => {
-  const forbidden = new Set(["necrotichollow", "aqualicz"]);
-  const removeForbiddenTierChips = () => {
-    document.querySelectorAll("button, a, span, div, li").forEach((el) => {
-      if (el.children.length !== 0) return;
-      const name = (el.textContent || "").trim().toLowerCase();
-      if (!forbidden.has(name)) return;
-      const chip = el.closest("button, a, .yba-tier-player, .tier-player, .tierlist-player, .player-card, .player-tag") || el;
-      chip.remove();
-    });
-  };
-  removeForbiddenTierChips();
-  const observer = new MutationObserver(removeForbiddenTierChips);
-  observer.observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
-'''
-marker = '<script id="nh-remove-user-from-yba-tierlist">'
-if marker in html:
-    start_guard = html.index(marker)
-    end_guard = html.index("</script>", start_guard) + len("</script>")
-    html = html[:start_guard] + html[end_guard:]
-body = html.lower().rfind("</body>")
-if body < 0:
-    raise SystemExit("Missing </body> while adding YBA removal guard.")
-html = html[:body] + guard + "\n" + html[body:]
+# Remove the previous broad text observer: it could also remove the creator
+# credit. The tier data above is the source of truth for player chips.
+guard_marker = '<script id="nh-remove-user-from-yba-tierlist">'
+if guard_marker in html:
+    guard_start = html.index(guard_marker)
+    guard_end = html.index("</script>", guard_start) + len("</script>")
+    html = html[:guard_start] + html[guard_end:]
+
+# Add NecroticHollow to the TL CREATOR panel, not to any tier.
+if "TL CREATOR" in html:
+    if not re.search(r"TL CREATOR.{0,500}NecroticHollow", html, re.DOTALL | re.IGNORECASE):
+        # Put the name directly after the creator heading's containing element.
+        heading = re.search(r"(<[^>]*>\\s*TL CREATOR\\s*</[^>]+>)", html, re.IGNORECASE)
+        if heading:
+            credit = '<div class="nh-yba-tl-creator-name">NecroticHollow</div>'
+            html = html[:heading.end()] + credit + html[heading.end():]
+        else:
+            raise SystemExit("Found TL CREATOR text but could not locate its HTML element.")
+    if "nh-yba-tl-creator-style" not in html:
+        style = """<style id="nh-yba-tl-creator-style">
+.nh-yba-tl-creator-name{margin-top:7px;color:#f1d9ff;font:700 12px/1.4 Inter,Arial,sans-serif;letter-spacing:.04em;text-shadow:0 0 10px rgba(210,105,255,.35)}
+</style>
+"""
+        head = html.lower().rfind("</head>")
+        if head >= 0:
+            html = html[:head] + style + html[head:]
+        else:
+            html = style + html
+else:
+    raise SystemExit("Could not find TL CREATOR heading in generated index.html.")
 
 path.write_text(html, encoding="utf-8")
-print("YBA tier list synchronized; NecroticHollow and Aqualicz are filtered from data and rendered chips.")
+print("YBA tier list synchronized; NecroticHollow appears in TL CREATOR only, not in any tier.")
