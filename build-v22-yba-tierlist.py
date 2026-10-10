@@ -70,7 +70,7 @@ if guard_marker in html:
 if "TL CREATOR" in html:
     if not re.search(r"TL CREATOR.{0,500}NecroticHollow", html, re.DOTALL | re.IGNORECASE):
         # Put the name directly after the creator heading's containing element.
-        heading = re.search(r"(<[^>]*>\\s*TL CREATOR\\s*</[^>]+>)", html, re.IGNORECASE)
+        heading = re.search(r"(<[^>]*>\s*TL CREATOR\s*</[^>]+>)", html, re.IGNORECASE)
         if heading:
             credit = '<div class="nh-yba-tl-creator-name">NecroticHollow</div>'
             html = html[:heading.end()] + credit + html[heading.end():]
