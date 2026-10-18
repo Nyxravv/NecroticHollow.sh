@@ -65,31 +65,38 @@ if guard_marker in html:
     guard_end = html.index("</script>", guard_start) + len("</script>")
     html = html[:guard_start] + html[guard_end:]
 
-# Add NecroticHollow to the TL CREATOR panel, not to any tier.
-if "TL CREATOR" in html:
-    heading = re.search(r"(<[^>]*>\s*TL CREATOR\s*</[^>]+>)", html, re.IGNORECASE)
-    if heading:
-        html = re.sub(r'<div class="nh-yba-tl-creator-name">.*?</div>', '', html, flags=re.DOTALL)
-        credit = ('<div class="nh-yba-tl-creator-name">Founder: Aethernial</div>'
-                  '<div class="nh-yba-tl-creator-name">Now current holder: NecroticHollow</div>')
-        html = html[:heading.end()] + credit + html[heading.end():]
-    else:
-        raise SystemExit("Found TL CREATOR text but could not locate its HTML element.")
-    if "nh-yba-tl-creator-style" not in html:
-        style = """<style id="nh-yba-tl-creator-style">
-.nh-yba-tl-creator-name{display:inline-block;margin:7px 8px 0 0;padding:8px 12px;background:#f5f5f5;color:#111;font:400 14px/1.4 Inter,Arial,sans-serif}
-</style>
+# Add the creator credit at runtime because the TL Creator panel is rendered
+# dynamically by the tier-list UI. This deliberately does not add a player chip.
+creator_script = r"""
+<script id="nh-yba-creator-credit">
+(() => {
+  const addCreatorCredit = () => {
+    const labels = [...document.querySelectorAll("th, td, div, span, label, strong, p")]
+      .filter(el => el.children.length === 0 && (el.textContent || "").replace(/\s+/g, " ").trim().toLowerCase() === "tl creator");
+    for (const label of labels) {
+      const row = label.closest("tr") || label.parentElement?.parentElement || label.parentElement;
+      if (!row || row.querySelector(".nh-yba-tl-creator-name")) continue;
+      const credit = document.createElement("div");
+      credit.className = "nh-yba-tl-creator-name";
+      credit.textContent = "Now current holder: NecroticHollow";
+      credit.style.cssText = "display:inline-block;margin:7px 8px 0 0;padding:8px 12px;background:#f5f5f5;color:#111;font:400 14px/1.4 Inter,Arial,sans-serif";
+      row.appendChild(credit);
+    }
+  };
+  addCreatorCredit();
+  new MutationObserver(addCreatorCredit).observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
 """
-        head = html.lower().rfind("</head>")
-        if head >= 0:
-            html = html[:head] + style + html[head:]
-        else:
-            html = style + html
-else:
-    # The creator panel is rendered by the site's tier-list UI, not necessarily
-    # as literal HTML in index.html at build time. Do not fail the Pages deploy
-    # when that client-rendered heading is absent from the generated source.
-    print("TL CREATOR heading is client-rendered; leaving creator UI untouched.")
+creator_marker = '<script id="nh-yba-creator-credit">'
+if creator_marker in html:
+    cstart = html.index(creator_marker)
+    cend = html.index("</script>", cstart) + len("</script>")
+    html = html[:cstart] + html[cend:]
+body_end = html.lower().rfind("</body>")
+if body_end < 0:
+    raise SystemExit("Missing </body> while adding creator credit.")
+html = html[:body_end] + creator_script + "\n" + html[body_end:]
 
 path.write_text(html, encoding="utf-8")
 print("YBA tier list synchronized; NecroticHollow appears in TL CREATOR only, not in any tier.")
