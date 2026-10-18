@@ -16,27 +16,28 @@ data = json.loads(match.group(2))
 visible_tiers = {
     "One Above All": ["Tornado"],
     "GOAT": ["Sketch", "Fanta", "Smg", "Preqnox", "Vano"],
-    "Z": ["Prayer", "Elfish", "Sinnkow", "Bogdan", "Jameslol7", "Zitler", "Flare", "Kono", "MasterKlinge", "sigmaoriol"],
-    "SSS": ["Digger", "Raze", "M4k", "Cxstom", "Cgg", "Fleemo", "Zenwydd", "Slater", "Saer", "Mickey", "Wex", "Seikiro", "Chickward", "Vxoow", "Sanyapep"],
+    "Z": ["Prayer", "Elfish", "Sinnkow", "Zitler", "Jameslol7 (FLUCTUATING)", "Flare", "sigmaoriol", "Kono", "MasterKlinge"],
+    "SSS": ["Digger", "Bogdan", "Raze", "M4k", "Cxstom", "Cgg", "Fleemo", "Vxoow", "Slater", "Zenwydd", "Saer", "Mickey", "Wex", "Seikiro", "=", "Ryuma", "=", "Cd"],
     "SS": [
-        "Doggone", "RANDOMYBA", "Duckmaster", "Ryuma", "Xdusts", "Heary", "Mukankie", "Frozen", "dintion_j", "Kiril",
-        "KiraniPro", "00Inx", "Sima", "Vendeur", "Q20ez", "Xezzir", "Blindwawa", "Yesmyst", "Gator", "Cam", "Workman",
-        "Klet", "Arca / RetroAlex", "Garlic", "Lcanrblx", "Sympaths", "Elkhan", "MaliciousLobster", "Eweoh", "Kevin",
-        "Faruk", "Sky", "Sacar", "Wyturz", "Raiden"
+        "Doggone", "Chickward", "Sanyapep", "MaliciousLobster", "RANDOMYBA", "Duckmaster", "Xdusts", "Mukankie", "Frozen",
+        "Q20ez", "dintion_j", "Kiril", "00Inx", "Sima", "Eweoh", "Vendeur", "Xezzir", "Blindwawa", "KiraniPro", "Yesmyst",
+        "Workman", "Klet", "Arca / RetroAlex", "Cam", "Faruk", "Lcanrblx", "Sympaths", "Garlic", "Sky", "Hinjaku", "Mureli",
+        "Heary"
     ],
     "S+": [
-        "Arkanior", "Ceresriot", "Zie", "=", "Alexandros", "Cd", "Emir", "Oj", "Summerhater", "Shayraim", "spiritcourser",
-        "Areeb", "Viper", "Sir_Diesalot", "Mureli", "Josh", "Stan", "=", "Uglymoon", "Zwqn", "mascarasleev", "Zero",
-        "Hinjaku", "Meepo", "Termidog", "Hoshie", "Andrija", "Zarth1", "Lowzz", "sanches_plygg", "Azerty", "Puerta",
-        "Zuchengs", "Chalk", "Clift", "Kuzym5", "Miraz", "Queks", "Bigdmariop", "Canner", "Nord", "Mathzz", "Igor",
-        "Phenomenon", "MasterHalo666"
+        "Elkhan", "Wyturz", "Raiden", "Arkanior", "Ceresriot", "Zie", "=", "Alexandros", "Emir", "Oj", "Sacar", "Kevin",
+        "Summerhater", "spiritcourser", "Viper", "Sir_Diesalot", "Gator", "Josh", "Stan", "Nord", "Uglymoon", "Zwqn",
+        "mascarasleev", "Zero", "Meepo", "Termidog", "Hoshie", "Andrija", "Zarth1", "Areeb", "Phenomenon", "Lowzz",
+        "Shayraim", "sanches_plygg", "Azerty", "Puerta", "Zuchengs", "Chalk", "Clift", "Kuzym5", "Miraz", "Queks",
+        "Bigdmariop", "Canner"
     ],
     "S": [
-        "Greyandromeda", "Oxz", "Asassin", "Irinel", "Grx", "Bulagra", "Darin", "HaroldTheGoose", "77BountyHunter77",
-        "Siebrink", "Zeet", "Brazagi", "Adwait", "Nebel", "Staine", "Camper", "Envy", "YutoSenpai", "Crwmn", "Kopek",
-        "resent", "Worldmach1ne", "Cmg", "Imraanis", "Crashjps", "James", "Ponosebebras", "Amedeo", "Instant", "rhysmlg",
-        "Keplersync", "Bellasync", "Fool", "Loshad", "Cookie", "Autty", "Godzzplayzz", "YousayNu", "kuin", "Aprilsheep",
-        "Zlatov", "Corza", "Jt", "s7lents", "Nova", "Vovaogg", "Memo", "Auxsty", "Down", "Sloth", "Yozzly", "Bbay eren1544"
+        "Mathzz", "Igor", "MasterHalo666", "Greyandromeda", "Oxz", "Asassin", "Irinel", "Grx", "Bulagra", "Darin",
+        "HaroldTheGoose", "77BountyHunter77", "Siebrink", "Zeet", "Brazagi", "Adwait", "Nebel", "Staine", "Camper", "Envy",
+        "YutoSenpai", "Crwmn", "Kopek", "resent", "W0rldmach1ne", "Cmg", "Imraanis", "Crashjps", "James", "Ponosebebras",
+        "Amedeo", "Instant", "rhysmlg", "Keplersync", "Bellasync", "Fool", "Loshad", "Cookie", "Autty", "Godzzplayzz",
+        "YousayNu", "kuin", "Aprilsheep", "Zlatov", "Corza", "Jt", "s7lents", "Nova", "Vovaogg", "Memo", "Auxsty", "Down",
+        "Sloth", "Yozzly", "Bbay eren1544"
     ],
 }
 
