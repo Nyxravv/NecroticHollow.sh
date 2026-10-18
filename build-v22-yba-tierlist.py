@@ -71,31 +71,38 @@ creator_script = r"""
 <script id="nh-yba-creator-credit">
 (() => {
   const addCreatorCredit = () => {
-    const labels = [...document.querySelectorAll("th, td, div, span, label, strong, p")]
+    const labels = [...document.querySelectorAll("th, td, div, span, label, strong, p, h1, h2, h3")]
       .filter(el => el.children.length === 0 && (el.textContent || "").replace(/\s+/g, " ").trim().toLowerCase() === "tl creator");
     for (const label of labels) {
-      if (label.parentElement?.querySelector(":scope > .nh-yba-tl-creator-name")) continue;
-      const credit = document.createElement("div");
-      credit.className = "nh-yba-tl-creator-name";
-      credit.textContent = "Now current holder: NecroticHollow";
-      credit.style.cssText = [
-        "display:block",
-        "box-sizing:border-box",
-        "width:fit-content",
-        "max-width:100%",
-        "margin:10px 0 0",
-        "padding:7px 12px",
-        "border:1px solid rgba(218,126,255,.48)",
-        "border-radius:4px",
-        "background:linear-gradient(100deg,rgba(112,35,130,.30),rgba(35,19,48,.52))",
-        "color:#f4e7ff",
-        "font:500 13px/1.45 Inter,Arial,sans-serif",
-        "letter-spacing:.02em",
-        "text-shadow:0 0 10px rgba(207,112,255,.22)"
-      ].join(";");
-      // Insert directly below the TL CREATOR label, not at the end of its
-      // containing tier-list row or the page.
-      label.insertAdjacentElement("afterend", credit);
+      const parent = label.parentElement;
+      if (!parent || parent.querySelector(".nh-yba-owner-card")) continue;
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "nh-yba-owner-card";
+      card.setAttribute("aria-haspopup", "dialog");
+      card.setAttribute("aria-label", "Open NecroticHollow profile");
+      card.innerHTML = '<span class="nh-yba-owner-mark">NH</span><span class="nh-yba-owner-copy"><strong>NecroticHollow</strong><small>OWNER // RECOGNISED COMPETITOR</small></span><span class="nh-yba-owner-open">VIEW PROFILE ↗</span>';
+      card.style.cssText = "display:flex;align-items:center;gap:11px;width:fit-content;max-width:100%;margin:10px 0 0;padding:10px 13px;text-align:left;cursor:pointer;border:1px solid rgba(205,113,255,.46);border-radius:7px;background:linear-gradient(115deg,rgba(87,29,111,.42),rgba(22,17,34,.88));color:#f8edff;font:inherit;box-shadow:inset 0 1px rgba(255,255,255,.035);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease";
+      if (!document.getElementById("nh-yba-owner-profile-style")) {
+        const style = document.createElement("style");
+        style.id = "nh-yba-owner-profile-style";
+        style.textContent = ".nh-yba-owner-card:hover,.nh-yba-owner-card:focus-visible{transform:translateY(-2px);border-color:#e7a0ff!important;background:linear-gradient(115deg,rgba(126,44,157,.58),rgba(34,19,48,.96))!important;box-shadow:0 0 0 1px rgba(205,113,255,.18),0 0 22px rgba(197,78,255,.2),0 8px 24px rgba(0,0,0,.22)!important;outline:none}.nh-yba-owner-mark{display:grid;place-items:center;flex:0 0 35px;height:35px;border:1px solid rgba(225,166,255,.65);border-radius:5px;background:linear-gradient(145deg,#54216c,#24152f);color:#f5d9ff;font-weight:800;font-size:12px;letter-spacing:.05em;text-shadow:0 0 10px #c56bff}.nh-yba-owner-copy{display:flex;flex-direction:column;gap:3px;min-width:0}.nh-yba-owner-copy strong{font-size:13px;line-height:1.2;color:#fff}.nh-yba-owner-copy small{font-size:9px;line-height:1.25;letter-spacing:.13em;color:#cba7df}.nh-yba-owner-open{margin-left:8px;font-size:9px;letter-spacing:.09em;color:#dca5ff;white-space:nowrap}.nh-yba-profile-backdrop{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:20px;background:rgba(7,5,12,.78);backdrop-filter:blur(9px);opacity:0;transition:opacity .2s ease}.nh-yba-profile-backdrop.nh-open{opacity:1}.nh-yba-profile-card{position:relative;overflow-y:auto;width:min(650px,100%);max-height:min(84vh,850px);border:1px solid rgba(211,132,255,.55);border-radius:13px;background:linear-gradient(155deg,#1b1425,#100e18 60%,#1d1028);color:#f4edf9;box-shadow:0 25px 90px rgba(0,0,0,.55),0 0 45px rgba(151,59,208,.16);transform:translateY(10px) scale(.985);transition:transform .2s ease}.nh-open .nh-yba-profile-card{transform:translateY(0) scale(1)}.nh-yba-profile-top{position:relative;padding:25px 27px 22px;background:radial-gradient(ellipse at 85% 0%,rgba(185,70,255,.22),transparent 48%);border-bottom:1px solid rgba(210,136,255,.2)}.nh-yba-profile-kicker{font-size:10px;letter-spacing:.2em;color:#d3a5f1}.nh-yba-profile-name{margin:9px 40px 5px 0;font-size:clamp(25px,5vw,37px);font-weight:800;color:#fff;text-shadow:0 0 22px rgba(195,94,255,.22)}.nh-yba-profile-sub{font-size:11px;letter-spacing:.12em;color:#d4b3e8}.nh-yba-profile-badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:17px}.nh-yba-profile-badges span{padding:6px 9px;border:1px solid rgba(210,136,255,.28);border-radius:4px;background:rgba(125,55,156,.14);font-size:10px;color:#f0d9ff}.nh-yba-profile-close{position:absolute;top:15px;right:16px;width:34px;height:34px;border:1px solid rgba(220,164,255,.35);border-radius:6px;background:rgba(255,255,255,.035);color:#f8eaff;font-size:22px;cursor:pointer}.nh-yba-profile-body{padding:23px 27px 27px}.nh-yba-profile-body h4{margin:18px 0 7px;font-size:10px;letter-spacing:.17em;color:#d9a8f5}.nh-yba-profile-body p{margin:0;color:#d7cbdc;font-size:13px;line-height:1.8}.nh-yba-profile-footer{padding:13px 27px;border-top:1px solid rgba(210,136,255,.17);font-size:9px;letter-spacing:.14em;color:#a88ab8}@media(max-width:520px){.nh-yba-owner-open{display:none}.nh-yba-profile-top,.nh-yba-profile-body{padding-left:18px;padding-right:18px}}";
+        document.head.appendChild(style);
+      }
+      card.addEventListener("click", () => {
+        if (document.querySelector(".nh-yba-profile-backdrop")) return;
+        const backdrop = document.createElement("div");
+        backdrop.className = "nh-yba-profile-backdrop";
+        backdrop.innerHTML = '<article class="nh-yba-profile-card" role="dialog" aria-modal="true" aria-labelledby="nhYbaProfileName"><header class="nh-yba-profile-top"><button class="nh-yba-profile-close" type="button" aria-label="Close profile">×</button><div class="nh-yba-profile-kicker">TL CREATOR // OWNER PROFILE</div><h2 class="nh-yba-profile-name" id="nhYbaProfileName">NecroticHollow</h2><div class="nh-yba-profile-sub">TIER LIST OWNER · YBA PLAYER</div><div class="nh-yba-profile-badges"><span>OWNER</span><span>COMPETITIVE PLAYER</span><span>COMMUNITY PROFILE</span></div></header><div class="nh-yba-profile-body"><h4>ABOUT THE OWNER</h4><p>NecroticHollow is the owner behind this tier-list project, responsible for maintaining its presentation, organising player placements, and keeping the roster aligned with the current reference. The creator role reflects the time invested in shaping the list, tracking changes, and presenting player rankings in a clear and consistent format.</p><h4>COMPETITIVE REPUTATION</h4><p>NecroticHollow is presented here as a highly capable player with a strong competitive identity. This profile highlights matchup awareness, adaptation, confident decision-making, and the ability to compete against experienced opponents. Strong play is about more than one result: it involves learning opponents, making decisions under pressure, refining execution, and continuing to improve.</p><h4>PLAYSTYLE &amp; APPROACH</h4><p>The profile emphasises preparation, consistency, game knowledge, and the willingness to review mistakes instead of repeating them. Competitive play rewards patience as much as aggression: recognising patterns, understanding spacing and timing, choosing the right response, and adapting when an opponent changes their approach. These qualities form the basis of the strong-player reputation represented by this card.</p><h4>ROLE IN THE TIER LIST</h4><p>As owner, NecroticHollow oversees the tier list’s structure and presentation while keeping the creator credit separate from ranked player entries. The owner name belongs in the TL Creator panel—not as an extra chip in Z, SSS, SS, S+, S, or any other player tier. This profile is separate from the competitive ranking itself.</p><h4>PROFILE NOTE</h4><p>This is a creator-written profile, not an independently verified tournament record. Its purpose is to introduce the owner, communicate a strong competitive identity, and give visitors a polished profile view consistent with the tier list’s visual style.</p></div><footer class="nh-yba-profile-footer">NECROTICHOLLOW // TL CREATOR PROFILE</footer></article>';
+        document.body.appendChild(backdrop);
+        const close = () => { backdrop.classList.remove("nh-open"); document.removeEventListener("keydown", onKey); setTimeout(() => backdrop.remove(), 220); };
+        const onKey = e => { if (e.key === "Escape") close(); };
+        backdrop.addEventListener("click", e => { if (e.target === backdrop) close(); });
+        backdrop.querySelector(".nh-yba-profile-close").addEventListener("click", close);
+        document.addEventListener("keydown", onKey);
+        requestAnimationFrame(() => backdrop.classList.add("nh-open"));
+      });
+      label.insertAdjacentElement("afterend", card);
     }
   };
   addCreatorCredit();
