@@ -74,13 +74,28 @@ creator_script = r"""
     const labels = [...document.querySelectorAll("th, td, div, span, label, strong, p")]
       .filter(el => el.children.length === 0 && (el.textContent || "").replace(/\s+/g, " ").trim().toLowerCase() === "tl creator");
     for (const label of labels) {
-      const row = label.closest("tr") || label.parentElement?.parentElement || label.parentElement;
-      if (!row || row.querySelector(".nh-yba-tl-creator-name")) continue;
+      if (label.parentElement?.querySelector(":scope > .nh-yba-tl-creator-name")) continue;
       const credit = document.createElement("div");
       credit.className = "nh-yba-tl-creator-name";
       credit.textContent = "Now current holder: NecroticHollow";
-      credit.style.cssText = "display:inline-block;margin:7px 8px 0 0;padding:8px 12px;background:#f5f5f5;color:#111;font:400 14px/1.4 Inter,Arial,sans-serif";
-      row.appendChild(credit);
+      credit.style.cssText = [
+        "display:block",
+        "box-sizing:border-box",
+        "width:fit-content",
+        "max-width:100%",
+        "margin:10px 0 0",
+        "padding:7px 12px",
+        "border:1px solid rgba(218,126,255,.48)",
+        "border-radius:4px",
+        "background:linear-gradient(100deg,rgba(112,35,130,.30),rgba(35,19,48,.52))",
+        "color:#f4e7ff",
+        "font:500 13px/1.45 Inter,Arial,sans-serif",
+        "letter-spacing:.02em",
+        "text-shadow:0 0 10px rgba(207,112,255,.22)"
+      ].join(";");
+      // Insert directly below the TL CREATOR label, not at the end of its
+      // containing tier-list row or the page.
+      label.insertAdjacentElement("afterend", credit);
     }
   };
   addCreatorCredit();
