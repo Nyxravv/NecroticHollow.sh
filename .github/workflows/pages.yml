@@ -68,6 +68,7 @@ jobs:
 
           tests = [
               ("json API read-only", "https://counterapi.com/api/necrotichollow.sh/view/portfolio-v195?readOnly=true&startNumber=0&noFormatting=true"),
+              ("documented sample API read-only", "https://counterapi.com/api/mysite.com/view/product123?readOnly=true&startNumber=0&noFormatting=true"),
               ("JSONP API read-only", "https://counterapi.com/api/necrotichollow.sh/view/portfolio-v195?readOnly=true&startNumber=0&noFormatting=true&callback=nhCounterHealthCheck"),
               ("SVG badge read-only", "https://counterapi.com/counter.svg?ns=necrotichollow.sh&action=view&key=portfolio-v195&readOnly=true&noLink=true&noFormatting=true&label=visitors&color=ff4774&labelColor=140613"),
               ("official embed script", "https://counterapi.com/c.js"),
