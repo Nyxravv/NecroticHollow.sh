@@ -274,7 +274,7 @@ def find_network_grid(section):
     parser.finish_unclosed_nodes()
 
     def normalized_text(node):
-        return re.sub(r"\\s+", " ", node.get("text", "")).strip().upper()
+        return re.sub(r"\s+", " ", node.get("text", "")).strip().upper()
 
     def titleish(node):
         tag = node["tag"]
