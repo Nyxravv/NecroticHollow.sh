@@ -56,6 +56,8 @@ jobs:
           p.write_text(s, encoding="utf-8")
           print("V22.17 Project Matrix gallery loaded")
           PY
+      - name: Add GOATD profile to Section 09 network
+        run: python3 build-v23-network-links.py
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
