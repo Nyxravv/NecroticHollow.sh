@@ -6,19 +6,19 @@ html = INDEX.read_text(encoding="utf-8")
 # The old V17.5 localStorage fallback is per-browser, not a global visitor count.
 # Do not expose it under the global visitor-count label.
 local_start_marker = "const hasVisited = localStorage.getItem('nh-v175-visitor') === '1';"
-local_end_marker = "if(visitorCount) visitorCount.textContent = \`VISITOR COUNT: \${localVisitCount}\`;"
+local_end_marker = "if(visitorCount) visitorCount.textContent = " + chr(96) + "VISITOR COUNT: $" + "{localVisitCount}" + chr(96) + ";"
 local_start = html.find(local_start_marker)
 if local_start >= 0:
     local_end = html.find(local_end_marker, local_start)
     if local_end < 0:
         raise SystemExit("Could not safely replace the local visitor fallback.")
     local_end += len(local_end_marker)
-    replacement = (
-        "if(visitorCount){\\n"
-        "  visitorCount.textContent = 'VISITOR COUNT: CONNECTING';\\n"
-        "  visitorCount.dataset.counterStatus = 'checking';\\n"
+    replacement = chr(10).join([
+        "if(visitorCount){",
+        "  visitorCount.textContent = 'VISITOR COUNT: CONNECTING';",
+        "  visitorCount.dataset.counterStatus = 'checking';",
         "}"
-    )
+    ])
     html = html[:local_start] + replacement + html[local_end:]
 elif "visitorCount.dataset.counterStatus = 'checking';" not in html:
     raise SystemExit("Could not find the local visitor fallback to replace.")
@@ -40,7 +40,7 @@ if start < 0:
         raise SystemExit(0)
     raise SystemExit("Could not find the V19.5 global counter integration.")
 
-end_marker = "\\n})();"
+end_marker = chr(10) + "})();"
 end = html.find(end_marker, start)
 if end < 0:
     raise SystemExit("Could not find the end of the global counter integration.")
