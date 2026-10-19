@@ -58,6 +58,8 @@ jobs:
           PY
       - name: Add GOATD profile to Section 09 network
         run: python3 build-v23-network-links.py
+      - name: Apply visitor counter fix
+        run: python3 build-v24-visitor-counter.py
       - name: Diagnose visitor counter options (read-only)
         run: |
           python3 - <<'PY'
