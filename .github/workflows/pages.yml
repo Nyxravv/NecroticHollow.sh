@@ -58,31 +58,39 @@ jobs:
           PY
       - name: Add GOATD profile to Section 09 network
         run: python3 build-v23-network-links.py
-      - name: Check visitor counter API (read-only)
+      - name: Diagnose visitor counter API (read-only)
         run: |
           python3 - <<'PY'
           import json
-          import urllib.error
           import urllib.request
 
-          url = "https://counterapi.com/api/necrotichollow.sh/view/portfolio-v195?unique=true&startNumber=0&noFormatting=true&readOnly=true"
-          try:
-              request = urllib.request.Request(url, headers={"Accept": "application/json", "User-Agent": "NecroticHollow-visitor-counter-healthcheck"})
-              with urllib.request.urlopen(request, timeout=12) as response:
-                  status = response.status
-                  raw = response.read().decode("utf-8", "replace")
+          tests = [
+              ("provider homepage", "https://counterapi.com/", False),
+              ("counter read without unique filter", "https://counterapi.com/api/necrotichollow.sh/view/portfolio-v195?readOnly=true&startNumber=0&noFormatting=true", True),
+              ("counter read with unique filter", "https://counterapi.com/api/necrotichollow.sh/view/portfolio-v195?unique=true&startNumber=0&noFormatting=true&readOnly=true", True),
+          ]
+
+          for label, url, expect_json in tests:
               try:
-                  data = json.loads(raw)
-              except json.JSONDecodeError:
-                  print(f"VISITOR_COUNTER_CHECK: HTTP {status}; response was not valid JSON: {raw[:400]}")
-              else:
+                  request = urllib.request.Request(url, headers={"Accept": "application/json", "User-Agent": "NecroticHollow-visitor-counter-healthcheck"})
+                  with urllib.request.urlopen(request, timeout=7) as response:
+                      status = response.status
+                      raw = response.read().decode("utf-8", "replace")
+                  if not expect_json:
+                      print(f"VISITOR_COUNTER_CHECK: {label}: HTTP {status}; received {len(raw)} characters")
+                      continue
+                  try:
+                      data = json.loads(raw)
+                  except json.JSONDecodeError:
+                      print(f"VISITOR_COUNTER_CHECK: {label}: HTTP {status}; response was not valid JSON: {raw[:300]}")
+                      continue
                   value = data.get("value") if isinstance(data, dict) else None
                   if isinstance(value, (int, float)) and not isinstance(value, bool):
-                      print(f"VISITOR_COUNTER_CHECK: HEALTHY; HTTP {status}; numeric value={value}")
+                      print(f"VISITOR_COUNTER_CHECK: {label}: HEALTHY; HTTP {status}; numeric value={value}")
                   else:
-                      print(f"VISITOR_COUNTER_CHECK: HTTP {status}; unexpected response shape: {str(data)[:400]}")
-          except Exception as exc:
-              print(f"VISITOR_COUNTER_CHECK: FAILED; {type(exc).__name__}: {exc}")
+                      print(f"VISITOR_COUNTER_CHECK: {label}: HTTP {status}; unexpected response shape: {str(data)[:300]}")
+              except Exception as exc:
+                  print(f"VISITOR_COUNTER_CHECK: {label}: FAILED; {type(exc).__name__}: {exc}")
           PY
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
