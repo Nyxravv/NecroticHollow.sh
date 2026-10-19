@@ -190,6 +190,7 @@ class SectionParser(HTMLParser):
         node = {
             "tag": tag,
             "attrs": dict(attrs),
+            "text": "",
             "start": start,
             "open_end": start + len(raw),
             "close_start": None,
@@ -247,19 +248,17 @@ class SectionParser(HTMLParser):
     def handle_data(self, data):
         if not data:
             return
-        lower = data.lower()
-        for title in TARGET_TITLES:
-            start = 0
-            needle = title.lower()
-            while True:
-                idx = lower.find(needle, start)
-                if idx < 0:
-                    break
-                stack = list(self.stack)
-                quality = self._title_quality(stack)
-                if quality:
-                    self.title_stacks[title].append((quality, stack))
-                start = idx + len(needle)
+        for node in self.stack:
+            node["text"] += data
+
+    def handle_entityref(self, name):
+        value = " " if name.lower() in ("nbsp", "thinsp", "ensp", "emsp") else ""
+        for node in self.stack:
+            node["text"] += value
+
+    def handle_charref(self, name):
+        for node in self.stack:
+            node["text"] += " "
 
     def finish_unclosed_nodes(self):
         for node in self.stack:
@@ -274,12 +273,44 @@ def find_network_grid(section):
     parser.close()
     parser.finish_unclosed_nodes()
 
+    def normalized_text(node):
+        return re.sub(r"\\s+", " ", node.get("text", "")).strip().upper()
+
+    def titleish(node):
+        tag = node["tag"]
+        if re.fullmatch(r"h[1-6]", tag):
+            return True
+        classes = node["attrs"].get("class", "").lower().split()
+        return any(any(key in cls for key in ("title", "heading", "link-name", "link-label")) for cls in classes)
+
     stacks = {}
-    for title, options in parser.title_stacks.items():
-        if not options:
+    for title in TARGET_TITLES:
+        # Accumulating descendant text means headings still match when their words
+        # are split between nested spans or emphasis tags.
+        exact = [n for n in parser.nodes if normalized_text(n) == title]
+        candidates = [n for n in exact if titleish(n)]
+        if not candidates:
+            candidates = [n for n in exact]
+        if not candidates:
+            # Fallback: allow an exact title within a heading that has extra whitespace.
+            candidates = [n for n in parser.nodes if titleish(n) and title in normalized_text(n)]
+        if not candidates:
+            headings = [
+                (n["tag"], n["attrs"].get("class", ""), normalized_text(n)[:100])
+                for n in parser.nodes
+                if titleish(n) and normalized_text(n)
+            ]
+            print(f"Network-card title {title!r} not found. Heading-like text detected: {headings[:40]}")
             raise RuntimeError(f"Could not locate the visible {title!r} card title in the network section.")
-        best_quality = max(quality for quality, _ in options)
-        stacks[title] = next(stack for quality, stack in options if quality == best_quality)
+        # Prefer semantic headings, then the smallest exact text node.
+        candidates.sort(key=lambda n: (0 if re.fullmatch(r"h[1-6]", n["tag"]) else 1, len(normalized_text(n)), -n["depth"]))
+        node = candidates[0]
+        ancestry = []
+        current = node
+        while current is not None:
+            ancestry.append(current)
+            current = current["parent"]
+        stacks[title] = list(reversed(ancestry))
 
     common = list(stacks[TARGET_TITLES[0]])
     for title in TARGET_TITLES[1:]:
