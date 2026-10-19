@@ -93,7 +93,7 @@ jobs:
                   elif "svg" in content_type.lower() or raw.lstrip().startswith("<svg"):
                       summary = "SVG badge returned"
                   elif "javascript" in content_type.lower() or label == "official embed script":
-                      summary = "script returned"
+                      summary = "script returned: " + raw[:400]
                   elif label == "JSONP API read-only":
                       summary = f"JSONP body begins: {raw[:140]}"
                   print(f"VISITOR_COUNTER_CHECK: {label}: HTTP {status}; {content_type}; {summary}")
